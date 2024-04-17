@@ -28,5 +28,6 @@ public class TowerProjectile : MonoBehaviour
         float deltaDistance = m_speed * Time.deltaTime;
         Vector3 newPos = Vector3.MoveTowards(transform.position, m_target.transform.position, deltaDistance);
         transform.position = newPos;
+        transform.LookAt(m_target.transform);
     }
 }
