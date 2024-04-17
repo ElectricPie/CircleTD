@@ -19,10 +19,12 @@ public class TowerWaves : MonoBehaviour
         {
             WaveTransform = waveTransform;
             RotationsPerMinute = rotationsPerMinute;
+            Units = new Queue<Unit>();
         }
         
         public Transform WaveTransform;
         public float RotationsPerMinute;
+        public Queue<Unit> Units;
     }
     
     public void AddWave(GameObject waveUnit, int unitCount,float waveRotationsPerMinute)
@@ -59,16 +61,28 @@ public class TowerWaves : MonoBehaviour
     private IEnumerator SpawnUnitsCoroutine(GameObject waveUnit, int unitCount, float waveRotationsPerMinute)
     {
         // Create the game object to rotate the units
-        GameObject wave = new GameObject("Wave");
-        wave.transform.parent = transform;
-        wave.transform.localScale = Vector3.one;
-        m_waves.Add(new Wave(wave.transform, waveRotationsPerMinute));
+        GameObject waveGameObject = new GameObject("Wave");
+        waveGameObject.transform.parent = transform;
+        waveGameObject.transform.localScale = Vector3.one;
+
+        Wave wave = new Wave(waveGameObject.transform, waveRotationsPerMinute);
+        m_waves.Add(wave);
         
         // Create new units
         for (int i = 0; i < unitCount; i++)
         {
             Vector3 spawnPosition = transform.position + m_unitSpawnPoint;
-            Instantiate(waveUnit, spawnPosition, Quaternion.identity, wave.transform);
+            Unit newUnit = Instantiate(waveUnit, spawnPosition, Quaternion.identity, waveGameObject.transform).GetComponent<Unit>();
+            if (newUnit == null)
+            {
+                Debug.Log($"{this.name} is attempting to spawn unit that is missing the unit component", this);
+            }
+            else
+            {
+                wave.Units.Enqueue(newUnit);
+            }
+
+            Debug.Log($"Wave size: {wave.Units.Count}");
             yield return new WaitForSeconds(m_unitSpawnSpeed);
         }
     }
