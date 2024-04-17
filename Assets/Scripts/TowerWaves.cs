@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tower : MonoBehaviour
+public class TowerWaves : MonoBehaviour
 {
     [SerializeField] private GameObject m_debugWaveOneUnit;
     [SerializeField] private GameObject m_debugWaveTwoUnit;
