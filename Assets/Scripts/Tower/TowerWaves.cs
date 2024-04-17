@@ -38,7 +38,21 @@ public class TowerWaves : MonoBehaviour
     /// <returns>The oldest spawned <c>Unit</c> if there are waves other wise null</returns>
     public Unit GetOldestUnit()
     {
+        if (m_waves == null)
+        {
+            return null;
+        }
+        
+        if (m_waves.Count == 0)
+        {
+            return null;
+        }
         Wave oldestWave = m_waves.Peek();
+        
+        if (oldestWave.Units.Count == 0)
+        {
+            return null;
+        }
         return oldestWave.Units.Peek();
     }
 

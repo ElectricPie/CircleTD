@@ -459,6 +459,10 @@ PrefabInstance:
       propertyPath: m_towerWaves
       value: 
       objectReference: {fileID: 719932121}
+    - target: {fileID: 9129706804224110044, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_towerProjectile
+      value: 
+      objectReference: {fileID: 2937510664636689804, guid: f7ec665cdade3129c8ac1b47a75c588f, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
