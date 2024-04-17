@@ -47,12 +47,13 @@ public class TowerWaves : MonoBehaviour
         {
             return null;
         }
-        Wave oldestWave = m_waves.Peek();
         
+        Wave oldestWave = m_waves.Peek();
         if (oldestWave.Units.Count == 0)
         {
             return null;
         }
+        
         return oldestWave.Units.Peek();
     }
 

@@ -1,18 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TowerProjectile : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float m_speed = 1.0f;
+
+    private int m_damage = 1;
+    private Unit m_target = null;
+
+    public void SetupProjectile(int damage, Unit target)
     {
-        
+        m_damage = damage;
+        m_target = target;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        MoveTowardsTarget();
+    }
+
+    private void MoveTowardsTarget()
+    {
+        if (m_target == null)
+        {
+            return;
+        }
+
+        float deltaDistance = m_speed * Time.deltaTime;
+        Vector3 newPos = Vector3.MoveTowards(transform.position, m_target.transform.position, deltaDistance);
+        transform.position = newPos;
     }
 }

@@ -8,6 +8,7 @@ public class TowerAttack : MonoBehaviour
     [SerializeField] private GameObject m_projectilePrefab;
     [SerializeField] private float m_defaultAttackSpeed = 1.0f;
     [Tooltip("How long to wait if there is no current target before attempting to get another")] [SerializeField] private float m_unitScanTime = 0.1f;
+    [SerializeField] private int m_baseDamage = 1;
 
     // TODO: Remove SerializeField after testing
     [SerializeField] private Unit m_curretTarget;
@@ -53,6 +54,7 @@ public class TowerAttack : MonoBehaviour
             
             Debug.Log("Attack");
             TowerProjectile projectile = Instantiate(m_projectilePrefab).GetComponent<TowerProjectile>();
+            projectile.SetupProjectile(m_baseDamage, m_curretTarget);
             yield return new WaitForSeconds(m_currentAttackSpeed);
         }
     }
