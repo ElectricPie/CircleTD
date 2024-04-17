@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3098167819730889447}
   - component: {fileID: 1387975562966167116}
   - component: {fileID: 7971336517557105522}
+  - component: {fileID: 9129706804224110044}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.074, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -63,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c20f4d03f439cf3e5b70c847c1633bdd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -118,5 +119,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 826c1638b89b605caa1be0757835fa54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_debugWaveOneUnit: {fileID: 6252284710597923287, guid: 6291bca52024166549449e6fc1f51948, type: 3}
+  m_debugWaveTwoUnit: {fileID: 7004839232425261707, guid: f82ba90c949a5d2899528384333c0da9, type: 3}
+  m_unitSpawnSpeed: 1
+  m_unitSpawnPoint: {x: 5, y: -1, z: 0}
+--- !u!114 &9129706804224110044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4416480666744996068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43acca0e5bdb4fcb18324a3a2cad845c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

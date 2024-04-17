@@ -11,7 +11,7 @@ public class TowerWaves : MonoBehaviour
     [SerializeField] private float m_unitSpawnSpeed = 1.0f;
     [SerializeField] private Vector3 m_unitSpawnPoint;
 
-    private List<Wave> m_waves;
+    private Queue<Wave> m_waves;
 
     struct Wave
     {
@@ -31,11 +31,21 @@ public class TowerWaves : MonoBehaviour
     {
         StartCoroutine(SpawnUnitsCoroutine(waveUnit, unitCount, waveRotationsPerMinute));
     }
+    
+    /// <summary>
+    /// Gets the earliest spawned <c>Unit</c> in the earliest wave
+    /// </summary>
+    /// <returns>The oldest spawned <c>Unit</c> if there are waves other wise null</returns>
+    public Unit GetOldestUnit()
+    {
+        Wave oldestWave = m_waves.Peek();
+        return oldestWave.Units.Peek();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        m_waves = new List<Wave>();
+        m_waves = new Queue<Wave>();
         
         AddWave(m_debugWaveOneUnit, 4, 6.0f);
         AddWave(m_debugWaveTwoUnit, 2, 3.0f);
@@ -66,7 +76,7 @@ public class TowerWaves : MonoBehaviour
         waveGameObject.transform.localScale = Vector3.one;
 
         Wave wave = new Wave(waveGameObject.transform, waveRotationsPerMinute);
-        m_waves.Add(wave);
+        m_waves.Enqueue(wave);
         
         // Create new units
         for (int i = 0; i < unitCount; i++)
@@ -82,7 +92,6 @@ public class TowerWaves : MonoBehaviour
                 wave.Units.Enqueue(newUnit);
             }
 
-            Debug.Log($"Wave size: {wave.Units.Count}");
             yield return new WaitForSeconds(m_unitSpawnSpeed);
         }
     }
