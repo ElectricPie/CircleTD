@@ -118,8 +118,15 @@ public class TowerWaves : MonoBehaviour
     {
         foreach (Wave wave in m_waves)
         {
+            // Remove the killed unit
             if (wave.Units.Remove(killedUnit))
             {
+                // Remove the wave once all units have been killed
+                if (wave.Units.Count == 0)
+                {
+                    m_waves.Dequeue();
+                    Destroy(wave.WaveTransform.gameObject);
+                }
                 return;
             }
         }
