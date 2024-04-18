@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class TowerProjectile : MonoBehaviour
@@ -41,5 +40,14 @@ public class TowerProjectile : MonoBehaviour
     private void Timeout()
     {
         Destroy(this.gameObject);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject == m_target.gameObject)
+        {
+            m_target.Damage(m_damage);
+            Destroy(this.gameObject);   
+        }
     }
 }

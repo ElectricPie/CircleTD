@@ -2,9 +2,16 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    public int Health { get; private set; }
+    public int Health
+    {
+        get
+        {
+            return m_currentHealth;
+        }
+    }
 
     [SerializeField] [Min(0)] private int m_initialHealth = 20;
+    [SerializeField] private int m_currentHealth;
 
     public void Damage(int damageAmount)
     {
@@ -13,10 +20,10 @@ public class Unit : MonoBehaviour
         {
             damageAmount = 1;
         }
-        Health -= damageAmount;
+        m_currentHealth -= damageAmount;
 
         // Handle unit death
-        if (Health < 0)
+        if (Health <= 0)
         {
             UnitKilled();
         }
@@ -24,11 +31,11 @@ public class Unit : MonoBehaviour
     
     protected void Awake()
     {
-        Health = m_initialHealth;
+        m_currentHealth = m_initialHealth;
     }
 
     private void UnitKilled()
     {
-        // TODO: Handle unit killed
+        Destroy(this.gameObject);
     }
 }

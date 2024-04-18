@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class TowerAttack : MonoBehaviour
 {
@@ -37,6 +36,11 @@ public class TowerAttack : MonoBehaviour
         m_curretTarget = m_towerWaves.GetOldestUnit();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Trigger");
+    }
+
     private IEnumerator AttackCoroutine()
     {
         if (m_projectilePrefab == null)
@@ -54,10 +58,11 @@ public class TowerAttack : MonoBehaviour
                 continue;
             }
             
-            Debug.Log("Attack");
+            // Create projectile
             Vector3 spawnPoint = transform.position + m_projectileSpawnPoint;
             TowerProjectile projectile = Instantiate(m_projectilePrefab, spawnPoint, Quaternion.identity).GetComponent<TowerProjectile>();
             projectile.SetupProjectile(m_baseDamage, m_curretTarget);
+            
             yield return new WaitForSeconds(m_currentAttackSpeed);
         }
     }
