@@ -19,12 +19,12 @@ public class TowerWaves : MonoBehaviour
         {
             WaveTransform = waveTransform;
             RotationsPerMinute = rotationsPerMinute;
-            Units = new Queue<Unit>();
+            Units = new List<Unit>();
         }
         
         public Transform WaveTransform;
         public float RotationsPerMinute;
-        public Queue<Unit> Units;
+        public List<Unit> Units;
     }
     
     public void AddWave(GameObject waveUnit, int unitCount,float waveRotationsPerMinute)
@@ -54,7 +54,7 @@ public class TowerWaves : MonoBehaviour
             return null;
         }
         
-        return oldestWave.Units.Peek();
+        return oldestWave.Units[0];
     }
 
     // Start is called before the first frame update
@@ -100,14 +100,28 @@ public class TowerWaves : MonoBehaviour
             Unit newUnit = Instantiate(waveUnit, spawnPosition, Quaternion.identity, waveGameObject.transform).GetComponent<Unit>();
             if (newUnit == null)
             {
+                // Remove the unit if it doesn't have the unit component
                 Debug.Log($"{this.name} is attempting to spawn unit that is missing the unit component", this);
+                Destroy(newUnit.gameObject);
             }
             else
             {
-                wave.Units.Enqueue(newUnit);
+                newUnit.OnUnitKilledEvent += OnUnitKilled;
+                wave.Units.Add(newUnit);
             }
 
             yield return new WaitForSeconds(m_unitSpawnSpeed);
+        }
+    }
+
+    private void OnUnitKilled(Unit killedUnit)
+    {
+        foreach (Wave wave in m_waves)
+        {
+            if (wave.Units.Remove(killedUnit))
+            {
+                return;
+            }
         }
     }
 

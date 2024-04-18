@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
@@ -12,6 +13,8 @@ public class Unit : MonoBehaviour
 
     [SerializeField] [Min(0)] private int m_initialHealth = 20;
     [SerializeField] private int m_currentHealth;
+
+    public event Action<Unit> OnUnitKilledEvent;
 
     public void Damage(int damageAmount)
     {
@@ -36,6 +39,8 @@ public class Unit : MonoBehaviour
 
     private void UnitKilled()
     {
+        OnUnitKilledEvent?.Invoke(this);
+        
         Destroy(this.gameObject);
     }
 }
