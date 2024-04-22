@@ -28,6 +28,7 @@ public class TowerProjectile : MonoBehaviour
     {
         if (m_target == null)
         {
+            Destroy(this.gameObject);
             return;
         }
 
