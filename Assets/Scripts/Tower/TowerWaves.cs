@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +10,7 @@ public class TowerWaves : MonoBehaviour
     [SerializeField] private float m_unitSpawnSpeed = 1.0f;
     [SerializeField] private Vector3 m_unitSpawnPoint;
 
-    private Queue<Wave> m_waves;
+    private List<Wave> m_waves;
 
     struct Wave
     {
@@ -26,10 +25,35 @@ public class TowerWaves : MonoBehaviour
         public float RotationsPerMinute;
         public List<Unit> Units;
     }
-    
-    public void AddWave(GameObject waveUnit, int unitCount,float waveRotationsPerMinute)
+
+    public void NewWave(float waveRotationsPerMinute)
     {
-        StartCoroutine(SpawnUnitsCoroutine(waveUnit, unitCount, waveRotationsPerMinute));
+        // Create the game object to rotate the units
+        GameObject waveGameObject = new GameObject("Wave");
+        waveGameObject.transform.parent = transform;
+        waveGameObject.transform.localScale = Vector3.one;
+
+        Wave wave = new Wave(waveGameObject.transform, waveRotationsPerMinute);
+        m_waves.Add(wave);
+    }
+
+    public void AddUnitToLatestWave(GameObject unitPrefab)
+    {
+        Wave latestWave = m_waves[m_waves.Count - 1];
+        
+        Vector3 spawnPosition = transform.position + m_unitSpawnPoint;
+        Unit newUnit = Instantiate(unitPrefab, spawnPosition, Quaternion.identity, latestWave.WaveTransform.transform).GetComponent<Unit>();
+        if (newUnit == null)
+        {
+            // Remove the unit if it doesn't have the unit component
+            Debug.Log($"{this.name} is attempting to spawn unit that is missing the unit component", this);
+            Destroy(newUnit.gameObject);
+        }
+        else
+        {
+            newUnit.OnUnitKilledEvent += OnUnitKilled;
+            latestWave.Units.Add(newUnit);
+        }
     }
     
     /// <summary>
@@ -48,7 +72,7 @@ public class TowerWaves : MonoBehaviour
             return null;
         }
         
-        Wave oldestWave = m_waves.Peek();
+        Wave oldestWave = m_waves[0];
         if (oldestWave.Units.Count == 0)
         {
             return null;
@@ -58,12 +82,9 @@ public class TowerWaves : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        m_waves = new Queue<Wave>();
-        
-        AddWave(m_debugWaveOneUnit, 4, 6.0f);
-        AddWave(m_debugWaveTwoUnit, 2, 3.0f);
+        m_waves = new List<Wave>();
     }
 
     // Update is called once per frame
@@ -83,37 +104,6 @@ public class TowerWaves : MonoBehaviour
         }
     }
 
-    private IEnumerator SpawnUnitsCoroutine(GameObject waveUnit, int unitCount, float waveRotationsPerMinute)
-    {
-        // Create the game object to rotate the units
-        GameObject waveGameObject = new GameObject("Wave");
-        waveGameObject.transform.parent = transform;
-        waveGameObject.transform.localScale = Vector3.one;
-
-        Wave wave = new Wave(waveGameObject.transform, waveRotationsPerMinute);
-        m_waves.Enqueue(wave);
-        
-        // Create new units
-        for (int i = 0; i < unitCount; i++)
-        {
-            Vector3 spawnPosition = transform.position + m_unitSpawnPoint;
-            Unit newUnit = Instantiate(waveUnit, spawnPosition, Quaternion.identity, waveGameObject.transform).GetComponent<Unit>();
-            if (newUnit == null)
-            {
-                // Remove the unit if it doesn't have the unit component
-                Debug.Log($"{this.name} is attempting to spawn unit that is missing the unit component", this);
-                Destroy(newUnit.gameObject);
-            }
-            else
-            {
-                newUnit.OnUnitKilledEvent += OnUnitKilled;
-                wave.Units.Add(newUnit);
-            }
-
-            yield return new WaitForSeconds(m_unitSpawnSpeed);
-        }
-    }
-
     private void OnUnitKilled(Unit killedUnit)
     {
         foreach (Wave wave in m_waves)
@@ -124,7 +114,7 @@ public class TowerWaves : MonoBehaviour
                 // Remove the wave once all units have been killed
                 if (wave.Units.Count == 0)
                 {
-                    m_waves.Dequeue();
+                    m_waves.RemoveAt(0);
                     Destroy(wave.WaveTransform.gameObject);
                 }
                 return;

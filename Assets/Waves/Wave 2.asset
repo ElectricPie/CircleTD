@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac5608b0e28ea286d89262dccb34c6f9, type: 3}
   m_Name: Wave 2
   m_EditorClassIdentifier: 
-  m_waveUnitPrefab: {fileID: 8414081306194666688, guid: b325209b84e25e821a63137efef299b4, type: 3}
-  m_maveUnitCount: 4
+  UnitPrefab: {fileID: 8414081306194666688, guid: b325209b84e25e821a63137efef299b4, type: 3}
+  UnitCount: 4
+  TimeSpawnGap: 1
