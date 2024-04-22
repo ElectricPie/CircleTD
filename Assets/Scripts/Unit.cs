@@ -3,16 +3,11 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    public int Health
-    {
-        get
-        {
-            return m_currentHealth;
-        }
-    }
+    public int Health { get; private set; }
 
     [SerializeField] [Min(0)] private int m_initialHealth = 20;
-    [SerializeField] private int m_currentHealth;
+
+    [SerializeField] private HealthBar m_healtBar;
 
     public event Action<Unit> OnUnitKilledEvent;
 
@@ -23,7 +18,12 @@ public class Unit : MonoBehaviour
         {
             damageAmount = 1;
         }
-        m_currentHealth -= damageAmount;
+        Health -= damageAmount;
+
+        if (m_healtBar is not null)
+        {
+            m_healtBar.UpdateHealthBar(Health, m_initialHealth);
+        }
 
         // Handle unit death
         if (Health <= 0)
@@ -34,7 +34,12 @@ public class Unit : MonoBehaviour
     
     protected void Awake()
     {
-        m_currentHealth = m_initialHealth;
+        Health = m_initialHealth;
+        
+        if (m_healtBar is not null)
+        {
+            m_healtBar.UpdateHealthBar(Health, m_initialHealth);
+        }
     }
 
     private void UnitKilled()
