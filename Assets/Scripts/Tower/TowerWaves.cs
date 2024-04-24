@@ -5,6 +5,8 @@ using UnityEngine.Events;
 public class TowerWaves : MonoBehaviour
 {
     [SerializeField] private Vector3 m_unitSpawnPoint;
+    [Tooltip("If set to a value will move a new spawned unit left/right the amount of the value")]
+    [SerializeField] private float m_unitSpawnPointVairation = 0.0f;
 
     public UnityEvent<Unit> OnUnitSpanwedEvent;
     public UnityEvent<Unit> OnUnitKilledEvent;
@@ -56,6 +58,7 @@ public class TowerWaves : MonoBehaviour
         Wave latestWave = m_waves[m_waves.Count - 1];
         
         Vector3 spawnPosition = transform.position + m_unitSpawnPoint;
+        spawnPosition.x += Random.Range(-m_unitSpawnPointVairation, m_unitSpawnPointVairation);
         Unit newUnit = Instantiate(unitPrefab, spawnPosition, Quaternion.identity, latestWave.WaveTransform.transform).GetComponent<Unit>();
         
         newUnit.OnUnitKilledEvent += OnUnitKilled;
@@ -139,6 +142,16 @@ public class TowerWaves : MonoBehaviour
     protected void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position + m_unitSpawnPoint, 0.5f);
+        
+        // Draw spawn point
+        Vector3 spawnPoint = transform.position + m_unitSpawnPoint;
+        Gizmos.DrawSphere(spawnPoint, 0.5f);
+        
+        // Draw spawn variation
+        Vector3 leftOfSpawn = spawnPoint;
+        leftOfSpawn.x -= m_unitSpawnPointVairation;
+        Vector3 rightOfSpawn = spawnPoint;
+        rightOfSpawn.x += m_unitSpawnPointVairation;
+        Gizmos.DrawLine(leftOfSpawn, rightOfSpawn);
     }
 }
