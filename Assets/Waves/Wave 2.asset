@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Wave 2
   m_EditorClassIdentifier: 
   UnitPrefab: {fileID: 8414081306194666688, guid: b325209b84e25e821a63137efef299b4, type: 3}
-  UnitCount: 4
-  TimeSpawnGap: 1
+  UnitCount: 20
+  TimeSpawnGap: 0.5
+  WaveRotationSpeed: 9
