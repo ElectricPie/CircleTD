@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TowerWaves : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class TowerWaves : MonoBehaviour
     [SerializeField] private float m_unitSpawnSpeed = 1.0f;
     [SerializeField] private Vector3 m_unitSpawnPoint;
 
+    public UnityEvent<Unit> OnUnitSpanwedEvent;
+    public UnityEvent<Unit> OnUnitKilledEvent;
+    
     private List<Wave> m_waves;
     private int m_unitCount;
 
@@ -63,6 +67,7 @@ public class TowerWaves : MonoBehaviour
         latestWave.Units.Add(newUnit);
 
         m_unitCount++;
+        OnUnitSpanwedEvent.Invoke(newUnit);
     }
 
     /// <summary>
@@ -118,8 +123,11 @@ public class TowerWaves : MonoBehaviour
         foreach (Wave wave in m_waves)
         {
             // Remove the killed unit
-            if (wave.Units.Remove(killedUnit))
+            if (wave.Units.Contains(killedUnit))
             {
+                OnUnitKilledEvent.Invoke(killedUnit);
+                wave.Units.Remove(killedUnit);
+                
                 // Remove the wave once all units have been killed
                 if (wave.Units.Count == 0)
                 {
@@ -127,6 +135,7 @@ public class TowerWaves : MonoBehaviour
                     Destroy(wave.WaveTransform.gameObject);
                 }
 
+                m_unitCount--;
                 return;
             }
         }

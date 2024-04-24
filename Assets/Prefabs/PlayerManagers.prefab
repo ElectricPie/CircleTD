@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5194637332472837017}
   - component: {fileID: 3103032598046403700}
+  - component: {fileID: -6049285032320113464}
   m_Layer: 0
-  m_Name: Wave Manager
+  m_Name: PlayerManagers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,3 +48,20 @@ MonoBehaviour:
   m_waves:
   - {fileID: 11400000, guid: a931ce6b4e343da7289d1a4be09631a9, type: 2}
   - {fileID: 11400000, guid: 0c03908ca19cabfb387414786576c113, type: 2}
+  m_maxTimeBetweenWaves: 30
+  m_towerWaves: {fileID: 0}
+  OnWaveStartedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &-6049285032320113464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7254321893148404680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f60c1b7f67e0d3318fbeb2130bd5eaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
