@@ -4,11 +4,6 @@ using UnityEngine.Events;
 
 public class TowerWaves : MonoBehaviour
 {
-    [SerializeField] private GameObject m_debugWaveOneUnit;
-    [SerializeField] private GameObject m_debugWaveTwoUnit;
-
-    // TODO: Consider changing to distance between units?
-    [SerializeField] private float m_unitSpawnSpeed = 1.0f;
     [SerializeField] private Vector3 m_unitSpawnPoint;
 
     public UnityEvent<Unit> OnUnitSpanwedEvent;
