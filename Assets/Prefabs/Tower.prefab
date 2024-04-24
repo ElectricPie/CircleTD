@@ -125,6 +125,12 @@ MonoBehaviour:
   m_debugWaveTwoUnit: {fileID: 8414081306194666688, guid: b325209b84e25e821a63137efef299b4, type: 3}
   m_unitSpawnSpeed: 1
   m_unitSpawnPoint: {x: 5, y: -1, z: 0}
+  OnUnitSpanwedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnitKilledEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &9129706804224110044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,7 +146,6 @@ MonoBehaviour:
   m_towerWaves: {fileID: 0}
   m_projectilePrefab: {fileID: 2937510664636689804, guid: f7ec665cdade3129c8ac1b47a75c588f, type: 3}
   m_defaultAttackSpeed: 1
-  m_unitScanTime: 0.1
+  m_unitScanTime: 0.01
   m_baseDamage: 1
   m_projectileSpawnPoint: {x: 0, y: 0, z: 0}
-  m_curretTarget: {fileID: 0}
