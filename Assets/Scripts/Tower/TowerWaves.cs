@@ -11,6 +11,7 @@ public class TowerWaves : MonoBehaviour
     [SerializeField] private Vector3 m_unitSpawnPoint;
 
     private List<Wave> m_waves;
+    private int m_unitCount;
 
     struct Wave
     {
@@ -20,7 +21,7 @@ public class TowerWaves : MonoBehaviour
             RotationsPerMinute = rotationsPerMinute;
             Units = new List<Unit>();
         }
-        
+
         public Transform WaveTransform;
         public float RotationsPerMinute;
         public List<Unit> Units;
@@ -29,7 +30,7 @@ public class TowerWaves : MonoBehaviour
     public void NewWave(float waveRotationsPerMinute)
     {
         // TODO: Create wave finished callback
-        
+
         // Create the game object to rotate the units
         GameObject waveGameObject = new GameObject("Wave");
         waveGameObject.transform.parent = transform;
@@ -41,23 +42,29 @@ public class TowerWaves : MonoBehaviour
 
     public void AddUnitToLatestWave(GameObject unitPrefab)
     {
+        if (unitPrefab is null)
+        {
+            Debug.Log($"{this.name} is missing the unit prefab", this);
+            return;
+        }
+        
+        if (unitPrefab.GetComponent<Unit>() is null)
+        {
+            Debug.Log($"{this.name} is attempting to spawn unit that is missing the unit component", this);
+            return;
+        }
+        
         Wave latestWave = m_waves[m_waves.Count - 1];
         
         Vector3 spawnPosition = transform.position + m_unitSpawnPoint;
         Unit newUnit = Instantiate(unitPrefab, spawnPosition, Quaternion.identity, latestWave.WaveTransform.transform).GetComponent<Unit>();
-        if (newUnit == null)
-        {
-            // Remove the unit if it doesn't have the unit component
-            Debug.Log($"{this.name} is attempting to spawn unit that is missing the unit component", this);
-            Destroy(newUnit.gameObject);
-        }
-        else
-        {
-            newUnit.OnUnitKilledEvent += OnUnitKilled;
-            latestWave.Units.Add(newUnit);
-        }
+        
+        newUnit.OnUnitKilledEvent += OnUnitKilled;
+        latestWave.Units.Add(newUnit);
+
+        m_unitCount++;
     }
-    
+
     /// <summary>
     /// Gets the earliest spawned <c>Unit</c> in the earliest wave
     /// </summary>
@@ -68,18 +75,18 @@ public class TowerWaves : MonoBehaviour
         {
             return null;
         }
-        
+
         if (m_waves.Count == 0)
         {
             return null;
         }
-        
+
         Wave oldestWave = m_waves[0];
         if (oldestWave.Units.Count == 0)
         {
             return null;
         }
-        
+
         return oldestWave.Units[0];
     }
 
@@ -119,6 +126,7 @@ public class TowerWaves : MonoBehaviour
                     m_waves.RemoveAt(0);
                     Destroy(wave.WaveTransform.gameObject);
                 }
+
                 return;
             }
         }
