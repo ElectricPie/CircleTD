@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class WaveManager : MonoBehaviour
 {
@@ -8,7 +10,12 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private float m_maxTimeBetweenWaves = 30.0f;
 
     [SerializeField] private TowerWaves m_towerWaves;
+    
+    // Parameter is the new wave number
+    public UnityEvent<int> OnWaveStartedEvent;
 
+    private int m_waveCount = 0;
+        
     private void Start()
     {
         if (m_towerWaves is null)
@@ -22,6 +29,9 @@ public class WaveManager : MonoBehaviour
 
     private IEnumerator SpawnWave(WaveScriptableObject wave)
     {
+        m_waveCount++;
+        OnWaveStartedEvent.Invoke(m_waveCount);
+        
         m_towerWaves.NewWave(wave.WaveRotationSpeed);
         
         for (int i = 0; i < wave.UnitCount; i++)
@@ -38,10 +48,8 @@ public class WaveManager : MonoBehaviour
         {
             yield return SpawnWave(wave);
             
-            // TEMP
+            // TODO: Handle wave max spawning timer 
             yield return new WaitForSeconds(5.0f);
         }
-        
-        yield return null;
     }
 }

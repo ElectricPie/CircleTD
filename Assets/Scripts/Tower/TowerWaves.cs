@@ -28,6 +28,8 @@ public class TowerWaves : MonoBehaviour
 
     public void NewWave(float waveRotationsPerMinute)
     {
+        // TODO: Create wave finished callback
+        
         // Create the game object to rotate the units
         GameObject waveGameObject = new GameObject("Wave");
         waveGameObject.transform.parent = transform;

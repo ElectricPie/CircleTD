@@ -762,18 +762,50 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3844681227347834737, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1105416544}
   m_SourcePrefab: {fileID: 100100000, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
 --- !u!224 &1105416542 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3794306709853315546, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
   m_PrefabInstance: {fileID: 1105416541}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1105416543 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3844681227347834737, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
+  m_PrefabInstance: {fileID: 1105416541}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1105416544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105416543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacb27f8adff04a3386d667eceffac3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_waveNumberText: {fileID: 1528492563}
 --- !u!224 &1254427662 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3794306709853315546, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
   m_PrefabInstance: {fileID: 8232887681880354801}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1528492563 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9011530737257955469, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
+  m_PrefabInstance: {fileID: 1105416541}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1771457031
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,6 +920,34 @@ PrefabInstance:
       propertyPath: m_towerWaves
       value: 
       objectReference: {fileID: 719932121}
+    - target: {fileID: 3103032598046403700, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
+      propertyPath: OnWaveStartedEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3103032598046403700, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
+      propertyPath: OnWaveStartedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3103032598046403700, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
+      propertyPath: OnWaveStartedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1105416544}
+    - target: {fileID: 3103032598046403700, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
+      propertyPath: OnWaveStartedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3103032598046403700, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
+      propertyPath: OnWaveStartedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnWaveStarted
+      objectReference: {fileID: 0}
+    - target: {fileID: 3103032598046403700, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
+      propertyPath: OnWaveStartedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: WaveTracker, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3103032598046403700, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
+      propertyPath: OnWaveStartedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5194637332472837017, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

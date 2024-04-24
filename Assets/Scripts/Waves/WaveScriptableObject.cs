@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName="New Wave", menuName="Waves/New Wave")]
 public class WaveScriptableObject : ScriptableObject
