@@ -1,12 +1,12 @@
-using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class WaveManager : MonoBehaviour
 {
     [SerializeField] private WaveScriptableObject[] m_waves;
-    [Tooltip("The time in seconds before the next wave spawns if the current one is not complete. Starts after the last unit is spawed")] 
+    [Tooltip("The time in seconds before the next wave spawns if the current one is not complete. Starts after the last unit is spawned")] 
     [SerializeField] private float m_maxTimeBetweenWaves = 30.0f;
 
     [SerializeField] private TowerWaves m_towerWaves;
@@ -14,23 +14,35 @@ public class WaveManager : MonoBehaviour
     // Parameter is the new wave number
     public UnityEvent<int> OnWaveStartedEvent;
 
-    private int m_waveCount = 0;
-        
+    public int CurrentWave { get; private set; } = 0;
+
+    private List<IEnumerator> m_waveSpawningCoroutines;
+
+    public void OnWaveKilled()
+    {
+        // Stop any waiting time
+        CancelInvoke(nameof(StartNextWave));
+        StartNextWave();
+    }
+    
     private void Start()
     {
+        m_waveSpawningCoroutines = new List<IEnumerator>();
+        
         if (m_towerWaves is null)
         {
             Debug.LogError($"Wave Manager on {name} is missing reference to a Tower Waves script", this);
             return;
         }
 
-        StartCoroutine(SpawnWaves());
+        IEnumerator newWaveCoroutine = SpawnWave(m_waves[CurrentWave]);
+        m_waveSpawningCoroutines.Add(newWaveCoroutine);
+        StartCoroutine(newWaveCoroutine);
     }
 
     private IEnumerator SpawnWave(WaveScriptableObject wave)
     {
-        m_waveCount++;
-        OnWaveStartedEvent.Invoke(m_waveCount);
+        OnWaveStartedEvent.Invoke(CurrentWave);
         
         m_towerWaves.NewWave(wave.WaveRotationSpeed);
         
@@ -39,17 +51,16 @@ public class WaveManager : MonoBehaviour
             m_towerWaves.AddUnitToLatestWave(wave.UnitPrefab);
             yield return new WaitForSeconds(wave.TimeSpawnGap);
         }
+
+        Invoke(nameof(StartNextWave), m_maxTimeBetweenWaves);
     }
 
-    private IEnumerator SpawnWaves()
+    private void StartNextWave()
     {
-        // Spawn each wave
-        foreach (WaveScriptableObject wave in m_waves)
-        {
-            yield return SpawnWave(wave);
-            
-            // TODO: Handle wave max spawning timer 
-            yield return new WaitForSeconds(5.0f);
-        }
+        CurrentWave++;
+        
+        IEnumerator newWaveCoroutine = SpawnWave(m_waves[CurrentWave]);
+        m_waveSpawningCoroutines.Add(newWaveCoroutine);
+        StartCoroutine(newWaveCoroutine);
     }
 }

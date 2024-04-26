@@ -10,7 +10,9 @@ public class TowerWaves : MonoBehaviour
 
     public UnityEvent<Unit> OnUnitSpanwedEvent;
     public UnityEvent<Unit> OnUnitKilledEvent;
-    
+
+    public UnityEvent OnWaveKilledEvent;
+
     private List<Wave> m_waves;
     private int m_unitCount;
 
@@ -131,6 +133,7 @@ public class TowerWaves : MonoBehaviour
                 {
                     m_waves.RemoveAt(0);
                     Destroy(wave.WaveTransform.gameObject);
+                    OnWaveKilledEvent.Invoke();
                 }
 
                 m_unitCount--;
