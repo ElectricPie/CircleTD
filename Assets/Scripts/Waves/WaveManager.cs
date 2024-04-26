@@ -44,7 +44,7 @@ public class WaveManager : MonoBehaviour
     {
         OnWaveStartedEvent.Invoke(CurrentWave);
         
-        m_towerWaves.NewWave(wave.WaveRotationSpeed);
+        m_towerWaves.NewWave(wave);
         
         for (int i = 0; i < wave.UnitCount; i++)
         {

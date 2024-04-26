@@ -16,21 +16,23 @@ public class TowerWaves : MonoBehaviour
     private List<Wave> m_waves;
     private int m_unitCount;
 
-    struct Wave
+    class Wave
     {
-        public Wave(Transform waveTransform, float rotationsPerMinute)
+        public Wave(Transform waveTransform, float rotationsPerMinute, int waveUnitCount)
         {
             WaveTransform = waveTransform;
             RotationsPerMinute = rotationsPerMinute;
             Units = new List<Unit>();
+            RemainingUnits = waveUnitCount;
         }
 
         public Transform WaveTransform;
         public float RotationsPerMinute;
         public List<Unit> Units;
+        public int RemainingUnits;
     }
 
-    public void NewWave(float waveRotationsPerMinute)
+    public void NewWave(WaveScriptableObject waveData)
     {
         // TODO: Create wave finished callback
 
@@ -39,8 +41,8 @@ public class TowerWaves : MonoBehaviour
         waveGameObject.transform.parent = transform;
         waveGameObject.transform.localScale = Vector3.one;
 
-        Wave wave = new Wave(waveGameObject.transform, waveRotationsPerMinute);
-        m_waves.Add(wave);
+        Wave newWave = new Wave(waveGameObject.transform, waveData.WaveRotationSpeed, waveData.UnitCount);
+        m_waves.Add(newWave);
     }
 
     public void AddUnitToLatestWave(GameObject unitPrefab)
@@ -127,9 +129,10 @@ public class TowerWaves : MonoBehaviour
             {
                 OnUnitKilledEvent.Invoke(killedUnit);
                 wave.Units.Remove(killedUnit);
+                wave.RemainingUnits--;
                 
                 // Remove the wave once all units have been killed
-                if (wave.Units.Count == 0)
+                if (wave.RemainingUnits == 0)
                 {
                     m_waves.RemoveAt(0);
                     Destroy(wave.WaveTransform.gameObject);
