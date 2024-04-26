@@ -13,6 +13,6 @@ public class WaveTracker : MonoBehaviour
             return;
         }
 
-        m_waveNumberText.text = waveNumber.ToString("000");
+        m_waveNumberText.text = (waveNumber + 1).ToString("000");
     }
 }
