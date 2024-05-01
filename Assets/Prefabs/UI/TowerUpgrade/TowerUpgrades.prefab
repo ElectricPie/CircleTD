@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1607271323870680670}
   - component: {fileID: 43916900218843681}
+  - component: {fileID: 1697589591550630835}
   m_Layer: 5
   m_Name: TabSelectors
   m_TagString: Untagged
@@ -64,6 +65,24 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1697589591550630835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287095687950023473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a433b5ac5c0bb9a5988bafa48eaa1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_tabButtons:
+  - {fileID: 3571691066174201055}
+  - {fileID: 2274536124014879327}
+  m_tabs:
+  - {fileID: 1165238161496510893}
+  - {fileID: 5411206525385392822}
 --- !u!1 &1165238161496510893
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,6 +327,34 @@ PrefabInstance:
       propertyPath: m_Interactable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1697589591550630835}
+    - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeTab
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TabController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7709354563037086808, guid: 67829358935179624a2650b0a98afa11, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -397,6 +444,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67829358935179624a2650b0a98afa11, type: 3}
+--- !u!114 &3571691066174201055 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
+  m_PrefabInstance: {fileID: 162606887031867940}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7547068958165028476 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7709354563037086808, guid: 67829358935179624a2650b0a98afa11, type: 3}
@@ -415,6 +473,38 @@ PrefabInstance:
       value: 'Upgrades
 
 '
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1697589591550630835}
+    - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeTab
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TabController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7709354563037086808, guid: 67829358935179624a2650b0a98afa11, type: 3}
       propertyPath: m_Pivot.x
@@ -505,6 +595,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67829358935179624a2650b0a98afa11, type: 3}
+--- !u!114 &2274536124014879327 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
+  m_PrefabInstance: {fileID: 3188626112710030500}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5097344355119755516 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7709354563037086808, guid: 67829358935179624a2650b0a98afa11, type: 3}
