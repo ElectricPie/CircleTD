@@ -121,16 +121,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826c1638b89b605caa1be0757835fa54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_debugWaveOneUnit: {fileID: 3834926075715469137, guid: 1d7624549176f189abd3f6303e92fa30, type: 3}
-  m_debugWaveTwoUnit: {fileID: 8414081306194666688, guid: b325209b84e25e821a63137efef299b4, type: 3}
-  m_unitSpawnSpeed: 1
   m_unitSpawnPoint: {x: 5, y: -1, z: 0}
+  m_unitSpawnPointVairation: 2
   OnUnitSpanwedEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PlayerLivesManager, Assembly-CSharp
+        m_MethodName: OnUnitsSpawned
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnUnitKilledEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PlayerLivesManager, Assembly-CSharp
+        m_MethodName: OnUnitKilled
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnWaveKilledEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: WaveManager, Assembly-CSharp
+        m_MethodName: OnWaveKilled
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &9129706804224110044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,9 +180,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43acca0e5bdb4fcb18324a3a2cad845c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_towerWaves: {fileID: 0}
+  m_towerWaves: {fileID: 7971336517557105522}
   m_projectilePrefab: {fileID: 2937510664636689804, guid: f7ec665cdade3129c8ac1b47a75c588f, type: 3}
-  m_defaultAttackSpeed: 1
-  m_unitScanTime: 0.01
+  m_defaultAttackSpeed: 0.2
   m_baseDamage: 1
-  m_projectileSpawnPoint: {x: 0, y: 0, z: 0}
+  m_projectileSpawnPoint: {x: 0, y: 1.5, z: 0}
