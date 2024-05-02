@@ -10,8 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1607271323870680670}
   - component: {fileID: 1697589591550630835}
-  - component: {fileID: 8053014601292032897}
-  - component: {fileID: 661400351773298230}
+  - component: {fileID: 4173497707484197222}
   m_Layer: 5
   m_Name: TabSelectors
   m_TagString: Untagged
@@ -26,7 +25,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 287095687950023473}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -34,12 +33,12 @@ RectTransform:
   - {fileID: 7547068958165028476}
   - {fileID: 5097344355119755516}
   m_Father: {fileID: 2661112619137708389}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 0}
-  m_Pivot: {x: 1, y: 5}
+  m_SizeDelta: {x: 740, y: -690}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &1697589591550630835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,7 +57,7 @@ MonoBehaviour:
   m_tabs:
   - {fileID: 1165238161496510893}
   - {fileID: 5411206525385392822}
---- !u!114 &8053014601292032897
+--- !u!114 &4173497707484197222
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -67,25 +66,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 287095687950023473}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a433b5ac5c0bb9a5988bafa48eaa1ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_tabButtons:
-  - {fileID: 3571691066174201055}
-  - {fileID: 2274536124014879327}
-  m_tabs:
-  - {fileID: 1165238161496510893}
-  - {fileID: 5411206525385392822}
---- !u!114 &661400351773298230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 287095687950023473}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
@@ -101,7 +82,7 @@ MonoBehaviour:
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
+  m_ReverseArrangement: 1
 --- !u!1 &1165238161496510893
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,7 +374,7 @@ PrefabInstance:
     - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 8053014601292032897}
+      objectReference: {fileID: 1697589591550630835}
     - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -540,7 +521,7 @@ PrefabInstance:
     - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 8053014601292032897}
+      objectReference: {fileID: 1697589591550630835}
     - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
