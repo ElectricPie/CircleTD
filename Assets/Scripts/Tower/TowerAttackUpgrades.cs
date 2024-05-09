@@ -19,6 +19,19 @@ public class TowerAttackUpgrades : MonoBehaviour
         m_towerAttack = GetComponent<TowerAttack>();
     }
 
+    private void Start()
+    {
+        if (m_damageButton is not null)
+        {
+            m_damageButton.UpdateText(m_towerAttack.CurrentDamage, m_towerAttack.CurrentDamage * m_upgradeMultiplier, 10);
+        }
+        
+        if (m_speedButton is not null)
+        {
+            m_speedButton.UpdateText(m_towerAttack.CurrentSpeed, m_towerAttack.CurrentSpeed * m_upgradeMultiplier, 10);
+        }
+    }
+
     public void UpgradeDamage()
     {
         float newDamage = m_towerAttack.CurrentDamage;
