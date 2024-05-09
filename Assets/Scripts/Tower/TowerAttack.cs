@@ -6,7 +6,7 @@ public class TowerAttack : MonoBehaviour
 {
     [SerializeField] private TowerWaves m_towerWaves;
     [SerializeField] private GameObject m_projectilePrefab;
-    [Tooltip("The time in seconds between the tower firing")] [SerializeField] private float m_defaultSpeed = 1.0f;
+    [Tooltip("The number of projectiles fired per second")] [SerializeField] private float m_defaultSpeed = 1.0f;
     [SerializeField] private int m_baseDamage = 1;
     [SerializeField] private Vector3 m_projectileSpawnPoint;
 
@@ -63,7 +63,7 @@ public class TowerAttack : MonoBehaviour
             TowerProjectile projectile = Instantiate(m_projectilePrefab, spawnPoint, Quaternion.identity).GetComponent<TowerProjectile>();
             projectile.SetupProjectile(CurrentDamage, m_currentTarget);
             
-            yield return new WaitForSeconds(CurrentSpeed);
+            yield return new WaitForSeconds(1 / CurrentSpeed);
         }
     }
 
