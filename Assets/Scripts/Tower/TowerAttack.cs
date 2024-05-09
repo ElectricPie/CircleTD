@@ -13,7 +13,7 @@ public class TowerAttack : MonoBehaviour
     private Unit m_currentTarget;
 
     public float CurrentDamage { get; set; } = 1;
-    public float CurrentSpeed { get; private set; } = 1;
+    public float CurrentSpeed { get; set; } = 1;
     private IEnumerator m_attackCoroutine;
 
     private void Start()

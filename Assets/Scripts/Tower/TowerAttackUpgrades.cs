@@ -26,6 +26,9 @@ public class TowerAttackUpgrades : MonoBehaviour
 
     public void UpgradeSpeed()
     {
-        
+        float newSpeed = m_towerAttack.CurrentSpeed;
+        newSpeed *= m_upgradeMultiplier;
+
+        m_towerAttack.CurrentSpeed = newSpeed;
     }
 }

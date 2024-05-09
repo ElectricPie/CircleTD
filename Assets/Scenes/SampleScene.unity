@@ -271,6 +271,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 7901504016403425156, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_text
+      value: Tower Speed
+      objectReference: {fileID: 0}
     - target: {fileID: 9137140370991448809, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
       propertyPath: m_Name
       value: Tower Speed Upgrade
