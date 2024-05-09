@@ -1,22 +1,25 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class TowerAttack : MonoBehaviour
 {
     [SerializeField] private TowerWaves m_towerWaves;
     [SerializeField] private GameObject m_projectilePrefab;
-    [Tooltip("The time in seconds between the tower firing")] [SerializeField] private float m_defaultAttackSpeed = 1.0f;
+    [Tooltip("The time in seconds between the tower firing")] [SerializeField] private float m_defaultSpeed = 1.0f;
     [SerializeField] private int m_baseDamage = 1;
     [SerializeField] private Vector3 m_projectileSpawnPoint;
 
     private Unit m_currentTarget;
 
-    private float m_currentAttackSpeed;
+    public float CurrentDamage { get; set; } = 1;
+    public float CurrentSpeed { get; private set; } = 1;
     private IEnumerator m_attackCoroutine;
 
     private void Start()
     {
-        m_currentAttackSpeed = m_defaultAttackSpeed;
+        CurrentDamage = m_baseDamage;
+        CurrentSpeed = m_defaultSpeed;
 
         m_attackCoroutine = AttackCoroutine();
         StartCoroutine(m_attackCoroutine);
@@ -58,9 +61,9 @@ public class TowerAttack : MonoBehaviour
             // Create projectile
             Vector3 spawnPoint = transform.position + m_projectileSpawnPoint;
             TowerProjectile projectile = Instantiate(m_projectilePrefab, spawnPoint, Quaternion.identity).GetComponent<TowerProjectile>();
-            projectile.SetupProjectile(m_baseDamage, m_currentTarget);
+            projectile.SetupProjectile(CurrentDamage, m_currentTarget);
             
-            yield return new WaitForSeconds(m_currentAttackSpeed);
+            yield return new WaitForSeconds(CurrentSpeed);
         }
     }
 

@@ -5,10 +5,10 @@ public class TowerProjectile : MonoBehaviour
     [SerializeField] private float m_speed = 1.0f;
     [Tooltip("Time after creation before projectile is destroyed")] [SerializeField] [Min(0)] private float m_destoryTime = 10.0f;
 
-    private int m_damage = 1;
+    private float m_damage = 1;
     private Unit m_target = null;
 
-    public void SetupProjectile(int damage, Unit target)
+    public void SetupProjectile(float damage, Unit target)
     {
         m_damage = damage;
         m_target = target;

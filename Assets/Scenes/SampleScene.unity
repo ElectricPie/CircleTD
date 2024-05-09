@@ -2508,6 +2508,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -2.769104
       objectReference: {fileID: 0}
+    - target: {fileID: 1928942521337036997, guid: c68fc8019a67462fb9ff8d5873172e79, type: 3}
+      propertyPath: m_text
+      value: Tower Damage
+      objectReference: {fileID: 0}
     - target: {fileID: 1996517620016249950, guid: c68fc8019a67462fb9ff8d5873172e79, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -2699,6 +2703,34 @@ PrefabInstance:
     - target: {fileID: 5544613322980167516, guid: c68fc8019a67462fb9ff8d5873172e79, type: 3}
       propertyPath: m_Name
       value: TowerUpgrades
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694830448084152758, guid: c68fc8019a67462fb9ff8d5873172e79, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694830448084152758, guid: c68fc8019a67462fb9ff8d5873172e79, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694830448084152758, guid: c68fc8019a67462fb9ff8d5873172e79, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7371096466507088161}
+    - target: {fileID: 5694830448084152758, guid: c68fc8019a67462fb9ff8d5873172e79, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694830448084152758, guid: c68fc8019a67462fb9ff8d5873172e79, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpgradeDamage
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694830448084152758, guid: c68fc8019a67462fb9ff8d5873172e79, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TowerAttackUpgrades, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694830448084152758, guid: c68fc8019a67462fb9ff8d5873172e79, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5939922287399678607, guid: c68fc8019a67462fb9ff8d5873172e79, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3161,11 +3193,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9129706804224110044, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_defaultSpeed
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+--- !u!114 &7371096466507088161 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3314149860893733602, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+  m_PrefabInstance: {fileID: 7371096466507088160}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61044330b8145b75c909c80b6c350e6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8232887681880354801
 PrefabInstance:
   m_ObjectHideFlags: 0

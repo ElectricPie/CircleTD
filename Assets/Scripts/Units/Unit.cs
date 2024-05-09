@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    public int Health { get; private set; }
+    public float Health { get; private set; }
 
     [SerializeField] [Min(0)] private int m_initialHealth = 20;
     [SerializeField] private HealthBar m_healtBar;
 
     public event Action<Unit> OnUnitKilledEvent;
 
-    public void Damage(int damageAmount)
+    public void Damage(float damageAmount)
     {
         // Clamp the damage to a minimum of 1
         if (damageAmount < 1)
