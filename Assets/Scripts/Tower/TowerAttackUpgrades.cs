@@ -6,6 +6,9 @@ public class TowerAttackUpgrades : MonoBehaviour
     [SerializeField] private float m_upgradeMultiplier = 1.1f;
     [SerializeField] private float m_costMultiplier = 1.15f;
 
+    [SerializeField] private TowerUpgradeButton m_damageButton;
+    [SerializeField] private TowerUpgradeButton m_speedButton;
+
     private TowerAttack m_towerAttack;
     
     private int m_damageLevel = 0;
@@ -22,6 +25,11 @@ public class TowerAttackUpgrades : MonoBehaviour
         newDamage *= m_upgradeMultiplier;
 
         m_towerAttack.CurrentDamage = newDamage;
+
+        if (m_damageButton is not null)
+        {
+            m_damageButton.UpdateText(newDamage, newDamage * m_upgradeMultiplier, 10);
+        }
     }
 
     public void UpgradeSpeed()
@@ -30,5 +38,10 @@ public class TowerAttackUpgrades : MonoBehaviour
         newSpeed *= m_upgradeMultiplier;
 
         m_towerAttack.CurrentSpeed = newSpeed;
+
+        if (m_speedButton is not null)
+        {
+            m_speedButton.UpdateText(newSpeed, newSpeed * m_upgradeMultiplier, 10);
+        }
     }
 }

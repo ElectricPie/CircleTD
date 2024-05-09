@@ -364,6 +364,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+--- !u!114 &130632916 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8853609067019229425, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+  m_PrefabInstance: {fileID: 130632915}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f46fd04b44a49298dabc27b1cb9ac0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &295944007
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3000,6 +3011,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2661112619137708389, guid: c68fc8019a67462fb9ff8d5873172e79, type: 3}
   m_PrefabInstance: {fileID: 1987061372}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1987061374 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 990059095982047152, guid: c68fc8019a67462fb9ff8d5873172e79, type: 3}
+  m_PrefabInstance: {fileID: 1987061372}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f46fd04b44a49298dabc27b1cb9ac0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4014765960970975926
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3283,6 +3305,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3314149860893733602, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_speedButton
+      value: 
+      objectReference: {fileID: 130632916}
+    - target: {fileID: 3314149860893733602, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_damageButton
+      value: 
+      objectReference: {fileID: 1987061374}
     - target: {fileID: 4416480666744996068, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: m_Name
       value: Tower
