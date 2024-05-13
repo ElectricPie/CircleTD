@@ -3171,61 +3171,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -6049285032320113464, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
-      propertyPath: OnLivesChangedEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -6049285032320113464, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
       propertyPath: OnLivesChangedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 629976959}
-    - target: {fileID: -6049285032320113464, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
-      propertyPath: OnLivesChangedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: -6049285032320113464, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
-      propertyPath: OnLivesChangedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnLivesChanged
-      objectReference: {fileID: 0}
-    - target: {fileID: -6049285032320113464, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
-      propertyPath: OnLivesChangedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: LivesTracker, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: -6049285032320113464, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
-      propertyPath: OnLivesChangedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 3103032598046403700, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
       propertyPath: m_towerWaves
       value: 
       objectReference: {fileID: 719932121}
     - target: {fileID: 3103032598046403700, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
-      propertyPath: OnWaveStartedEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3103032598046403700, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
-      propertyPath: OnWaveStartedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3103032598046403700, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
       propertyPath: OnWaveStartedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1105416544}
-    - target: {fileID: 3103032598046403700, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
-      propertyPath: OnWaveStartedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3103032598046403700, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
-      propertyPath: OnWaveStartedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnWaveStarted
-      objectReference: {fileID: 0}
-    - target: {fileID: 3103032598046403700, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
-      propertyPath: OnWaveStartedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: WaveTracker, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 3103032598046403700, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
-      propertyPath: OnWaveStartedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 5194637332472837017, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
