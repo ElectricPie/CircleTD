@@ -47,7 +47,7 @@ public class TowerWaves : MonoBehaviour
         m_waves.Add(newWave);
     }
 
-    public void AddUnitToLatestWave(GameObject unitPrefab)
+    public void SpawnUnitToLatestWave(GameObject unitPrefab)
     {
         if (unitPrefab is null)
         {
