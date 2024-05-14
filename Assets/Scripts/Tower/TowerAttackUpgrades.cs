@@ -7,7 +7,7 @@ public class TowerAttackUpgrades : MonoBehaviour
     
     [SerializeField] private float m_upgradeMultiplier = 1.1f;
     [SerializeField] private float m_costMultiplier = 1.15f;
-    [SerializeField] private float m_upgradeInitialCost = 2.0f;
+    [SerializeField] private float m_upgradeInitialCost = 5.0f;
     
     [SerializeField] private TowerUpgradeButton m_damageButton;
     [SerializeField] private TowerUpgradeButton m_speedButton;
@@ -42,7 +42,8 @@ public class TowerAttackUpgrades : MonoBehaviour
 
     public void UpgradeDamage()
     {
-        float upgradeCost = m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_damageLevel);
+        // Cost is rounded up to remove any decimals and to ensure the cost always goes up
+        float upgradeCost =  Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_damageLevel));
         
         if (!m_playerMoney.RemoveMoney(upgradeCost))
         {
@@ -58,13 +59,14 @@ public class TowerAttackUpgrades : MonoBehaviour
         
         if (m_damageButton is not null)
         {
-            m_damageButton.UpdateText(newDamage, newDamage * m_upgradeMultiplier, upgradeCost * m_costMultiplier);
+            m_damageButton.UpdateText(newDamage, newDamage * m_upgradeMultiplier,  Mathf.Ceil(upgradeCost * m_costMultiplier));
         }
     }
 
     public void UpgradeSpeed()
     {
-        float upgradeCost = m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_speedLevel);
+        // Cost is rounded up to remove any decimals and to ensure the cost always goes up
+        float upgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_speedLevel));
 
         if (!m_playerMoney.RemoveMoney(upgradeCost))
         {
@@ -80,7 +82,7 @@ public class TowerAttackUpgrades : MonoBehaviour
 
         if (m_speedButton is not null)
         {
-            m_speedButton.UpdateText(newSpeed, newSpeed * m_upgradeMultiplier, upgradeCost * m_costMultiplier);
+            m_speedButton.UpdateText(newSpeed, newSpeed * m_upgradeMultiplier,  Mathf.Ceil(upgradeCost * m_costMultiplier));
         }
     }
 }

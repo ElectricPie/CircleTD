@@ -3183,6 +3183,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1105416544}
     - target: {fileID: 5060817481088591531, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
+      propertyPath: m_startingMoney
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060817481088591531, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
       propertyPath: m_onAmountChanged.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -3332,6 +3336,10 @@ PrefabInstance:
       propertyPath: m_damageButton
       value: 
       objectReference: {fileID: 1987061374}
+    - target: {fileID: 3314149860893733602, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_upgradeInitialCost
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4416480666744996068, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: m_Name
       value: Tower
