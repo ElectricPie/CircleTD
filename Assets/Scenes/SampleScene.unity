@@ -3324,6 +3324,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 629976959}
     - target: {fileID: 3103032598046403700, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3103032598046403700, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
       propertyPath: m_towerWaves
       value: 
       objectReference: {fileID: 719932121}
