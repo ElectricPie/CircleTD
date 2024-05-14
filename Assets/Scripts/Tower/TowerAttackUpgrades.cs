@@ -42,7 +42,9 @@ public class TowerAttackUpgrades : MonoBehaviour
 
     public void UpgradeDamage()
     {
-        if (!m_playerMoney.RemoveMoney(m_upgradeInitialCost * (m_damageLevel * m_costMultiplier)))
+        float upgradeCost = m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_damageLevel);
+        
+        if (!m_playerMoney.RemoveMoney(upgradeCost))
         {
             // TODO: Display insignificant money message here
             return;
@@ -53,16 +55,18 @@ public class TowerAttackUpgrades : MonoBehaviour
 
         m_towerAttack.CurrentDamage = newDamage;
         m_damageLevel++;
-
+        
         if (m_damageButton is not null)
         {
-            m_damageButton.UpdateText(newDamage, newDamage * m_upgradeMultiplier, m_upgradeInitialCost * (m_damageLevel * m_costMultiplier));
+            m_damageButton.UpdateText(newDamage, newDamage * m_upgradeMultiplier, upgradeCost * m_costMultiplier);
         }
     }
 
     public void UpgradeSpeed()
     {
-        if (!m_playerMoney.RemoveMoney(m_upgradeInitialCost * (m_speedLevel * m_costMultiplier)))
+        float upgradeCost = m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_speedLevel);
+
+        if (!m_playerMoney.RemoveMoney(upgradeCost))
         {
             // TODO: Display insignificant money message here
             return;
@@ -76,7 +80,7 @@ public class TowerAttackUpgrades : MonoBehaviour
 
         if (m_speedButton is not null)
         {
-            m_speedButton.UpdateText(newSpeed, newSpeed * m_upgradeMultiplier, m_upgradeInitialCost * (m_speedLevel * m_costMultiplier));
+            m_speedButton.UpdateText(newSpeed, newSpeed * m_upgradeMultiplier, upgradeCost * m_costMultiplier);
         }
     }
 }
