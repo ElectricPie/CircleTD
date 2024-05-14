@@ -9,7 +9,7 @@ public class SetWaveSpawner : WaveSpawner
     {
         WaveScriptableObject wave = m_waves[waveNumber];
         
-        m_towerWaves.NewWave(wave);
+        m_towerWaves.NewWave(wave.WaveRotationSpeed, wave.UnitCount);
         
         for (int i = 0; i < wave.UnitCount; i++)
         {

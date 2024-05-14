@@ -34,7 +34,7 @@ public class TowerWaves : MonoBehaviour
         public int RemainingUnits;
     }
 
-    public void NewWave(WaveScriptableObject waveData)
+    public void NewWave(float waveRotationSpeed, int waveUnitCount)
     {
         // TODO: Create wave finished callback
 
@@ -43,7 +43,7 @@ public class TowerWaves : MonoBehaviour
         waveGameObject.transform.parent = transform;
         waveGameObject.transform.localScale = Vector3.one;
 
-        Wave newWave = new Wave(waveGameObject.transform, waveData.WaveRotationSpeed, waveData.UnitCount);
+        Wave newWave = new Wave(waveGameObject.transform, waveRotationSpeed, waveUnitCount);
         m_waves.Add(newWave);
     }
 
