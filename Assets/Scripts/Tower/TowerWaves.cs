@@ -8,6 +8,8 @@ public class TowerWaves : MonoBehaviour
     [Tooltip("If set to a value will move a new spawned unit left/right the amount of the value")]
     [SerializeField] private float m_unitSpawnPointVairation = 0.0f;
 
+    [SerializeField] private PlayerMoney m_playerMoney;
+
     public UnityEvent<Unit> OnUnitSpanwedEvent;
     public UnityEvent<Unit> OnUnitKilledEvent;
 
@@ -101,6 +103,11 @@ public class TowerWaves : MonoBehaviour
     void Awake()
     {
         m_waves = new List<Wave>();
+
+        if (m_playerMoney is null)
+        {
+            Debug.Log($"Tower Waves on {this.name} is missing reference to Player Money Script", this);
+        }
     }
 
     // Update is called once per frame
@@ -122,6 +129,12 @@ public class TowerWaves : MonoBehaviour
 
     private void OnUnitKilled(Unit killedUnit)
     {
+        // Give the player money from the unit
+        if (m_playerMoney is not null)
+        {
+            m_playerMoney.AddMoney(killedUnit.MoneyWorth);
+        }
+
         foreach (Wave wave in m_waves)
         {
             // Remove the killed unit

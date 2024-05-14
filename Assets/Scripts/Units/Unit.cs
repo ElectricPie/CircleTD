@@ -7,8 +7,10 @@ public class Unit : MonoBehaviour
 
     [SerializeField] [Min(0)] private int m_initialHealth = 20;
     [SerializeField] private HealthBar m_healtBar;
-
+    [SerializeField] [Min(1)] private float m_moneyWorth = 1.0f;
+    
     public event Action<Unit> OnUnitKilledEvent;
+    public float MoneyWorth => m_moneyWorth;
 
     public void Damage(float damageAmount)
     {

@@ -3494,6 +3494,10 @@ PrefabInstance:
       value: Tower
       objectReference: {fileID: 0}
     - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_playerMoney
+      value: 
+      objectReference: {fileID: 6725663958928044032}
+    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: OnUnitKilledEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 6725663958928044030}
