@@ -45,9 +45,9 @@ public class TowerAttackUpgrades : MonoBehaviour
         // Cost is rounded up to remove any decimals and to ensure the cost always goes up
         float upgradeCost =  Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_damageLevel));
         
-        if (!m_playerMoney.RemoveMoney(upgradeCost))
+        if (!m_playerMoney.RemoveMoney(upgradeCost) && UIErrorMessage.Instance is not null)
         {
-            // TODO: Display insignificant money message here
+            UIErrorMessage.Instance.ShowError("Insignificant money for upgrade");
             return;
         }
         
@@ -68,9 +68,9 @@ public class TowerAttackUpgrades : MonoBehaviour
         // Cost is rounded up to remove any decimals and to ensure the cost always goes up
         float upgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_speedLevel));
 
-        if (!m_playerMoney.RemoveMoney(upgradeCost))
+        if (!m_playerMoney.RemoveMoney(upgradeCost) && UIErrorMessage.Instance is not null)
         {
-            // TODO: Display insignificant money message here
+            UIErrorMessage.Instance.ShowError("Insignificant money for upgrade");
             return;
         }
         
