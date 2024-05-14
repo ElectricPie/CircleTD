@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class WaveManager : MonoBehaviour
+public class SetWaveSpawner : WaveSpawner
 {
     [SerializeField] private WaveScriptableObject[] m_waves;
     [Tooltip("The time in seconds before the next wave spawns if the current one is not complete. Starts after the last unit is spawned")] 
