@@ -47,7 +47,7 @@ public class TowerWaves : MonoBehaviour
         m_waves.Add(newWave);
     }
 
-    public void SpawnUnitToLatestWave(GameObject unitPrefab, bool modifyUnit = false, float unitHealth = 0.0f)
+    public void SpawnUnitToLatestWave(GameObject unitPrefab, bool modifyUnit = false, float unitHealth = 1.0f, float moneyWorth = 1.0f)
     {
         if (unitPrefab is null)
         {
@@ -66,6 +66,11 @@ public class TowerWaves : MonoBehaviour
         Vector3 spawnPosition = transform.position + m_unitSpawnPoint;
         spawnPosition.x += Random.Range(-m_unitSpawnPointVairation, m_unitSpawnPointVairation);
         Unit newUnit = Instantiate(unitPrefab, spawnPosition, Quaternion.identity, latestWave.WaveTransform.transform).GetComponent<Unit>();
+        if (modifyUnit)
+        {
+            newUnit.UpdateMaxHealth(unitHealth, false);
+            newUnit.MoneyWorth = moneyWorth;
+        }
         
         newUnit.OnUnitKilledEvent += OnUnitKilled;
         latestWave.Units.Add(newUnit);

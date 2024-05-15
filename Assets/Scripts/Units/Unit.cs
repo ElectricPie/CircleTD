@@ -1,17 +1,18 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Unit : MonoBehaviour
 {
-    public float Health { get; private set; }
+    [SerializeField] [Min(0)] private float m_maxHealth = 20;
+    public float CurrentHealth { get; private set; }
 
-    [SerializeField] [Min(0)] private int m_initialHealth = 20;
     [SerializeField] private HealthBar m_healtBar;
-    [SerializeField] [Min(1)] private float m_moneyWorth = 1.0f;
     
     public event Action<Unit> OnUnitKilledEvent;
-    public float MoneyWorth => m_moneyWorth;
-
+    [Min(1)] public float MoneyWorth = 1.0f;
+    
+    
     public void Damage(float damageAmount)
     {
         // Clamp the damage to a minimum of 1
@@ -19,27 +20,44 @@ public class Unit : MonoBehaviour
         {
             damageAmount = 1;
         }
-        Health -= damageAmount;
+        CurrentHealth -= damageAmount;
 
         if (m_healtBar is not null)
         {
-            m_healtBar.UpdateHealthBar(Health, m_initialHealth);
+            m_healtBar.UpdateHealthBar(CurrentHealth, m_maxHealth);
         }
 
         // Handle unit death
-        if (Health <= 0)
+        if (CurrentHealth <= 0)
         {
             UnitKilled();
         }
     }
+
+    /// <summary>
+    /// Adjusts the units health to the 
+    /// </summary>
+    /// <param name="newMaxHealth"></param>
+    /// <param name="keepHeathPercentage"></param>
+    public void UpdateMaxHealth(float newMaxHealth, bool keepHeathPercentage = true)
+    {
+        float healthPercent = 1.0f;
+        if (keepHeathPercentage)
+        {
+            healthPercent = CurrentHealth / m_maxHealth;
+        }
+
+        m_maxHealth = newMaxHealth;
+        CurrentHealth = m_maxHealth * healthPercent;
+    }
     
     protected void Awake()
     {
-        Health = m_initialHealth;
+        CurrentHealth = m_maxHealth;
         
         if (m_healtBar is not null)
         {
-            m_healtBar.UpdateHealthBar(Health, m_initialHealth);
+            m_healtBar.UpdateHealthBar(CurrentHealth, m_maxHealth);
         }
     }
 

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -23,7 +22,7 @@ public class GeneratedWaveSpawner : WaveSpawner
 
         for (int i = 0; i < m_unitWaveCount; i++)
         {
-            m_towerWaves.SpawnUnitToLatestWave(m_unitBase, true, unitHealth);
+            m_towerWaves.SpawnUnitToLatestWave(m_unitBase, true, unitHealth, unitWorth);
             yield return new WaitForSeconds(m_waveUnitTimeGap);
         }
         

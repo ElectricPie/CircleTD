@@ -3376,6 +3376,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 719932121}
     - target: {fileID: 7917825475648517969, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
+      propertyPath: m_waves.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7917825475648517969, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
       propertyPath: OnWaveStartedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1105416544}
