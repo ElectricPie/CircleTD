@@ -40,6 +40,11 @@ public abstract class WaveSpawner : MonoBehaviour
         
         OnWaveStartedEvent.Invoke(CurrentWave);
     }
+
+    protected void WaveSpawningFinished()
+    {
+        Invoke(nameof(StartNextWave), m_maxTimeBetweenWaves);
+    }
     
     protected void StartNextWave()
     {

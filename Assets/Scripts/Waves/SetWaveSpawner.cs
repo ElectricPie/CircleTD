@@ -15,7 +15,7 @@ public class SetWaveSpawner : WaveSpawner
             m_towerWaves.SpawnUnitToLatestWave(wave.UnitPrefab);
             yield return new WaitForSeconds(wave.TimeSpawnGap);
         }
-
-        Invoke(nameof(StartNextWave), m_maxTimeBetweenWaves);
+        
+        WaveSpawningFinished();
     } 
 }

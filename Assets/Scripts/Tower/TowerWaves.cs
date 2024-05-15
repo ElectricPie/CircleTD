@@ -47,7 +47,7 @@ public class TowerWaves : MonoBehaviour
         m_waves.Add(newWave);
     }
 
-    public void SpawnUnitToLatestWave(GameObject unitPrefab)
+    public void SpawnUnitToLatestWave(GameObject unitPrefab, bool modifyUnit = false, float unitHealth = 0.0f)
     {
         if (unitPrefab is null)
         {
@@ -73,7 +73,7 @@ public class TowerWaves : MonoBehaviour
         m_unitCount++;
         OnUnitSpanwedEvent.Invoke(newUnit);
     }
-
+    
     /// <summary>
     /// Gets the earliest spawned <c>Unit</c> in the earliest wave
     /// </summary>

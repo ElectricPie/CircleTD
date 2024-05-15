@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5194637332472837017}
-  - component: {fileID: 3103032598046403700}
+  - component: {fileID: 7917825475648517969}
   - component: {fileID: -6049285032320113464}
   - component: {fileID: 5060817481088591531}
   m_Layer: 0
@@ -34,7 +34,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3103032598046403700
+--- !u!114 &7917825475648517969
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,7 +43,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7254321893148404680}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1fc83878694d2d36a6aab46bb07d135, type: 3}
+  m_Script: {fileID: 11500000, guid: 88e880e211fb99feaac91bfb7c26d19d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_towerWaves: {fileID: 0}
@@ -64,8 +64,34 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_waves:
-  - {fileID: 11400000, guid: a931ce6b4e343da7289d1a4be09631a9, type: 2}
-  - {fileID: 11400000, guid: 0c03908ca19cabfb387414786576c113, type: 2}
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 40
+      value: 50
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_unitWaveCount: 4
+  m_waveRotationalSpeed: 10
+  m_waveUnitTimeGap: 0.5
+  m_unitBase: {fileID: 113394094472918004, guid: 83d2db1587f9ca9bfb422ecc6b38da15, type: 3}
+  m_unitStartingHealth: 4
 --- !u!114 &-6049285032320113464
 MonoBehaviour:
   m_ObjectHideFlags: 0

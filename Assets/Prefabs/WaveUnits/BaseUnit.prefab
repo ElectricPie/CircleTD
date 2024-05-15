@@ -150,8 +150,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: effb925aa6715b07e924151a5a6e61de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_initialHealth: 20
+  m_initialHealth: 5
   m_healtBar: {fileID: 5472108405462257786}
+  m_moneyWorth: 1
 --- !u!114 &2993243509421894659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,6 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7130de8eb6606a4a0b75bdebce5d3461, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_liveCost: 1
 --- !u!1 &1857225945720398400
 GameObject:
   m_ObjectHideFlags: 0
