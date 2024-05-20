@@ -46,7 +46,12 @@ public class TowerProjectile : MonoBehaviour
 
     private void Timeout()
     {
-        Destroy(this.gameObject);
+        if (m_target is not null)
+        {
+            m_target.Damage(m_damage);
+        }
+        
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)
