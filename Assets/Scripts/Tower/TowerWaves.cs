@@ -43,6 +43,7 @@ public class TowerWaves : MonoBehaviour
         // Create the game object to rotate the units
         GameObject waveGameObject = new GameObject("Wave");
         waveGameObject.transform.parent = transform;
+        waveGameObject.transform.localPosition = Vector3.zero;
         waveGameObject.transform.localScale = Vector3.one;
 
         Wave newWave = new Wave(waveGameObject.transform, waveRotationSpeed, waveUnitCount);
