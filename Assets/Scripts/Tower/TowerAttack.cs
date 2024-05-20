@@ -77,22 +77,26 @@ public class TowerAttack : MonoBehaviour
 
     private Vector3 GetPredictedLocation(Vector3 targetPos)
     {
-        float distanceToTarget = Vector3.Distance(transform.position, m_currentTarget.transform.position);
+        Vector3 towerPosition = transform.position;
+        float distanceToTarget = Vector3.Distance(towerPosition, m_currentTarget.transform.position);
         
         float angularVelocity = (m_towerWaves.CurrentWaveRpm * 2 * Mathf.PI) / 60;
         float timeToTarget = distanceToTarget / m_projectileSpeed;
 
         // Keep it on one plane so don't need to handle the y axis
-        Vector3 towerPosition = transform.position;
         towerPosition.y = targetPos.y;
         
+        // Calculate how much the unit will rotate in a frame
         float startingAngle = Mathf.Atan2(targetPos.z - towerPosition.z, targetPos.x - towerPosition.x);
         float angleMoved = angularVelocity * timeToTarget;
         float newAngle = startingAngle - angleMoved;
             
+        // Calculate the predicted position
         float x = distanceToTarget * Mathf.Cos(newAngle);
         float z = distanceToTarget * Mathf.Sin(newAngle);
-        return new Vector3(x, targetPos.y, z);
+        
+        // Need to account for the towers position
+        return new Vector3(x + towerPosition.x, targetPos.y, z + towerPosition.z);
 
     }
 
