@@ -100,12 +100,5 @@ public class TowerAttack : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(transform.position + m_projectileSpawnPoint, 0.5f);
-
-        if (m_currentTarget is not null)
-        {
-            Vector3 predictedPos = GetPredictedLocation(m_currentTarget.transform.position);
-            Gizmos.color = Color.magenta;
-            Gizmos.DrawSphere(predictedPos, 0.5f);
-        }
     }
 }

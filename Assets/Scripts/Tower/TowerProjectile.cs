@@ -54,14 +54,7 @@ public class TowerProjectile : MonoBehaviour
         if (collision.gameObject == m_target.gameObject)
         {
             m_target.Damage(m_damage);
-            Destroy(this.gameObject);   
+            Destroy(gameObject);   
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position, m_targetPos);
-        Gizmos.DrawSphere(m_targetPos, 0.1f);
     }
 }
