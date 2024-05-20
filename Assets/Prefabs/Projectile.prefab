@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_speed: 20
-  m_destoryTime: 10
+  m_destoryTime: 4
 --- !u!54 &7244603853143164600
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -125,6 +125,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4592987455882402, guid: 4747eb87cb4d01b438c8bb2330fc8965, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64183917000621182, guid: 4747eb87cb4d01b438c8bb2330fc8965, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 64183917000621182, guid: 4747eb87cb4d01b438c8bb2330fc8965, type: 3}
+      propertyPath: m_ProvidesContacts
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

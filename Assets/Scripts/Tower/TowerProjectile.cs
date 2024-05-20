@@ -1,17 +1,22 @@
+using System;
 using UnityEngine;
 
 public class TowerProjectile : MonoBehaviour
 {
-    [SerializeField] private float m_speed = 1.0f;
+    [Tooltip("In distance per second")] [SerializeField] private float m_speed = 1.0f;
     [Tooltip("Time after creation before projectile is destroyed")] [SerializeField] [Min(0)] private float m_destoryTime = 10.0f;
 
+    public float Speed => m_speed;
+    
     private float m_damage = 1;
     private Unit m_target = null;
+    private Vector3 m_targetPos = Vector3.zero;
 
-    public void SetupProjectile(float damage, Unit target)
+    public void SetupProjectile(float damage, Unit target, Vector3 targetPos)
     {
         m_damage = damage;
         m_target = target;
+        m_targetPos = targetPos;
     }
 
     protected void Start()
@@ -28,14 +33,15 @@ public class TowerProjectile : MonoBehaviour
     {
         if (m_target == null)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
             return;
         }
 
-        float deltaDistance = m_speed * Time.deltaTime;
-        Vector3 newPos = Vector3.MoveTowards(transform.position, m_target.transform.position, deltaDistance);
-        transform.position = newPos;
-        transform.LookAt(m_target.transform);
+        // transform.LookAt(m_target.transform);
+        transform.LookAt(m_targetPos);
+        
+        float moveDistance = m_speed * Time.deltaTime;
+        transform.Translate(Vector3.forward * moveDistance);
     }
 
     private void Timeout()
@@ -50,5 +56,12 @@ public class TowerProjectile : MonoBehaviour
             m_target.Damage(m_damage);
             Destroy(this.gameObject);   
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position, m_targetPos);
+        Gizmos.DrawSphere(m_targetPos, 0.1f);
     }
 }

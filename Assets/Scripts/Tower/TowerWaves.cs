@@ -15,6 +15,8 @@ public class TowerWaves : MonoBehaviour
 
     public UnityEvent OnWaveKilledEvent;
 
+    public float CurrentWaveRpm => m_waves[0].RotationsPerMinute;
+
     private List<Wave> m_waves;
     private int m_unitCount;
 

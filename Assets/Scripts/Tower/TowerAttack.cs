@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class TowerAttack : MonoBehaviour
 {
@@ -14,12 +13,19 @@ public class TowerAttack : MonoBehaviour
 
     public float CurrentDamage { get; set; } = 1;
     public float CurrentSpeed { get; set; } = 1;
+    
     private IEnumerator m_attackCoroutine;
-
+    private float m_projectileSpeed = 0.0f;
+    
     private void Start()
     {
         CurrentDamage = m_baseDamage;
         CurrentSpeed = m_defaultSpeed;
+
+        if (m_projectilePrefab is not null)
+        {
+            m_projectileSpeed = m_projectilePrefab.GetComponent<TowerProjectile>().Speed;
+        }
 
         m_attackCoroutine = AttackCoroutine();
         StartCoroutine(m_attackCoroutine);
@@ -58,18 +64,48 @@ public class TowerAttack : MonoBehaviour
                 continue;
             }
             
+            Vector3 predictedPos = GetPredictedLocation(m_currentTarget.transform.position);
+            
             // Create projectile
             Vector3 spawnPoint = transform.position + m_projectileSpawnPoint;
             TowerProjectile projectile = Instantiate(m_projectilePrefab, spawnPoint, Quaternion.identity).GetComponent<TowerProjectile>();
-            projectile.SetupProjectile(CurrentDamage, m_currentTarget);
+            projectile.SetupProjectile(CurrentDamage, m_currentTarget, predictedPos);
             
             yield return new WaitForSeconds(1 / CurrentSpeed);
         }
+    }
+
+    private Vector3 GetPredictedLocation(Vector3 targetPos)
+    {
+        float distanceToTarget = Vector3.Distance(transform.position, m_currentTarget.transform.position);
+        
+        float angularVelocity = (m_towerWaves.CurrentWaveRpm * 2 * Mathf.PI) / 60;
+        float timeToTarget = distanceToTarget / m_projectileSpeed;
+
+        // Keep it on one plane so don't need to handle the y axis
+        Vector3 towerPosition = transform.position;
+        towerPosition.y = targetPos.y;
+        
+        float startingAngle = Mathf.Atan2(targetPos.z - towerPosition.z, targetPos.x - towerPosition.x);
+        float angleMoved = angularVelocity * timeToTarget;
+        float newAngle = startingAngle - angleMoved;
+            
+        float x = distanceToTarget * Mathf.Cos(newAngle);
+        float z = distanceToTarget * Mathf.Sin(newAngle);
+        return new Vector3(x, targetPos.y, z);
+
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(transform.position + m_projectileSpawnPoint, 0.5f);
+
+        if (m_currentTarget is not null)
+        {
+            Vector3 predictedPos = GetPredictedLocation(m_currentTarget.transform.position);
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawSphere(predictedPos, 0.5f);
+        }
     }
 }
