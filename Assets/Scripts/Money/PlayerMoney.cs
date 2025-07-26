@@ -1,18 +1,21 @@
+using CircleTD.Messages;
+using ElectricPie.UnityMessageRouter;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PlayerMoney : MonoBehaviour
 {
     [SerializeField] private float m_startingMoney = 20;
-    [SerializeField] private UnityEvent<float> m_onAmountChangedEvent;
+    
+    [Header("Message Router Channels")]
+    [SerializeField] private string m_moneyChangedChannel = "PlayerMoneyChanged";
     
     // Using a float to allow for multiplication of money increases
     public float Amount { get; private set; }
 
-    private void Awake()
+    private void Start()
     {
         Amount = m_startingMoney;
-        m_onAmountChangedEvent.Invoke(Amount);
+        MessageRouter.Broadcast(m_moneyChangedChannel, new MoneyUpdateMessage(Amount));
     }
 
     /// <summary>
@@ -22,7 +25,7 @@ public class PlayerMoney : MonoBehaviour
     public void AddMoney(float amountToAdd)
     {
         Amount += amountToAdd;
-        m_onAmountChangedEvent.Invoke(Amount);
+        MessageRouter.Broadcast(m_moneyChangedChannel, new MoneyUpdateMessage(Amount));
     }
 
     /// <summary>
@@ -38,7 +41,7 @@ public class PlayerMoney : MonoBehaviour
         }
 
         Amount -= amountToRemove;
-        m_onAmountChangedEvent.Invoke(Amount);
+        MessageRouter.Broadcast(m_moneyChangedChannel, new MoneyUpdateMessage(Amount));
         return true;
     }
 }
