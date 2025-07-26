@@ -1,13 +1,17 @@
+using CircleTD.Messages;
+using ElectricPie.UnityMessageRouter;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerLivesManager : MonoBehaviour
 {
     [SerializeField] private int m_initialLives = 40;
+    
+    [Header("Message Router Channels")]
+    [SerializeField] private string m_livesChangedChannel = "LivesChanged";
+    
     private int m_maxLives;
     private int m_currentLives;
-
-    public UnityEvent<int, int> OnLivesChangedEvent;
 
     private void Awake()
     {
@@ -28,7 +32,7 @@ public class PlayerLivesManager : MonoBehaviour
             m_currentLives -= cost.LiveCost;
         }
 
-        OnLivesChangedEvent.Invoke(m_currentLives, m_maxLives);
+        MessageRouter.Broadcast(m_livesChangedChannel, new LiveChangedMessage(m_currentLives, m_maxLives));
     }
 
     public void OnUnitKilled(Unit killedUnit)
@@ -44,6 +48,6 @@ public class PlayerLivesManager : MonoBehaviour
             m_currentLives += cost.LiveCost;
         }
 
-        OnLivesChangedEvent.Invoke(m_currentLives, m_maxLives);
+        MessageRouter.Broadcast(m_livesChangedChannel, new LiveChangedMessage(m_currentLives, m_maxLives));
     }
 }
