@@ -49,6 +49,7 @@ public class TowerAttack : MonoBehaviour, ISharedEffects
             () => {
                 TowerProjectile projectile = Instantiate(m_projectilePrefab);
                 projectile.OnHitEvent += OnProjectileHit;
+                projectile.OnTimeoutEvent += OnProjectileHit;
                 projectile.SharedEffects = this;
                 return projectile;
             }, 

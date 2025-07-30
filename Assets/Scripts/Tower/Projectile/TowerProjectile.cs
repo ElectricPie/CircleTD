@@ -5,30 +5,35 @@ using UnityEngine;
 [RequireComponent(typeof(TowerProjectileMovement))]
 public class TowerProjectile : MonoBehaviour
 {
-    public Action<TowerProjectile> OnHitEvent = null;
+    public event Action<TowerProjectile> OnHitEvent = delegate { };
+    public event Action<TowerProjectile> OnTimeoutEvent = delegate { };
     public ISharedEffects SharedEffects;
-    
+
     [Tooltip("Time after creation before projectile the projectile triggers its on hit event")]
-    [SerializeField] [Min(0)] private float m_timeoutTime = 4.0f;
-    
+    [SerializeField]
+    [Min(0)]
+    private float m_timeoutTime = 4.0f;
+
     private TowerProjectileMovement m_movementComponent = null;
-    private Unit m_target = null;
+    private GameObject m_target = null;
 
     private void Awake()
     {
         m_movementComponent = GetComponent<TowerProjectileMovement>();
     }
-    
+
     public void SetTarget(Unit target, Vector3 targetPos)
     {
         if (target == null)
         {
-            OnHitEvent?.Invoke(this);
+            OnTimeoutEvent?.Invoke(this);
             return;
         }
-        
+
+        target.HealthComponent.OnKilledEvent += OnTargetKilled;
+
         m_movementComponent.SetTarget(target, targetPos);
-        m_target = target;
+        m_target = target.gameObject;
         StartTimeout();
     }
 
@@ -37,34 +42,38 @@ public class TowerProjectile : MonoBehaviour
         CancelInvoke();
         Invoke(nameof(Timeout), m_timeoutTime);
     }
-    
+
     private void Timeout()
     {
         ApplyEffects();
-        OnHitEvent?.Invoke(this);
+        OnTimeoutEvent?.Invoke(this);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (m_target != null)
-        {
-            if (collision.gameObject == m_target.gameObject)
-            {
-                ApplyEffects();
-            }
-        }
-        
-        OnHitEvent?.Invoke(this);
-    }
-    
-    private void ApplyEffects()
-    {
-        if (m_target == null || SharedEffects == null)
+        if (collision.gameObject != m_target.gameObject) 
             return;
         
+        ApplyEffects();
+        OnHitEvent?.Invoke(this);
+    }
+
+    private void ApplyEffects()
+    {
+        if (SharedEffects == null)
+            return;
+
         foreach (GameEffect effect in SharedEffects.GetEffects())
         {
             effect.Execute(gameObject, m_target.gameObject);
         }
+    }
+
+    private void OnTargetKilled(GameObject target)
+    {
+        m_target = null;
+
+        OnTimeoutEvent?.Invoke(this);
+        CancelInvoke();
     }
 }
