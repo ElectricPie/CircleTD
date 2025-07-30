@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4187619456751892373}
   - component: {fileID: 733946917715905344}
+  - component: {fileID: 5334966420341806112}
   - component: {fileID: 7244603853143164600}
   m_Layer: 0
   m_Name: Projectile
@@ -46,8 +47,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 251937ebee187da77b0e547ae55622c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_timeoutTime: 4
+--- !u!114 &5334966420341806112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2937510664636689804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd7e72411bbd4a1b9225cb7f3c63181c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_speed: 20
-  m_destoryTime: 4
 --- !u!54 &7244603853143164600
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -44,7 +44,7 @@ public class TowerAttack : MonoBehaviour, ISharedEffects
         CurrentDamage = m_baseDamage;
         CurrentSpeed = m_defaultSpeed;
         
-        m_projectileSpeed = m_projectilePrefab.Speed;
+        m_projectileSpeed = m_projectilePrefab.GetComponent<TowerProjectileMovement>().Speed;
         m_projectilePool = new ObjectPool<TowerProjectile>(
             () => {
                 TowerProjectile projectile = Instantiate(m_projectilePrefab);
@@ -59,7 +59,6 @@ public class TowerAttack : MonoBehaviour, ISharedEffects
                 Vector3 predictedPos = GetPredictedLocation(m_currentTarget.transform.position);
                 projectile.transform.position = spawnPoint;
                 projectile.SetTarget(m_currentTarget, predictedPos);
-                projectile.StartTimeout();
             },
             projectile =>
             {
@@ -100,17 +99,8 @@ public class TowerAttack : MonoBehaviour, ISharedEffects
                 continue;
             }
 
-            // Vector3 predictedPos = GetPredictedLocation(m_currentTarget.transform.position);
-
-            // Create projectile
-            // Vector3 spawnPoint = transform.position + m_projectileSpawnPoint;
-            // TowerProjectile projectile = Instantiate(m_projectilePrefab, spawnPoint, Quaternion.identity)
-            //     .GetComponent<TowerProjectile>();
             m_projectilePool.Get();
-            // projectile.transform.position = spawnPoint;
-            // projectile.SetupProjectile(CurrentDamage, m_currentTarget, predictedPos);
-            // projectile.Effects.AddRange(m_projectileEffects);
-
+            
             yield return new WaitForSeconds(1 / CurrentSpeed);
         }
     }
