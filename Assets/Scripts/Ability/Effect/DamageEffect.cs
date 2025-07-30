@@ -8,6 +8,6 @@ public class DamageEffect : GameEffect
 
     public override void Execute(GameObject caster, GameObject target)
     {
-        target.GetComponent<Unit>()?.Damage(DamageAmount);
+        target.GetComponent<UnitHealth>()?.Damage(DamageAmount);
     }
 }

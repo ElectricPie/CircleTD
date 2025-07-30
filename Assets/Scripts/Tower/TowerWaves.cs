@@ -54,13 +54,13 @@ public class TowerWaves : MonoBehaviour
     {
         if (unitPrefab is null)
         {
-            Debug.Log($"{this.name} is missing the unit prefab", this);
+            Debug.Log($"{name} is missing the unit prefab", this);
             return;
         }
         
         if (unitPrefab.GetComponent<Unit>() is null)
         {
-            Debug.Log($"{this.name} is attempting to spawn unit that is missing the unit component", this);
+            Debug.Log($"{name} is attempting to spawn unit that is missing the unit component", this);
             return;
         }
         
@@ -69,13 +69,14 @@ public class TowerWaves : MonoBehaviour
         Vector3 spawnPosition = transform.position + m_unitSpawnPoint;
         spawnPosition.x += Random.Range(-m_unitSpawnPointVairation, m_unitSpawnPointVairation);
         Unit newUnit = Instantiate(unitPrefab, spawnPosition, Quaternion.identity, latestWave.WaveTransform.transform).GetComponent<Unit>();
+        UnitHealth unitHealthComponent = newUnit.GetComponent<UnitHealth>();
         if (modifyUnit)
         {
-            newUnit.UpdateMaxHealth(unitHealth, false);
+            unitHealthComponent.UpdateMaxHealth(unitHealth, false);
             newUnit.MoneyWorth = moneyWorth;
         }
         
-        newUnit.OnUnitKilledEvent += OnUnitKilled;
+        unitHealthComponent.OnKilledEvent += OnUnitKilled;
         latestWave.Units.Add(newUnit);
 
         m_unitCount++;
@@ -135,8 +136,10 @@ public class TowerWaves : MonoBehaviour
         }
     }
 
-    private void OnUnitKilled(Unit killedUnit)
+    private void OnUnitKilled(GameObject killedUnitGameobject)
     {
+        Unit killedUnit = killedUnitGameobject.GetComponent<Unit>();
+        
         // Give the player money from the unit
         if (m_playerMoney is not null)
         {
