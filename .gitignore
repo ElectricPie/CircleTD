@@ -154,3 +154,6 @@ sysinfo.txt
 
 # End of https://www.toptal.com/developers/gitignore/api/unity,rider
 
+# Odin
+Assets/Plugins/Sirenix/
+Assets/Plugins/Sirenix.meta

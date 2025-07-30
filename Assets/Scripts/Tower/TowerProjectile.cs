@@ -1,27 +1,29 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TowerProjectile : MonoBehaviour
 {
-    [Tooltip("In distance per second")] [SerializeField] private float m_speed = 1.0f;
-    [Tooltip("Time after creation before projectile is destroyed")] [SerializeField] [Min(0)] private float m_destoryTime = 10.0f;
-
+    public Action<TowerProjectile> OnHitEvent = null;
     public float Speed => m_speed;
-    
-    private float m_damage = 1;
+    public ISharedEffects SharedEffects;
+
+    [Tooltip("In distance per second")] [SerializeField] private float m_speed = 1.0f;
+    [Tooltip("Time after creation before projectile the projectile triggers its on hit event")] [SerializeField] [Min(0)] private float m_timeoutTime = 4.0f;
+
     private Unit m_target = null;
     private Vector3 m_targetPos = Vector3.zero;
-
-    public void SetupProjectile(float damage, Unit target, Vector3 targetPos)
+    
+    public void SetTarget(Unit target, Vector3 targetPos)
     {
-        m_damage = damage;
         m_target = target;
         m_targetPos = targetPos;
     }
 
-    protected void Start()
+    public void StartTimeout()
     {
-        Invoke(nameof(Timeout), m_destoryTime);
+        CancelInvoke();
+        Invoke(nameof(Timeout), m_timeoutTime);
     }
 
     protected void Update()
@@ -31,13 +33,12 @@ public class TowerProjectile : MonoBehaviour
 
     private void MoveTowardsTarget()
     {
-        if (m_target == null)
+        if (!m_target)
         {
-            Destroy(gameObject);
+            OnHitEvent?.Invoke(this);
             return;
         }
 
-        // transform.LookAt(m_target.transform);
         transform.LookAt(m_targetPos);
         
         float moveDistance = m_speed * Time.deltaTime;
@@ -46,20 +47,27 @@ public class TowerProjectile : MonoBehaviour
 
     private void Timeout()
     {
-        if (m_target is not null)
-        {
-            m_target.Damage(m_damage);
-        }
-        
-        Destroy(gameObject);
+        ApplyEffects();
+        OnHitEvent?.Invoke(this);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject == m_target.gameObject)
         {
-            m_target.Damage(m_damage);
-            Destroy(gameObject);   
+            ApplyEffects();
+            OnHitEvent?.Invoke(this);
+        }
+    }
+    
+    private void ApplyEffects()
+    {
+        if (m_target == null || SharedEffects == null)
+            return;
+        
+        foreach (GameEffect effect in SharedEffects.GetEffects())
+        {
+            effect.Execute(gameObject, m_target.gameObject);
         }
     }
 }

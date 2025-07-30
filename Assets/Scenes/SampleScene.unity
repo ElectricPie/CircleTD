@@ -969,6 +969,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_livesText: {fileID: 556196915}
+  m_livesChangedChannel: LivesChanged
 --- !u!1 &666662978
 GameObject:
   m_ObjectHideFlags: 0
@@ -2593,7 +2594,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
 --- !u!114 &1771457033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3532,10 +3533,6 @@ PrefabInstance:
       propertyPath: m_damageButton
       value: 
       objectReference: {fileID: 1987061374}
-    - target: {fileID: 3314149860893733602, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      propertyPath: m_upgradeInitialCost
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4416480666744996068, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: m_Name
       value: Tower
@@ -3545,53 +3542,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6725663958928044032}
     - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      propertyPath: m_unitSpawnPoint.y
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      propertyPath: OnWaveKilledEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      propertyPath: OnWaveKilledEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: OnUnitKilledEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 6725663958928044030}
     - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      propertyPath: OnWaveKilledEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      propertyPath: OnWaveKilledEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: OnUnitSpanwedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 6725663958928044030}
-    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      propertyPath: OnWaveKilledEvent.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      propertyPath: OnWaveKilledEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: OnWaveKilled
-      objectReference: {fileID: 0}
-    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      propertyPath: OnWaveKilledEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: WaveSpawner, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      propertyPath: OnWaveKilledEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: WaveManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      propertyPath: OnWaveKilledEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 8063762793612358293, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3631,10 +3588,6 @@ PrefabInstance:
     - target: {fileID: 8063762793612358293, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9129706804224110044, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      propertyPath: m_defaultSpeed
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
