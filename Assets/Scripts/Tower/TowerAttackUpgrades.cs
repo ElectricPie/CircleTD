@@ -31,12 +31,12 @@ public class TowerAttackUpgrades : MonoBehaviour
     {
         if (m_damageButton is not null)
         {
-            m_damageButton.UpdateText(m_towerAttack.CurrentDamage, m_towerAttack.CurrentDamage * m_upgradeMultiplier, m_upgradeInitialCost);
+            m_damageButton.UpdateText(m_towerAttack.ProjectileDamage, m_towerAttack.ProjectileDamage * m_upgradeMultiplier, m_upgradeInitialCost);
         }
         
         if (m_speedButton is not null)
         {
-            m_speedButton.UpdateText(m_towerAttack.CurrentSpeed, m_towerAttack.CurrentSpeed * m_upgradeMultiplier, m_upgradeInitialCost);
+            m_speedButton.UpdateText(m_towerAttack.FireRate, m_towerAttack.FireRate * m_upgradeMultiplier, m_upgradeInitialCost);
         }
     }
 
@@ -51,10 +51,10 @@ public class TowerAttackUpgrades : MonoBehaviour
             return;
         }
         
-        float newDamage = m_towerAttack.CurrentDamage;
+        float newDamage = m_towerAttack.ProjectileDamage;
         newDamage *= m_upgradeMultiplier;
 
-        m_towerAttack.CurrentDamage = newDamage;
+        m_towerAttack.ProjectileDamage = newDamage;
         m_damageLevel++;
         
         if (m_damageButton is not null)
@@ -74,10 +74,10 @@ public class TowerAttackUpgrades : MonoBehaviour
             return;
         }
         
-        float newSpeed = m_towerAttack.CurrentSpeed;
+        float newSpeed = m_towerAttack.FireRate;
         newSpeed *= m_upgradeMultiplier;
 
-        m_towerAttack.CurrentSpeed = newSpeed;
+        m_towerAttack.FireRate = newSpeed;
         m_speedLevel++;
 
         if (m_speedButton is not null)

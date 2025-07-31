@@ -5,22 +5,18 @@ using UnityEngine.Pool;
 
 public class TowerAttack : MonoBehaviour, ISharedEffects
 {
+    public float ProjectileDamage = 1;
+    [Tooltip("The number of projectiles fired per second")] public float FireRate = 5.0f;
+    
     [SerializeField] private TowerWaves m_towerWaves;
     [SerializeField] private TowerProjectile m_projectilePrefab;
     [SerializeField] private int m_projectilePoolSize = 20;
-
-    [Tooltip("The number of projectiles fired per second")] [SerializeField]
-    private float m_defaultSpeed = 1.0f;
-
-    [SerializeField] private int m_baseDamage = 1;
+    
     [SerializeField] private Vector3 m_projectileSpawnPoint;
 
     [SerializeReference] private List<GameEffect> m_projectileEffects = new List<GameEffect>();
 
     private Unit m_currentTarget;
-
-    public float CurrentDamage { get; set; } = 1;
-    public float CurrentSpeed { get; set; } = 1;
 
     private IEnumerator m_attackCoroutine;
     private float m_projectileSpeed = 0.0f;
@@ -40,9 +36,6 @@ public class TowerAttack : MonoBehaviour, ISharedEffects
         {
             throw new System.Exception($"{name} TowerAttack component is missing projectile prefab");
         }
-        
-        CurrentDamage = m_baseDamage;
-        CurrentSpeed = m_defaultSpeed;
         
         m_projectileSpeed = m_projectilePrefab.GetComponent<TowerProjectileMovement>().Speed;
         m_projectilePool = new ObjectPool<TowerProjectile>(
@@ -84,11 +77,6 @@ public class TowerAttack : MonoBehaviour, ISharedEffects
         m_currentTarget = m_towerWaves.GetOldestUnit();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("Trigger");
-    }
-
     private IEnumerator AttackCoroutine()
     {
         while (true)
@@ -102,7 +90,7 @@ public class TowerAttack : MonoBehaviour, ISharedEffects
 
             m_projectilePool.Get();
             
-            yield return new WaitForSeconds(1 / CurrentSpeed);
+            yield return new WaitForSeconds(1 / FireRate);
         }
     }
 

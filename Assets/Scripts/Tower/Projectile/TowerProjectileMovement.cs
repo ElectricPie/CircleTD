@@ -3,17 +3,9 @@
 public class TowerProjectileMovement : MonoBehaviour
 {
     public float Speed => m_speed;
+    public Vector3 TargetPos = Vector3.zero;
     
     [Tooltip("In distance per second")] [SerializeField] private float m_speed = 20.0f;
-    
-    private Unit m_target = null;
-    private Vector3 m_targetPos = Vector3.zero;
-    
-    public void SetTarget(Unit target, Vector3 targetPos)
-    {
-        m_target = target;
-        m_targetPos = targetPos;
-    }
     
     protected void Update()
     {
@@ -22,10 +14,9 @@ public class TowerProjectileMovement : MonoBehaviour
     
     private void MoveTowardsTarget()
     {
-        transform.LookAt(m_targetPos);
+        transform.LookAt(TargetPos);
         
         float moveDistance = m_speed * Time.deltaTime;
         transform.Translate(Vector3.forward * moveDistance);
     }
-
 }

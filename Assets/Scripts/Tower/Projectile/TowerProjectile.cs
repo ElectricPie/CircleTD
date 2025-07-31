@@ -32,7 +32,7 @@ public class TowerProjectile : MonoBehaviour
 
         target.HealthComponent.OnKilledEvent += OnTargetKilled;
 
-        m_movementComponent.SetTarget(target, targetPos);
+        m_movementComponent.TargetPos = targetPos;
         m_target = target.gameObject;
         StartTimeout();
     }
