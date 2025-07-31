@@ -59,8 +59,9 @@ public class TowerAttack : MonoBehaviour, ISharedEffects
                 projectile.gameObject.SetActive(false);
             },
             projectile => {
+                Debug.Log("Destroying Projectile");
                 Destroy(projectile.gameObject);
-            }, false, m_projectilePoolSize, m_projectilePoolSize * 2);
+            }, true, m_projectilePoolSize, m_projectilePoolSize * 2);
 
         m_attackCoroutine = AttackCoroutine();
         StartCoroutine(m_attackCoroutine);

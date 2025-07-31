@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName="New Wave", menuName="Waves/New Wave")]
 public class WaveScriptableObject : ScriptableObject
 {
-    public GameObject UnitPrefab;
+    public Unit UnitPrefab;
     [Min(1)] public int UnitCount = 4;
     [Tooltip("The time in seconds between each unit spawning in a wave")]
     [Min(0.1f)] public float TimeSpawnGap = 1.0f;

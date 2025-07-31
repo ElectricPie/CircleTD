@@ -1,12 +1,60 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
+
+public class Wave
+{
+    public readonly Transform WaveTransform;
+    public readonly float RotationsPerMinute;
+    public int RemainingUnits { get; private set; }
+    public int WaveNumber { get; private set; }
+
+    private readonly List<Unit> m_units;
+
+    public event Action<Wave> OnAllUnitsKilled = delegate { };
+
+    public Wave(Transform waveTransform, float rotationsPerMinute, int waveUnitCount, int waveNumber)
+    {
+        WaveTransform = waveTransform;
+        RotationsPerMinute = rotationsPerMinute;
+        m_units = new List<Unit>(waveUnitCount);
+        RemainingUnits = waveUnitCount;
+        WaveNumber = waveNumber;
+    }
+
+    public void AddUnit(Unit newUnit)
+    {
+        m_units.Add(newUnit);
+        newUnit.HealthComponent.OnKilledEvent += OnUnitKilled;
+    }
+
+    public Unit GetFirstUnit()
+    {
+        return m_units.Count == 0 ? null : m_units[0];
+    }
+
+    private void OnUnitKilled(GameObject killedUnitGameObject)
+    {
+        Unit killedUnit = killedUnitGameObject.GetComponent<Unit>();
+        m_units.Remove(killedUnit);
+
+        RemainingUnits--;
+        if (RemainingUnits <= 0)
+        {
+            OnAllUnitsKilled?.Invoke(this);
+        }
+        
+        // TODO: Give the player money from the unit
+    }
+}
 
 public class TowerWaves : MonoBehaviour
 {
     [SerializeField] private Vector3 m_unitSpawnPoint;
     [Tooltip("If set to a value will move a new spawned unit left/right the amount of the value")]
-    [SerializeField] private float m_unitSpawnPointVairation = 0.0f;
+    [SerializeField] private float m_unitSpawnPointVariation = 2.0f;
 
     [SerializeField] private PlayerMoney m_playerMoney;
 
@@ -20,54 +68,39 @@ public class TowerWaves : MonoBehaviour
     private List<Wave> m_waves;
     private int m_unitCount;
 
-    class Wave
+    public Wave NewWave(float waveRotationSpeed, int waveUnitCount, int waveNumber)
     {
-        public Wave(Transform waveTransform, float rotationsPerMinute, int waveUnitCount)
-        {
-            WaveTransform = waveTransform;
-            RotationsPerMinute = rotationsPerMinute;
-            Units = new List<Unit>();
-            RemainingUnits = waveUnitCount;
-        }
-
-        public Transform WaveTransform;
-        public float RotationsPerMinute;
-        public List<Unit> Units;
-        public int RemainingUnits;
-    }
-
-    public void NewWave(float waveRotationSpeed, int waveUnitCount)
-    {
-        // TODO: Create wave finished callback
-
         // Create the game object to rotate the units
-        GameObject waveGameObject = new GameObject("Wave");
-        waveGameObject.transform.parent = transform;
-        waveGameObject.transform.localPosition = Vector3.zero;
-        waveGameObject.transform.localScale = Vector3.one;
+        GameObject waveGameObject = new GameObject("Wave")
+        {
+            transform =
+            {
+                parent = transform,
+                localPosition = Vector3.zero,
+                localScale = Vector3.one
+            }
+        };
 
-        Wave newWave = new Wave(waveGameObject.transform, waveRotationSpeed, waveUnitCount);
+        Wave newWave = new Wave(waveGameObject.transform, waveRotationSpeed, waveUnitCount, waveNumber);
+        newWave.OnAllUnitsKilled += wave =>
+        {
+            m_waves.Remove(wave);
+            Destroy(wave.WaveTransform.gameObject);
+        };
         m_waves.Add(newWave);
+
+        return newWave;
     }
 
-    public void SpawnUnitToLatestWave(GameObject unitPrefab, bool modifyUnit = false, float unitHealth = 1.0f, float moneyWorth = 1.0f)
+    public void SpawnUnitToLatestWave(Unit unitPrefab, bool modifyUnit = false, float unitHealth = 1.0f, float moneyWorth = 1.0f)
     {
         if (unitPrefab is null)
-        {
-            Debug.Log($"{name} is missing the unit prefab", this);
-            return;
-        }
-        
-        if (unitPrefab.GetComponent<Unit>() is null)
-        {
-            Debug.Log($"{name} is attempting to spawn unit that is missing the unit component", this);
-            return;
-        }
+            throw new Exception($"{name} is missing unitPrefab");
         
         Wave latestWave = m_waves[m_waves.Count - 1];
         
         Vector3 spawnPosition = transform.position + m_unitSpawnPoint;
-        spawnPosition.x += Random.Range(-m_unitSpawnPointVairation, m_unitSpawnPointVairation);
+        spawnPosition.x += Random.Range(-m_unitSpawnPointVariation, m_unitSpawnPointVariation);
         Unit newUnit = Instantiate(unitPrefab, spawnPosition, Quaternion.identity, latestWave.WaveTransform.transform).GetComponent<Unit>();
         UnitHealth unitHealthComponent = newUnit.GetComponent<UnitHealth>();
         if (modifyUnit)
@@ -76,8 +109,7 @@ public class TowerWaves : MonoBehaviour
             newUnit.MoneyWorth = moneyWorth;
         }
         
-        unitHealthComponent.OnKilledEvent += OnUnitKilled;
-        latestWave.Units.Add(newUnit);
+        latestWave.AddUnit(newUnit);
 
         m_unitCount++;
         OnUnitSpanwedEvent.Invoke(newUnit);
@@ -90,22 +122,12 @@ public class TowerWaves : MonoBehaviour
     public Unit GetOldestUnit()
     {
         if (m_waves == null)
-        {
             return null;
-        }
 
         if (m_waves.Count == 0)
-        {
             return null;
-        }
 
-        Wave oldestWave = m_waves[0];
-        if (oldestWave.Units.Count == 0)
-        {
-            return null;
-        }
-
-        return oldestWave.Units[0];
+        return m_waves[0].GetFirstUnit();
     }
 
     // Start is called before the first frame update
@@ -136,39 +158,6 @@ public class TowerWaves : MonoBehaviour
         }
     }
 
-    private void OnUnitKilled(GameObject killedUnitGameobject)
-    {
-        Unit killedUnit = killedUnitGameobject.GetComponent<Unit>();
-        
-        // Give the player money from the unit
-        if (m_playerMoney is not null)
-        {
-            m_playerMoney.AddMoney(killedUnit.MoneyWorth);
-        }
-
-        foreach (Wave wave in m_waves)
-        {
-            // Remove the killed unit
-            if (wave.Units.Contains(killedUnit))
-            {
-                OnUnitKilledEvent.Invoke(killedUnit);
-                wave.Units.Remove(killedUnit);
-                wave.RemainingUnits--;
-                
-                // Remove the wave once all units have been killed
-                if (wave.RemainingUnits == 0)
-                {
-                    m_waves.RemoveAt(0);
-                    Destroy(wave.WaveTransform.gameObject);
-                    OnWaveKilledEvent.Invoke();
-                }
-
-                m_unitCount--;
-                return;
-            }
-        }
-    }
-
     protected void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -179,9 +168,9 @@ public class TowerWaves : MonoBehaviour
         
         // Draw spawn variation
         Vector3 leftOfSpawn = spawnPoint;
-        leftOfSpawn.x -= m_unitSpawnPointVairation;
+        leftOfSpawn.x -= m_unitSpawnPointVariation;
         Vector3 rightOfSpawn = spawnPoint;
-        rightOfSpawn.x += m_unitSpawnPointVairation;
+        rightOfSpawn.x += m_unitSpawnPointVariation;
         Gizmos.DrawLine(leftOfSpawn, rightOfSpawn);
     }
 }

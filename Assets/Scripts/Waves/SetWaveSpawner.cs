@@ -8,7 +8,7 @@ public class SetWaveSpawner : WaveSpawner
     protected override IEnumerator SpawnWave(int waveNumber)
     {
         WaveScriptableObject wave = m_waves[waveNumber];
-        m_towerWaves.NewWave(wave.WaveRotationSpeed, wave.UnitCount);
+        m_towerWaves.NewWave(wave.WaveRotationSpeed, wave.UnitCount, waveNumber);
         
         for (int i = 0; i < wave.UnitCount; i++)
         {
@@ -16,6 +16,6 @@ public class SetWaveSpawner : WaveSpawner
             yield return new WaitForSeconds(wave.TimeSpawnGap);
         }
         
-        WaveSpawningFinished();
+        WaveSpawningFinished(waveNumber);
     } 
 }
