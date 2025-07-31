@@ -6,10 +6,10 @@ using UnityEngine.Events;
 public class PlayerLivesManager : MonoBehaviour
 {
     [SerializeField] private int m_initialLives = 40;
-    
-    [Header("Message Router Channels")]
-    [SerializeField] private string m_livesChangedChannel = "LivesChanged";
-    
+
+    [Header("Message Router Channels")] [SerializeField]
+    private string m_livesChangedChannel = "LivesChanged";
+
     private int m_maxLives;
     private int m_currentLives;
 
@@ -21,32 +21,20 @@ public class PlayerLivesManager : MonoBehaviour
 
     public void OnUnitsSpawned(Unit spawnedUnit)
     {
-        if (spawnedUnit is null)
-        {
-            return;
-        }
+        spawnedUnit.HealthComponent.OnKilledEvent += OnUnitKilled;
 
-        UnitLiveCost cost = spawnedUnit.GetComponent<UnitLiveCost>();
-        if (cost is not null)
-        {
-            m_currentLives -= cost.LiveCost;
-        }
+        UnitLiveCost cost = spawnedUnit.LivesCostComponent;
+
+        m_currentLives -= cost.LiveCost;
 
         MessageRouter.Broadcast(m_livesChangedChannel, new LiveChangedMessage(m_currentLives, m_maxLives));
     }
 
-    public void OnUnitKilled(Unit killedUnit)
+    public void OnUnitKilled(GameObject killedUnitGameObject)
     {
-        if (killedUnit is null)
-        {
-            return;
-        }
-        
-        UnitLiveCost cost = killedUnit.GetComponent<UnitLiveCost>();
-        if (cost is not null)
-        {
-            m_currentLives += cost.LiveCost;
-        }
+        UnitLiveCost cost = killedUnitGameObject.GetComponent<UnitLiveCost>();
+
+        m_currentLives += cost.LiveCost;
 
         MessageRouter.Broadcast(m_livesChangedChannel, new LiveChangedMessage(m_currentLives, m_maxLives));
     }
