@@ -7,12 +7,11 @@ public class TowerProjectile : MonoBehaviour
 {
     public event Action<TowerProjectile> OnHitEvent = delegate { };
     public event Action<TowerProjectile> OnTimeoutEvent = delegate { };
+    public event Action<TowerProjectile> OnTargetKilledEvent = delegate { };
     public ISharedEffects SharedEffects;
 
     [Tooltip("Time after creation before projectile the projectile triggers its on hit event")]
-    [SerializeField]
-    [Min(0)]
-    private float m_timeoutTime = 4.0f;
+    [SerializeField] [Min(0)] private float m_timeoutTime = 4.0f;
 
     private TowerProjectileMovement m_movementComponent = null;
     private GameObject m_target = null;
@@ -39,13 +38,14 @@ public class TowerProjectile : MonoBehaviour
 
     private void StartTimeout()
     {
-        CancelInvoke();
+        CancelInvoke(nameof(Timeout));
         Invoke(nameof(Timeout), m_timeoutTime);
     }
 
     private void Timeout()
     {
         ApplyEffects();
+        m_target = null;
         OnTimeoutEvent?.Invoke(this);
     }
 
@@ -54,13 +54,14 @@ public class TowerProjectile : MonoBehaviour
         if (collision.gameObject != m_target.gameObject) 
             return;
         
+        CancelInvoke(nameof(Timeout));
         ApplyEffects();
         OnHitEvent?.Invoke(this);
     }
 
     private void ApplyEffects()
     {
-        if (SharedEffects == null)
+        if (SharedEffects == null || m_target == null)
             return;
 
         foreach (GameEffect effect in SharedEffects.GetEffects())
@@ -71,9 +72,9 @@ public class TowerProjectile : MonoBehaviour
 
     private void OnTargetKilled(GameObject target)
     {
+        CancelInvoke(nameof(Timeout));
+        
         m_target = null;
-
-        OnTimeoutEvent?.Invoke(this);
-        CancelInvoke();
+        OnTargetKilledEvent?.Invoke(this);
     }
 }

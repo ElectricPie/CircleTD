@@ -41,8 +41,6 @@ public class TowerAttack : MonoBehaviour, ISharedEffects
         m_projectilePool = new ObjectPool<TowerProjectile>(
             () => {
                 TowerProjectile projectile = Instantiate(m_projectilePrefab);
-                projectile.OnHitEvent += OnProjectileHit;
-                projectile.OnTimeoutEvent += OnProjectileHit;
                 projectile.SharedEffects = this;
                 return projectile;
             }, 
@@ -53,15 +51,22 @@ public class TowerAttack : MonoBehaviour, ISharedEffects
                 Vector3 predictedPos = GetPredictedLocation(m_currentTarget.transform.position);
                 projectile.transform.position = spawnPoint;
                 projectile.SetTarget(m_currentTarget, predictedPos);
+                
+                projectile.OnHitEvent += OnProjectileHit;
+                projectile.OnTimeoutEvent += OnProjectileHit;
+                projectile.OnTargetKilledEvent += OnProjectileHit;
             },
             projectile =>
             {
                 projectile.gameObject.SetActive(false);
+                
+                projectile.OnHitEvent -= OnProjectileHit;
+                projectile.OnTimeoutEvent -= OnProjectileHit;
+                projectile.OnTargetKilledEvent -= OnProjectileHit;
             },
             projectile => {
-                Debug.Log("Destroying Projectile");
                 Destroy(projectile.gameObject);
-            }, true, m_projectilePoolSize, m_projectilePoolSize * 2);
+            }, false, m_projectilePoolSize, m_projectilePoolSize * 2);
 
         m_attackCoroutine = AttackCoroutine();
         StartCoroutine(m_attackCoroutine);
