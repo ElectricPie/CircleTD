@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class TowerAttack : MonoBehaviour, ISharedEffects
     [Tooltip("The number of projectiles fired per second")] public float FireRate = 5.0f;
     
     [SerializeField] private TowerWaves m_towerWaves;
+    [SerializeField] private PlayerManager m_owner;
+    
     [SerializeField] private TowerProjectile m_projectilePrefab;
     [SerializeField] private int m_projectilePoolSize = 20;
     
@@ -34,7 +37,12 @@ public class TowerAttack : MonoBehaviour, ISharedEffects
     {
         if (m_projectilePrefab == null)
         {
-            throw new System.Exception($"{name} TowerAttack component is missing projectile prefab");
+            throw new Exception($"{name} TowerAttack component is missing projectile prefab");
+        }
+
+        if (m_owner == null)
+        {
+            throw new Exception($"{name} TowerAttack component is missing Player Money reference");
         }
         
         m_projectileSpeed = m_projectilePrefab.GetComponent<TowerProjectileMovement>().Speed;
@@ -42,6 +50,7 @@ public class TowerAttack : MonoBehaviour, ISharedEffects
             () => {
                 TowerProjectile projectile = Instantiate(m_projectilePrefab);
                 projectile.SharedEffects = this;
+                projectile.Owner = m_owner;
                 return projectile;
             }, 
             projectile =>

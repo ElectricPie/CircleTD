@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class UnitHealth : MonoBehaviour
 {
@@ -7,7 +8,10 @@ public class UnitHealth : MonoBehaviour
     
     public event Action<float> OnUnitCurrentHealthChangedEvent = delegate { };
     public event Action<float> OnUnitMaxHealthChangedEvent = delegate { };
-    public event Action<GameObject> OnKilledEvent = delegate { };
+    /// <summary>
+    /// The object that was killed and the object responsible for killing
+    /// </summary>
+    public event UnityAction<GameObject, GameObject> OnKilledEvent = delegate { };
     
     public float CurrentHealth { get; private set; }
     public float MaxHealth => m_maxHealth;
@@ -21,20 +25,20 @@ public class UnitHealth : MonoBehaviour
         OnUnitCurrentHealthChangedEvent?.Invoke(m_maxHealth);
     }
     
-    public void Damage(float damageAmount)
+    public void Damage(float damageAmount, GameObject damageCauser)
     {
         // Clamp the damage to a minimum of 1
         damageAmount = damageAmount < 1 ? 1 : damageAmount;
-        
         CurrentHealth -= damageAmount;
 
         OnUnitCurrentHealthChangedEvent?.Invoke(CurrentHealth);
 
         // Handle unit death
-        if (CurrentHealth <= 0)
-        {
-            UnitKilled();
-        }
+        if (!(CurrentHealth <= 0)) 
+            return;
+        
+        OnKilledEvent?.Invoke(gameObject, damageCauser);
+        Destroy(gameObject);
     }
     
     /// <summary>
@@ -55,12 +59,5 @@ public class UnitHealth : MonoBehaviour
         
         OnUnitMaxHealthChangedEvent?.Invoke(m_maxHealth);
         OnUnitCurrentHealthChangedEvent?.Invoke(CurrentHealth);
-    }
-    
-    private void UnitKilled()
-    {
-        OnKilledEvent?.Invoke(gameObject);
-        
-        Destroy(gameObject);
     }
 }

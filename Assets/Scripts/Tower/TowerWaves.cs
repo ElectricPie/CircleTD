@@ -35,7 +35,7 @@ public class Wave
         return m_units.Count == 0 ? null : m_units[0];
     }
 
-    private void OnUnitKilled(GameObject killedUnitGameObject)
+    private void OnUnitKilled(GameObject killedUnitGameObject, GameObject killer)
     {
         Unit killedUnit = killedUnitGameObject.GetComponent<Unit>();
         m_units.Remove(killedUnit);
@@ -59,14 +59,10 @@ public class TowerWaves : MonoBehaviour
     [SerializeField] private PlayerMoney m_playerMoney;
 
     public UnityEvent<Unit> OnUnitSpanwedEvent;
-    public UnityEvent<Unit> OnUnitKilledEvent;
-
-    public UnityEvent OnWaveKilledEvent;
 
     public float CurrentWaveRpm => m_waves[0].RotationsPerMinute;
 
     private List<Wave> m_waves;
-    private int m_unitCount;
 
     public Wave NewWave(float waveRotationSpeed, int waveUnitCount, int waveNumber)
     {
@@ -102,23 +98,21 @@ public class TowerWaves : MonoBehaviour
         Vector3 spawnPosition = transform.position + m_unitSpawnPoint;
         spawnPosition.x += Random.Range(-m_unitSpawnPointVariation, m_unitSpawnPointVariation);
         Unit newUnit = Instantiate(unitPrefab, spawnPosition, Quaternion.identity, latestWave.WaveTransform.transform).GetComponent<Unit>();
-        UnitHealth unitHealthComponent = newUnit.GetComponent<UnitHealth>();
         if (modifyUnit)
         {
-            unitHealthComponent.UpdateMaxHealth(unitHealth, false);
-            newUnit.MoneyWorth = moneyWorth;
+            newUnit.HealthComponent.UpdateMaxHealth(unitHealth, false);
+            newUnit.MoneyComponent.MoneyWorth = moneyWorth;
         }
         
         latestWave.AddUnit(newUnit);
 
-        m_unitCount++;
         OnUnitSpanwedEvent.Invoke(newUnit);
     }
     
     /// <summary>
     /// Gets the earliest spawned <c>Unit</c> in the earliest wave
     /// </summary>
-    /// <returns>The oldest spawned <c>Unit</c> if there are waves other wise null</returns>
+    /// <returns>The oldest spawned <c>Unit</c> if there are waves otherwise null</returns>
     public Unit GetOldestUnit()
     {
         if (m_waves == null)
@@ -149,7 +143,7 @@ public class TowerWaves : MonoBehaviour
 
     private void RotateWaves()
     {
-        // Rotate each wave based on each ones RotationsPerMinute
+        // Rotate each wave based on each waves' RotationsPerMinute
         foreach (Wave wave in m_waves)
         {
             // Convert RPM to angle by / 60 to get seconds and * by 360 to convert to angle

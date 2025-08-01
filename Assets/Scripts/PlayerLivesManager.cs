@@ -24,16 +24,14 @@ public class PlayerLivesManager : MonoBehaviour
         spawnedUnit.HealthComponent.OnKilledEvent += OnUnitKilled;
 
         UnitLiveCost cost = spawnedUnit.LivesCostComponent;
-
         m_currentLives -= cost.LiveCost;
 
         MessageRouter.Broadcast(m_livesChangedChannel, new LiveChangedMessage(m_currentLives, m_maxLives));
     }
 
-    public void OnUnitKilled(GameObject killedUnitGameObject)
+    public void OnUnitKilled(GameObject killedUnitGameObject, GameObject killerGameObject)
     {
         UnitLiveCost cost = killedUnitGameObject.GetComponent<UnitLiveCost>();
-
         m_currentLives += cost.LiveCost;
 
         MessageRouter.Broadcast(m_livesChangedChannel, new LiveChangedMessage(m_currentLives, m_maxLives));
