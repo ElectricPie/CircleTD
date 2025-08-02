@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7971336517557105522}
   - component: {fileID: 9129706804224110044}
   - component: {fileID: 3314149860893733602}
+  - component: {fileID: 4052425807144529552}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Untagged
@@ -58,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_unitSpawnPoint: {x: 5, y: -0.5, z: 0}
-  m_unitSpawnPointVairation: 2
+  m_unitSpawnPointVariation: 2
   m_playerMoney: {fileID: 0}
   OnUnitSpanwedEvent:
     m_PersistentCalls:
@@ -75,36 +76,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnUnitKilledEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerLivesManager, Assembly-CSharp
-        m_MethodName: OnUnitKilled
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnWaveKilledEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: WaveSpawner, Assembly-CSharp
-        m_MethodName: OnWaveKilled
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &9129706804224110044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,15 +83,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4416480666744996068}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43acca0e5bdb4fcb18324a3a2cad845c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjectileDamage: 1
+  FireRate: 5
   m_towerWaves: {fileID: 7971336517557105522}
+  m_owner: {fileID: 0}
   m_projectilePrefab: {fileID: 733946917715905344, guid: f7ec665cdade3129c8ac1b47a75c588f, type: 3}
-  m_defaultSpeed: 5
-  m_baseDamage: 1
+  m_projectilePoolSize: 20
   m_projectileSpawnPoint: {x: 0, y: 2.5, z: 0}
   m_projectileEffects:
   - rid: 4573896471259644188
@@ -149,6 +122,22 @@ MonoBehaviour:
   m_upgradeInitialCost: 5
   m_damageButton: {fileID: 0}
   m_speedButton: {fileID: 0}
+--- !u!114 &4052425807144529552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4416480666744996068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfc067e2843b4456b82b2522b6abfb85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_owningPlayer: {fileID: 0}
+  m_basicAttack: {fileID: 11400000, guid: a5b91448dde9ac849bf196351d4d326c, type: 2}
+  m_abilities: []
+  m_projectileSpawnPointOffset: {x: 0, y: 2.5, z: 0}
 --- !u!1001 &7155740735048003876
 PrefabInstance:
   m_ObjectHideFlags: 0

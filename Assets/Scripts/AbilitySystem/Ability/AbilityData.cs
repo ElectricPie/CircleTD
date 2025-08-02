@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewAbility", menuName = "ScriptableObject/TowerAbility")]
+[CreateAssetMenu(fileName = "New Ability Data", menuName = "Abilities/New Ability Data")]
 public class AbilityData : ScriptableObject
 {
     public string Label;
     [SerializeReference] public List<GameEffect> Effects;
 
-    private void OnEnable()
+    protected void OnEnable()
     {
         if (string.IsNullOrEmpty(Label))
         {

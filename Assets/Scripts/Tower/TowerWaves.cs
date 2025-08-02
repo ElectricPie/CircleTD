@@ -45,8 +45,6 @@ public class Wave
         {
             OnAllUnitsKilled?.Invoke(this);
         }
-        
-        // TODO: Give the player money from the unit
     }
 }
 

@@ -9,16 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3697b697a19d4961b1b147e1d5eb7d2f, type: 3}
-  m_Name: Damage
+  m_Script: {fileID: 11500000, guid: 8b1bae337e0e4af3b63652624f7c4be9, type: 3}
+  m_Name: BasicTowerAttack
   m_EditorClassIdentifier: 
-  Label: Damage
+  Label: TowerAttack
   Effects:
-  - rid: 4573896471259644187
+  - rid: 3214090246003621944
+  m_projectilePrefab: {fileID: 733946917715905344, guid: f7ec665cdade3129c8ac1b47a75c588f, type: 3}
+  m_poolSize: 10
   references:
     version: 2
     RefIds:
-    - rid: 4573896471259644187
+    - rid: 3214090246003621944
       type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
       data:
         DamageAmount: 1

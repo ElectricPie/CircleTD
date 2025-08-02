@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(TowerAttack))]
 public class TowerAttackUpgrades : MonoBehaviour
 {
     [SerializeField] private PlayerMoney m_playerMoney;

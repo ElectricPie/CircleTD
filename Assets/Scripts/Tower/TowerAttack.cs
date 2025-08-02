@@ -10,7 +10,7 @@ public class TowerAttack : MonoBehaviour, ISharedEffects
     [Tooltip("The number of projectiles fired per second")] public float FireRate = 5.0f;
     
     [SerializeField] private TowerWaves m_towerWaves;
-    [SerializeField] private PlayerManager m_owner;
+    [SerializeField] private GameObject m_owner;
     
     [SerializeField] private TowerProjectile m_projectilePrefab;
     [SerializeField] private int m_projectilePoolSize = 20;
@@ -49,7 +49,7 @@ public class TowerAttack : MonoBehaviour, ISharedEffects
         m_projectilePool = new ObjectPool<TowerProjectile>(
             () => {
                 TowerProjectile projectile = Instantiate(m_projectilePrefab);
-                projectile.SharedEffects = this;
+                // projectile.SharedEffects = this;
                 projectile.Owner = m_owner;
                 return projectile;
             }, 
@@ -133,11 +133,11 @@ public class TowerAttack : MonoBehaviour, ISharedEffects
         return new Vector3(x + towerPosition.x, targetPos.y, z + towerPosition.z);
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(transform.position + m_projectileSpawnPoint, 0.5f);
-    }
+    // private void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.green;
+    //     Gizmos.DrawSphere(transform.position + m_projectileSpawnPoint, 0.5f);
+    // }
 
     private void OnProjectileHit(TowerProjectile projectile)
     {

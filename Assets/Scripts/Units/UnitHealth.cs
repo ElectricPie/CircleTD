@@ -33,10 +33,10 @@ public class UnitHealth : MonoBehaviour
 
         OnUnitCurrentHealthChangedEvent?.Invoke(CurrentHealth);
 
-        // Handle unit death
-        if (!(CurrentHealth <= 0)) 
+        if (CurrentHealth >= 0) 
             return;
         
+        // Handle unit death
         OnKilledEvent?.Invoke(gameObject, damageCauser);
         Destroy(gameObject);
     }

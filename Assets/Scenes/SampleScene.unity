@@ -3491,18 +3491,23 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -6049285032320113464, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
   m_PrefabInstance: {fileID: 6725663958928044029}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 6725663958928044031}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f60c1b7f67e0d3318fbeb2130bd5eaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &6725663958928044031 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7254321893148404680, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
+  m_PrefabInstance: {fileID: 6725663958928044029}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6725663958928044032 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5060817481088591531, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
   m_PrefabInstance: {fileID: 6725663958928044029}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 6725663958928044031}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e74c69f9ed8acd4ee949a67d8103ab09, type: 3}
@@ -3533,6 +3538,30 @@ PrefabInstance:
       propertyPath: m_damageButton
       value: 
       objectReference: {fileID: 1987061374}
+    - target: {fileID: 4052425807144529552, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_towerWaves
+      value: 
+      objectReference: {fileID: 719932121}
+    - target: {fileID: 4052425807144529552, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_basicAttack
+      value: 
+      objectReference: {fileID: 11400000, guid: a5b91448dde9ac849bf196351d4d326c, type: 2}
+    - target: {fileID: 4052425807144529552, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_owningPlayer
+      value: 
+      objectReference: {fileID: 6725663958928044031}
+    - target: {fileID: 4052425807144529552, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_abilities.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052425807144529552, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: 'm_abilities.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: a5b91448dde9ac849bf196351d4d326c, type: 2}
+    - target: {fileID: 4052425807144529552, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: 'm_abilities.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: a5b91448dde9ac849bf196351d4d326c, type: 2}
     - target: {fileID: 4416480666744996068, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: m_Name
       value: Tower
@@ -3541,10 +3570,6 @@ PrefabInstance:
       propertyPath: m_playerMoney
       value: 
       objectReference: {fileID: 6725663958928044032}
-    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      propertyPath: OnUnitKilledEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 6725663958928044030}
     - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: OnUnitSpanwedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -3589,6 +3614,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9129706804224110044, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_owner
+      value: 
+      objectReference: {fileID: 6725663958928044031}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
