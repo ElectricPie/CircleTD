@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -2.769104}
   m_SizeDelta: {x: 740, y: -690}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1697589591550630835
@@ -977,12 +977,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 576492026917280271}
+  - {fileID: 6641844964406492351}
   m_Father: {fileID: 1568573227977437862}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00011462388}
-  m_SizeDelta: {x: 0, y: 70}
+  m_AnchoredPosition: {x: 0, y: -0.0000076293945}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &3914546043922746743
 MonoBehaviour:
@@ -1111,6 +1112,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Tower
       objectReference: {fileID: 0}
+    - target: {fileID: 1447062179587094839, guid: 67829358935179624a2650b0a98afa11, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
     - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
       propertyPath: m_Interactable
       value: 0
@@ -1227,6 +1232,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tower Tab
       objectReference: {fileID: 0}
+    - target: {fileID: 9084440953712337629, guid: 67829358935179624a2650b0a98afa11, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.00079345703
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1248,6 +1257,152 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7709354563037086808, guid: 67829358935179624a2650b0a98afa11, type: 3}
   m_PrefabInstance: {fileID: 162606887031867940}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2544460906115957233
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7718722775162015549}
+    m_Modifications:
+    - target: {fileID: 1086707608552366593, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
+    - target: {fileID: 4031886078422868358, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
+    - target: {fileID: 4065388269865457399, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4065388269865457399, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4065388269865457399, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4065388269865457399, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpgradeSpeed
+      objectReference: {fileID: 0}
+    - target: {fileID: 4065388269865457399, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TowerAttackUpgrades, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4065388269865457399, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7901504016403425156, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_text
+      value: Tower Speed
+      objectReference: {fileID: 0}
+    - target: {fileID: 7901504016403425156, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
+    - target: {fileID: 8853609067019229425, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_upgradeChangeChannel
+      value: SpeedUpgradeChannel
+      objectReference: {fileID: 0}
+    - target: {fileID: 9137140370991448809, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_Name
+      value: Tower Speed Upgrade
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+--- !u!224 &6641844964406492351 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+  m_PrefabInstance: {fileID: 2544460906115957233}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3188626112710030500
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1261,6 +1416,10 @@ PrefabInstance:
       value: 'Upgrades
 
 '
+      objectReference: {fileID: 0}
+    - target: {fileID: 1447062179587094839, guid: 67829358935179624a2650b0a98afa11, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 3733624845576886011, guid: 67829358935179624a2650b0a98afa11, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -1407,9 +1566,53 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7718722775162015549}
     m_Modifications:
+    - target: {fileID: 1086707608552366593, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
+    - target: {fileID: 4031886078422868358, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
+    - target: {fileID: 4065388269865457399, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4065388269865457399, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4065388269865457399, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4065388269865457399, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpgradeDamage
+      objectReference: {fileID: 0}
+    - target: {fileID: 4065388269865457399, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TowerAttackUpgrades, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4065388269865457399, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7901504016403425156, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_text
+      value: Tower Damage
+      objectReference: {fileID: 0}
+    - target: {fileID: 7901504016403425156, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
+    - target: {fileID: 8853609067019229425, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
+      propertyPath: m_upgradeChangeChannel
+      value: DamageUpgradeChannel
+      objectReference: {fileID: 0}
     - target: {fileID: 9137140370991448809, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
       propertyPath: m_Name
-      value: TowerUpgradeButton
+      value: Tower Attack Upgrade
       objectReference: {fileID: 0}
     - target: {fileID: 9179232660525120846, guid: 3d7953ba9b3a0f893826cfd062ae93f9, type: 3}
       propertyPath: m_Pivot.x

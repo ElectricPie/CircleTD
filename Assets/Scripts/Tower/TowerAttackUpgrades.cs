@@ -6,7 +6,6 @@ public class TowerAttackUpgrades : MonoBehaviour
 {
     [SerializeField] private PlayerMoney m_playerMoney;
     
-    [SerializeField] private float m_upgradeMultiplier = 1.1f;
     [SerializeField] private float m_costMultiplier = 1.15f;
     [SerializeField] private float m_upgradeInitialCost = 5.0f;
     
@@ -35,18 +34,13 @@ public class TowerAttackUpgrades : MonoBehaviour
     private void Start()
     {
         BroadcastDamageValues(m_upgradeInitialCost);
-        
-        // UpgradeChangeMessage speedUpgradeMessage = new UpgradeChangeMessage(
-        //     m_towerAbilities.BasicAttackInstance.FireRate, 
-        //     m_towerAbilities.BasicAttackInstance.FireRate * m_upgradeMultiplier, 
-        //     m_upgradeInitialCost);
-        // MessageRouter.Broadcast(m_damageUpgradeChannel, speedUpgradeMessage);
+        BroadcastFireRateValues(m_upgradeInitialCost);
     }
 
     public void UpgradeDamage()
     {
         // Cost is rounded up to remove any decimals and to ensure the cost always goes up
-        float upgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_projectileAbility.Level));
+        float upgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_projectileAbility.Level - 1));
         
         if (!m_playerMoney.RemoveMoney(upgradeCost) && UIErrorMessage.Instance != null)
         {
@@ -56,31 +50,25 @@ public class TowerAttackUpgrades : MonoBehaviour
 
         m_projectileAbility.SetLevel(m_projectileAbility.Level + 1);
         
-        float nextUpgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_projectileAbility.Level));
+        float nextUpgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_projectileAbility.Level - 1));
         BroadcastDamageValues(nextUpgradeCost);
     }
 
     public void UpgradeSpeed()
     {
         // Cost is rounded up to remove any decimals and to ensure the cost always goes up
-        // float upgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_speedLevel));
-        //
-        // if (!m_playerMoney.RemoveMoney(upgradeCost) && UIErrorMessage.Instance is not null)
-        // {
-        //     UIErrorMessage.Instance.ShowError("Insignificant money for upgrade");
-        //     return;
-        // }
-        //
-        // float newSpeed = m_towerAttack.FireRate;
-        // newSpeed *= m_upgradeMultiplier;
-        //
-        // m_towerAttack.FireRate = newSpeed;
-        // m_speedLevel++;
-        //
-        // if (m_speedButton is not null)
-        // {
-        //     m_speedButton.UpdateText(newSpeed, newSpeed * m_upgradeMultiplier,  Mathf.Ceil(upgradeCost * m_costMultiplier));
-        // }
+        float upgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_projectileAbility.FireRateLevel - 1));
+        
+        if (!m_playerMoney.RemoveMoney(upgradeCost) && UIErrorMessage.Instance != null)
+        {
+            UIErrorMessage.Instance.ShowError("Insignificant money for upgrade");
+            return;
+        }
+
+        m_projectileAbility.FireRateLevel++;
+        
+        float nextUpgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_projectileAbility.FireRateLevel - 1));
+        BroadcastFireRateValues(nextUpgradeCost);
     }
 
     private void BroadcastDamageValues(float upgradeCost)
@@ -91,5 +79,15 @@ public class TowerAttackUpgrades : MonoBehaviour
             m_projectileAbility.GetDamage(m_projectileAbility.Level + 1) 
             );
         MessageRouter.Broadcast(m_damageUpgradeChannel, damageUpgradeMessage);
+    }
+
+    private void BroadcastFireRateValues(float upgradeCost)
+    {
+        UpgradeChangeMessage speedUpgradeMessage = new UpgradeChangeMessage(
+            upgradeCost,
+            m_projectileAbility.GetFireRate(m_projectileAbility.FireRateLevel), 
+            m_projectileAbility.GetFireRate(m_projectileAbility.FireRateLevel + 1)
+            );
+        MessageRouter.Broadcast(m_speedUpgradeChannel, speedUpgradeMessage);
     }
 }

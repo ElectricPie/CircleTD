@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8063762793612358293}
   - component: {fileID: 7821727000532653649}
   - component: {fileID: 7971336517557105522}
-  - component: {fileID: 9129706804224110044}
   - component: {fileID: 3314149860893733602}
   - component: {fileID: 4052425807144529552}
   m_Layer: 0
@@ -76,34 +75,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &9129706804224110044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4416480666744996068}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43acca0e5bdb4fcb18324a3a2cad845c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ProjectileDamage: 1
-  FireRate: 5
-  m_towerWaves: {fileID: 7971336517557105522}
-  m_owner: {fileID: 0}
-  m_projectilePrefab: {fileID: 733946917715905344, guid: f7ec665cdade3129c8ac1b47a75c588f, type: 3}
-  m_projectilePoolSize: 20
-  m_projectileSpawnPoint: {x: 0, y: 2.5, z: 0}
-  m_projectileEffects:
-  - rid: 4573896471259644188
-  references:
-    version: 2
-    RefIds:
-    - rid: 4573896471259644188
-      type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
-      data:
-        DamageAmount: 1
 --- !u!114 &3314149860893733602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,6 +93,8 @@ MonoBehaviour:
   m_upgradeInitialCost: 5
   m_damageButton: {fileID: 0}
   m_speedButton: {fileID: 0}
+  m_damageUpgradeChannel: DamageUpgradeChannel
+  m_speedUpgradeChannel: SpeedUpgradeChannel
 --- !u!114 &4052425807144529552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,8 +108,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_owningPlayer: {fileID: 0}
+  m_towerWaves: {fileID: 7971336517557105522}
   m_basicAttack: {fileID: 11400000, guid: a5b91448dde9ac849bf196351d4d326c, type: 2}
-  m_abilities: []
   m_projectileSpawnPointOffset: {x: 0, y: 2.5, z: 0}
 --- !u!1001 &7155740735048003876
 PrefabInstance:
