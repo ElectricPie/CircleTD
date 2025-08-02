@@ -1,3 +1,5 @@
+using System;
+using ElectricPie.UnityMessageRouter;
 using UnityEngine;
 
 public class TowerAttackUpgrades : MonoBehaviour
@@ -10,78 +12,84 @@ public class TowerAttackUpgrades : MonoBehaviour
     
     [SerializeField] private TowerUpgradeButton m_damageButton;
     [SerializeField] private TowerUpgradeButton m_speedButton;
-
-    private TowerAttack m_towerAttack;
     
-    private int m_damageLevel = 1;
-    private int m_speedLevel = 1;
+    [Header("Message Router Channels")]
+    [SerializeField] private string m_damageUpgradeChannel = "DamageUpgradeChannel";
+    [SerializeField] private string m_speedUpgradeChannel = "SpeedUpgradeChannel";
+
+    private TowerAbilities m_towerAbilities;
+
+    private ProjectileAbilityInstance m_projectileAbility;
 
     private void Awake()
     {
-        m_towerAttack = GetComponent<TowerAttack>();
-
-        if (m_playerMoney is null)
+        if (m_playerMoney == null)
         {
-            Debug.LogError($"TowerAttackUpgrade on {name} is missing reference to PlayerMoney script", this);
+            throw new Exception($"TowerAttackUpgrade on {name} is missing reference to PlayerMoney script");
         }
+
+        m_towerAbilities = GetComponent<TowerAbilities>();
+        m_projectileAbility = m_towerAbilities.BasicAttackInstance;
     }
 
     private void Start()
     {
-        if (m_damageButton is not null)
-        {
-            m_damageButton.UpdateText(m_towerAttack.ProjectileDamage, m_towerAttack.ProjectileDamage * m_upgradeMultiplier, m_upgradeInitialCost);
-        }
+        BroadcastDamageValues(m_upgradeInitialCost);
         
-        if (m_speedButton is not null)
-        {
-            m_speedButton.UpdateText(m_towerAttack.FireRate, m_towerAttack.FireRate * m_upgradeMultiplier, m_upgradeInitialCost);
-        }
+        // UpgradeChangeMessage speedUpgradeMessage = new UpgradeChangeMessage(
+        //     m_towerAbilities.BasicAttackInstance.FireRate, 
+        //     m_towerAbilities.BasicAttackInstance.FireRate * m_upgradeMultiplier, 
+        //     m_upgradeInitialCost);
+        // MessageRouter.Broadcast(m_damageUpgradeChannel, speedUpgradeMessage);
     }
 
     public void UpgradeDamage()
     {
         // Cost is rounded up to remove any decimals and to ensure the cost always goes up
-        float upgradeCost =  Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_damageLevel));
+        float upgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_projectileAbility.Level));
         
-        if (!m_playerMoney.RemoveMoney(upgradeCost) && UIErrorMessage.Instance is not null)
+        if (!m_playerMoney.RemoveMoney(upgradeCost) && UIErrorMessage.Instance != null)
         {
             UIErrorMessage.Instance.ShowError("Insignificant money for upgrade");
             return;
         }
-        
-        float newDamage = m_towerAttack.ProjectileDamage;
-        newDamage *= m_upgradeMultiplier;
 
-        m_towerAttack.ProjectileDamage = newDamage;
-        m_damageLevel++;
+        m_projectileAbility.SetLevel(m_projectileAbility.Level + 1);
         
-        if (m_damageButton is not null)
-        {
-            m_damageButton.UpdateText(newDamage, newDamage * m_upgradeMultiplier,  Mathf.Ceil(upgradeCost * m_costMultiplier));
-        }
+        float nextUpgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_projectileAbility.Level));
+        BroadcastDamageValues(nextUpgradeCost);
     }
 
     public void UpgradeSpeed()
     {
         // Cost is rounded up to remove any decimals and to ensure the cost always goes up
-        float upgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_speedLevel));
+        // float upgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_speedLevel));
+        //
+        // if (!m_playerMoney.RemoveMoney(upgradeCost) && UIErrorMessage.Instance is not null)
+        // {
+        //     UIErrorMessage.Instance.ShowError("Insignificant money for upgrade");
+        //     return;
+        // }
+        //
+        // float newSpeed = m_towerAttack.FireRate;
+        // newSpeed *= m_upgradeMultiplier;
+        //
+        // m_towerAttack.FireRate = newSpeed;
+        // m_speedLevel++;
+        //
+        // if (m_speedButton is not null)
+        // {
+        //     m_speedButton.UpdateText(newSpeed, newSpeed * m_upgradeMultiplier,  Mathf.Ceil(upgradeCost * m_costMultiplier));
+        // }
+    }
 
-        if (!m_playerMoney.RemoveMoney(upgradeCost) && UIErrorMessage.Instance is not null)
-        {
-            UIErrorMessage.Instance.ShowError("Insignificant money for upgrade");
-            return;
-        }
-        
-        float newSpeed = m_towerAttack.FireRate;
-        newSpeed *= m_upgradeMultiplier;
-
-        m_towerAttack.FireRate = newSpeed;
-        m_speedLevel++;
-
-        if (m_speedButton is not null)
-        {
-            m_speedButton.UpdateText(newSpeed, newSpeed * m_upgradeMultiplier,  Mathf.Ceil(upgradeCost * m_costMultiplier));
-        }
+    private void BroadcastDamageValues(float upgradeCost)
+    {
+        UpgradeChangeMessage damageUpgradeMessage = new UpgradeChangeMessage(
+            upgradeCost,
+            m_projectileAbility.GetDamage(m_projectileAbility.Level), 
+            m_projectileAbility.GetDamage(m_projectileAbility.Level + 1) 
+            );
+        MessageRouter.Broadcast(m_damageUpgradeChannel, damageUpgradeMessage);
     }
 }

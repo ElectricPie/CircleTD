@@ -4,10 +4,11 @@ using UnityEngine;
 [Serializable]
 public class DamageEffect : GameEffect
 {
-    public float DamageAmount = 1.0f;
+    public AnimationCurve DamageCurve;
 
-    public override void Execute(GameObject caster, GameObject target)
+    public override void Execute(GameObject caster, GameObject target, int level = 1)
     {
-        target.GetComponent<UnitHealth>()?.Damage(DamageAmount, caster);
+        float damage = DamageCurve.Evaluate(level);
+        target.GetComponent<UnitHealth>()?.Damage(damage, caster);
     }
 }

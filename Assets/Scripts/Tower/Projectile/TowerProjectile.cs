@@ -11,8 +11,9 @@ public class TowerProjectile : MonoBehaviour
     
     public ISharedEffects Effects;
 
-    public GameObject Owner { private get; set; } 
-
+    public GameObject Owner { private get; set; }
+    public int Level { private get; set; } = 1;
+    
     [Tooltip("Time after creation before projectile the projectile triggers its on hit event")]
     [SerializeField] [Min(0)] private float m_timeoutTime = 4.0f;
 
@@ -70,9 +71,9 @@ public class TowerProjectile : MonoBehaviour
         if (m_target == null)
             return;
         
-        foreach (GameEffect effect in Effects.GetEffects())
+        foreach (GameEffectScriptableObject gameEffectScriptableObject in Effects.GetEffects())
         {
-            effect.Execute(Owner, m_target);
+            gameEffectScriptableObject.Effect.Execute(Owner, m_target, Level);
         }
     }
 

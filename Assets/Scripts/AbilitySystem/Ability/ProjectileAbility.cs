@@ -7,11 +7,15 @@ using Object = UnityEngine.Object;
 [CreateAssetMenu(fileName = "New Projectile Ability Data", menuName = "Abilities/New Projectile Ability Data")]
 public class ProjectileAbilityData : AbilityData
 {
+    [SerializeField] private GameEffectScriptableObject m_damageEffectObject;
     [SerializeField] private TowerProjectile m_projectilePrefab = null;
     [SerializeField] private int m_poolSize = 10;
+    [SerializeField] [Min(0.1f)] private float m_fireRate = 1;
 
     public TowerProjectile ProjectilePrefab => m_projectilePrefab;
     public int PoolSize => m_poolSize;
+    public float FireRate => m_fireRate;
+    public GameEffectScriptableObject DamageGameEffect => m_damageEffectObject;
 }
 
 public class ProjectileInitData : AbilityInitData
@@ -19,7 +23,6 @@ public class ProjectileInitData : AbilityInitData
     public Transform SpawnTransform = null;
     public Vector3 SpawnOffSet = Vector3.zero;
     public TowerWaves TowerWaveComponent = null;
-    public float FireRate = 1.0f;
 
     public ProjectileInitData(GameObject owner, AbilityData abilityData) : base(owner, abilityData)
     {
@@ -28,8 +31,10 @@ public class ProjectileInitData : AbilityInitData
 
 public class ProjectileAbilityInstance : AbilityInstance, ISharedEffects
 {
-    [SerializeReference] private readonly List<GameEffect> m_effects = new List<GameEffect>();
-    
+    public GameEffectScriptableObject DamageEffect { get; private set; }
+    public List<GameEffectScriptableObject> Effects { get; } = new List<GameEffectScriptableObject>();
+    public float FireRate { get; private set; } = 1.0f;
+
     private ObjectPool<TowerProjectile> m_projectilePool;
     private float m_projectileSpeed;
 
@@ -37,31 +42,35 @@ public class ProjectileAbilityInstance : AbilityInstance, ISharedEffects
     private Unit m_currentTarget;
     private TowerWaves m_waveComponent;
 
-    private float m_fireRate = 1.0f;
     private float m_lastFireTime = int.MinValue;
-
+    
     public override void InitAbility(AbilityInitData initData)
     {
-        if (initData is not ProjectileInitData { AbilityData: ProjectileAbilityData abilityData } projectileInitData)
+        if (initData is not ProjectileInitData { AbilityData: ProjectileAbilityData projectileAbilityData } projectileInitData)
         {
             Debug.LogError("Tried to initialized projectile ability with non ProjectileInitData");
             return;
         }
 
-        if (abilityData.ProjectilePrefab == null)
+        if (projectileAbilityData.ProjectilePrefab == null)
         {
-            throw new Exception($"Projectile Ability Data is missing projectile prefab");
+            throw new Exception("Projectile Ability Data is missing projectile prefab");
         }
 
+        m_projectileSpeed = projectileAbilityData.ProjectilePrefab.GetComponent<TowerProjectileMovement>().Speed;
         m_spawnPoint = projectileInitData.SpawnTransform;
-        m_projectileSpeed = abilityData.ProjectilePrefab.GetComponent<TowerProjectileMovement>().Speed;
-        m_fireRate = projectileInitData.FireRate;
         m_waveComponent = projectileInitData.TowerWaveComponent;
+        FireRate = projectileAbilityData.FireRate;
+        
+        // Need to keep track of damage effect as it will be upgraded, need to clone it otherwise it will affect original
+        DamageEffect = projectileAbilityData.DamageGameEffect;
+        Effects.Add(DamageEffect);
+        Effects.AddRange(projectileAbilityData.Effects);
 
         m_projectilePool = new ObjectPool<TowerProjectile>(
             () =>
             {
-                TowerProjectile projectile = Object.Instantiate(abilityData.ProjectilePrefab);
+                TowerProjectile projectile = Object.Instantiate(projectileAbilityData.ProjectilePrefab);
                 projectile.Owner = projectileInitData.Owner;
                 projectile.Effects = this;
                 return projectile;
@@ -69,10 +78,13 @@ public class ProjectileAbilityInstance : AbilityInstance, ISharedEffects
             projectile =>
             {
                 projectile.gameObject.SetActive(true);
+                
                 Vector3 spawnPoint = m_spawnPoint.position + projectileInitData.SpawnOffSet;
-                Vector3 predictedPos = GetPredictedLocation(m_currentTarget.transform.position);
                 projectile.transform.position = spawnPoint;
+                Vector3 predictedPos = GetPredictedLocation(m_currentTarget.transform.position);
                 projectile.SetTarget(m_currentTarget, predictedPos);
+                
+                projectile.Level = Level;
 
                 projectile.OnHitEvent += OnProjectileHit;
                 projectile.OnTimeoutEvent += OnProjectileHit;
@@ -86,8 +98,8 @@ public class ProjectileAbilityInstance : AbilityInstance, ISharedEffects
                 projectile.OnTimeoutEvent -= OnProjectileHit;
                 projectile.OnTargetKilledEvent -= OnProjectileHit;
             },
-            projectile => { Object.Destroy(projectile.gameObject); }, false, abilityData.PoolSize,
-            abilityData.PoolSize * 2);
+            projectile => { Object.Destroy(projectile.gameObject); }, false, projectileAbilityData.PoolSize,
+            projectileAbilityData.PoolSize * 2);
     }
 
     public override void TryActivate()
@@ -99,11 +111,16 @@ public class ProjectileAbilityInstance : AbilityInstance, ISharedEffects
                 return;
         }
         
-        if (m_lastFireTime + m_fireRate < Time.time)
+        if (m_lastFireTime + FireRate < Time.time)
         {
             m_lastFireTime = Time.time;
             m_projectilePool.Get();
         }
+    }
+
+    public float GetDamage(int level)
+    {
+        return ((DamageEffect)DamageEffect.Effect).DamageCurve.Evaluate(level);
     }
 
     private Vector3 GetPredictedLocation(Vector3 targetPos)
@@ -135,8 +152,8 @@ public class ProjectileAbilityInstance : AbilityInstance, ISharedEffects
         m_projectilePool.Release(projectile);
     }
 
-    public List<GameEffect> GetEffects()
+    public List<GameEffectScriptableObject> GetEffects()
     {
-        return m_effects;
+        return Effects;
     }
 }

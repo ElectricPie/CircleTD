@@ -1,3 +1,4 @@
+using ElectricPie.UnityMessageRouter;
 using TMPro;
 using UnityEngine;
 
@@ -5,17 +6,16 @@ public class TowerUpgradeButton : MonoBehaviour
 {
     [SerializeField] private TMP_Text m_upgradeAmountText;
     [SerializeField] private TMP_Text m_upgradeButtonText;
+    
+    [Header("Message Router Channels")]
+    [SerializeField] private string m_upgradeChangeChannel = "UpgradeChannel";
 
-    public void UpdateText(float currentValue, float nextValue, float cost)
+    private void Awake()
     {
-        if (m_upgradeAmountText is not null)
-        {
-            m_upgradeAmountText.text = $"{currentValue:0.00} -> {nextValue:0.00}";
-        }
-
-        if (m_upgradeButtonText is not null)
-        {
-            m_upgradeButtonText.text = $"£{cost}";
-        }
+        MessageRouter.Register<UpgradeChangeMessage>(this, m_upgradeChangeChannel, 
+            payload => {
+                m_upgradeAmountText.text = $"{payload.NewValue:0.00} -> {payload.NextValue:0.00}";
+                m_upgradeButtonText.text = $"£{payload.NewCost}";
+            });
     }
 }

@@ -7,12 +7,14 @@ public class TowerAbilities : MonoBehaviour
     [SerializeField] private GameObject m_owningPlayer;
     [SerializeField] private TowerWaves m_towerWaves;
     
-    [SerializeField] private AbilityData m_basicAttack;
-    [SerializeField] private List<AbilityData> m_abilities;
-    private List<AbilityInstance> m_abilityInstances;
+    [SerializeField] private ProjectileAbilityData m_basicAttack;
+    // [SerializeField] private List<AbilityData> m_activeAbilities;
+    // private List<AbilityInstance> m_activeAbilityInstances;
 
     [SerializeField] private Vector3 m_projectileSpawnPointOffset;
-    
+
+    public ProjectileAbilityInstance BasicAttackInstance { get; private set; }
+
     private void Awake()
     {
         if (m_basicAttack == null)
@@ -20,25 +22,26 @@ public class TowerAbilities : MonoBehaviour
             throw new Exception($"{name} is missing Basic Attack ability");
         }
 
-        m_abilityInstances = new List<AbilityInstance>();
+        // m_activeAbilityInstances = new List<AbilityInstance>();
 
-        ProjectileAbilityInstance basicAttack = new ProjectileAbilityInstance();
+        BasicAttackInstance = new ProjectileAbilityInstance();
         ProjectileInitData initData = new ProjectileInitData(m_owningPlayer, m_basicAttack)
         {
             SpawnTransform = transform,
             SpawnOffSet = m_projectileSpawnPointOffset,
             TowerWaveComponent = m_towerWaves
         };
-        basicAttack.InitAbility(initData);
-        m_abilityInstances.Add(basicAttack);
+        BasicAttackInstance.InitAbility(initData);
     }
 
     private void Update()
     {
-        foreach (AbilityInstance instance in m_abilityInstances)
-        {
-            instance.TryActivate();
-        }
+        BasicAttackInstance.TryActivate();
+        
+        // foreach (AbilityInstance instance in m_activeAbilityInstances)
+        // {
+        //     instance.TryActivate();
+        // }
     }
 
     private void OnDrawGizmos()
