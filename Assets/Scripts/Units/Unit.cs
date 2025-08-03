@@ -1,7 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(UnitHealth))]
-[RequireComponent(typeof(UnitMoney))]
+[RequireComponent(typeof(UnitHealth)), RequireComponent(typeof(UnitMoney)), RequireComponent(typeof(EffectsContainer))]
 public class Unit : MonoBehaviour
 {
     public UnitHealth HealthComponent { get; private set; }

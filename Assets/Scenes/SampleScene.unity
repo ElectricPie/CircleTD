@@ -226,17 +226,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3844681227347834737, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
   m_PrefabInstance: {fileID: 629976957}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &130632916 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6454198397857618176, guid: c68fc8019a67462fb9ff8d5873172e79, type: 3}
-  m_PrefabInstance: {fileID: 1987061372}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f46fd04b44a49298dabc27b1cb9ac0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &295944007
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2713,6 +2702,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 7371096466507088161}
+    - target: {fileID: 1955851557777430278, guid: c68fc8019a67462fb9ff8d5873172e79, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpgradeSpeed
+      objectReference: {fileID: 0}
     - target: {fileID: 1996517620016249950, guid: c68fc8019a67462fb9ff8d5873172e79, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -3243,15 +3236,43 @@ PrefabInstance:
     - target: {fileID: 3314149860893733602, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: m_speedButton
       value: 
-      objectReference: {fileID: 130632916}
+      objectReference: {fileID: 0}
     - target: {fileID: 3314149860893733602, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: m_damageButton
       value: 
       objectReference: {fileID: 1987061374}
+    - target: {fileID: 3314149860893733602, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_speedUpgradeChannel
+      value: SpeedUpgradeChannel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3314149860893733602, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_damageUpgradeChannel
+      value: DamageUpgradeChannel
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052425807144529552, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_towerWaves
+      value: 
+      objectReference: {fileID: 719932121}
+    - target: {fileID: 4052425807144529552, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_basicAttack
+      value: 
+      objectReference: {fileID: 11400000, guid: a5b91448dde9ac849bf196351d4d326c, type: 2}
     - target: {fileID: 4052425807144529552, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: m_owningPlayer
       value: 
       objectReference: {fileID: 6725663958928044031}
+    - target: {fileID: 4052425807144529552, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_abilities.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052425807144529552, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: 'm_abilities.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: a5b91448dde9ac849bf196351d4d326c, type: 2}
+    - target: {fileID: 4052425807144529552, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: 'm_abilities.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: a5b91448dde9ac849bf196351d4d326c, type: 2}
     - target: {fileID: 4416480666744996068, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: m_Name
       value: Tower
@@ -3304,7 +3325,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9129706804224110044, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_owner
+      value: 
+      objectReference: {fileID: 6725663958928044031}
+    m_RemovedComponents:
+    - {fileID: 9129706804224110044, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

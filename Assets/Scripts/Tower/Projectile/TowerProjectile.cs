@@ -70,10 +70,14 @@ public class TowerProjectile : MonoBehaviour
     {
         if (m_target == null)
             return;
+
+        EffectsContainer effectsContainer = m_target.GetComponent<EffectsContainer>();
+        if (effectsContainer == null)
+            return;
         
         foreach (GameEffectScriptableObject gameEffectScriptableObject in Effects.GetEffects())
         {
-            gameEffectScriptableObject.Effect.Execute(Owner, m_target, Level);
+            effectsContainer.ApplyEffect(Owner, gameEffectScriptableObject.Effect, Level);
         }
     }
 
