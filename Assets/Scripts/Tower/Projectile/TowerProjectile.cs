@@ -75,9 +75,9 @@ public class TowerProjectile : MonoBehaviour
         if (effectsContainer == null)
             return;
         
-        foreach (GameEffectScriptableObject gameEffectScriptableObject in Effects.GetEffects())
+        foreach (GameEffect effect in Effects.GetEffects())
         {
-            effectsContainer.ApplyEffect(Owner, gameEffectScriptableObject.Effect, Level);
+            effectsContainer.ApplyEffect(Owner, effect, Level);
         }
     }
 

@@ -9,9 +9,6 @@ public class TowerAttackUpgrades : MonoBehaviour
     [SerializeField] private float m_costMultiplier = 1.15f;
     [SerializeField] private float m_upgradeInitialCost = 5.0f;
     
-    [SerializeField] private TowerUpgradeButton m_damageButton;
-    [SerializeField] private TowerUpgradeButton m_speedButton;
-    
     [Header("Message Router Channels")]
     [SerializeField] private string m_damageUpgradeChannel = "DamageUpgradeChannel";
     [SerializeField] private string m_speedUpgradeChannel = "SpeedUpgradeChannel";

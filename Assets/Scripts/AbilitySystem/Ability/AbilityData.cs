@@ -5,7 +5,7 @@ using UnityEngine;
 public class AbilityData : ScriptableObject
 {
     public string Label;
-    [SerializeReference] public List<GameEffectScriptableObject> Effects;
+    [SerializeReference] public List<GameEffect> Effects;
 
     protected void OnEnable()
     {
@@ -14,6 +14,6 @@ public class AbilityData : ScriptableObject
             Label = name;
         }
 
-        Effects ??= new List<GameEffectScriptableObject>();
+        Effects ??= new List<GameEffect>();
     }
 }

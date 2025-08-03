@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Pool;
 using Object = UnityEngine.Object;
@@ -7,16 +8,16 @@ using Object = UnityEngine.Object;
 [CreateAssetMenu(fileName = "New Projectile Ability Data", menuName = "Abilities/New Projectile Ability Data")]
 public class ProjectileAbilityData : AbilityData
 {
-    [SerializeField] private GameEffectScriptableObject m_damageEffectObject;
+    [SerializeReference, BoxGroup("Base Attack")] private DamageEffect m_baseAttackEffect;
     [SerializeField] private TowerProjectile m_projectilePrefab = null;
     [SerializeField] private int m_poolSize = 10;
     [SerializeField] [Min(0.1f)] private float m_fireRate = 1;
     [SerializeField] private AnimationCurve m_fireRateCurve;
 
+    public DamageEffect BaseAttackEffect => m_baseAttackEffect;
     public TowerProjectile ProjectilePrefab => m_projectilePrefab;
     public int PoolSize => m_poolSize;
     public float FireRate => m_fireRate;
-    public GameEffectScriptableObject DamageGameEffect => m_damageEffectObject;
     public AnimationCurve FireRateCurve => m_fireRateCurve;
 }
 
@@ -33,11 +34,10 @@ public class ProjectileInitData : AbilityInitData
 
 public class ProjectileAbilityInstance : AbilityInstance, ISharedEffects
 {
-    public GameEffectScriptableObject DamageEffect { get; private set; }
-    public List<GameEffectScriptableObject> Effects { get; } = new List<GameEffectScriptableObject>();
-
     public int FireRateLevel { get; set; } = 1;
-
+    
+    private DamageEffect m_damageEffect;
+    
     private ObjectPool<TowerProjectile> m_projectilePool;
     private float m_projectileSpeed;
 
@@ -48,6 +48,9 @@ public class ProjectileAbilityInstance : AbilityInstance, ISharedEffects
     private float m_lastFireTime = int.MinValue;
 
     private ProjectileAbilityData m_abilityData;
+
+    private readonly List<GameEffect> m_effects = new List<GameEffect>();
+
     
     public override void InitAbility(AbilityInitData initData)
     {
@@ -66,11 +69,9 @@ public class ProjectileAbilityInstance : AbilityInstance, ISharedEffects
         m_projectileSpeed = projectileAbilityData.ProjectilePrefab.GetComponent<TowerProjectileMovement>().Speed;
         m_spawnPoint = projectileInitData.SpawnTransform;
         m_waveComponent = projectileInitData.TowerWaveComponent;
-        
-        // Need to keep track of damage effect as it will be upgraded, need to clone it otherwise it will affect original
-        DamageEffect = projectileAbilityData.DamageGameEffect;
-        Effects.Add(DamageEffect);
-        Effects.AddRange(projectileAbilityData.Effects);
+
+        m_effects.Add(m_abilityData.BaseAttackEffect);
+        m_effects.AddRange(projectileAbilityData.Effects);
 
         m_projectilePool = new ObjectPool<TowerProjectile>(
             () =>
@@ -122,15 +123,17 @@ public class ProjectileAbilityInstance : AbilityInstance, ISharedEffects
             m_projectilePool.Get();
         }
     }
+    
+    /* ISharedEffects Interface begin */ 
+    public List<GameEffect> GetEffects()
+    {
+        return m_effects;
+    }
+    /* ISharedEffects Interface end */
 
     public float GetDamage(int level)
     {
-        return ((DamageEffect)DamageEffect.Effect).DamageCurve.Evaluate(level);
-    }
-
-    public List<GameEffectScriptableObject> GetEffects()
-    {
-        return Effects;
+        return m_abilityData.BaseAttackEffect.DamageCurve.Evaluate(level);
     }
 
     public float GetFireRate(int level)

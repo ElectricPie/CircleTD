@@ -2,5 +2,5 @@
 
 public interface ISharedEffects
 {
-    public List<GameEffectScriptableObject> GetEffects();
+    public List<GameEffect> GetEffects();
 }

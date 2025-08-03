@@ -17,7 +17,7 @@ public class TowerAttack : MonoBehaviour, ISharedEffects
     
     [SerializeField] private Vector3 m_projectileSpawnPoint;
 
-    [SerializeReference] private List<GameEffectScriptableObject> m_projectileEffects = new List<GameEffectScriptableObject>();
+    [SerializeReference] private List<GameEffect> m_projectileEffects = new List<GameEffect>();
 
     private Unit m_currentTarget;
 
@@ -27,7 +27,7 @@ public class TowerAttack : MonoBehaviour, ISharedEffects
     private ObjectPool<TowerProjectile> m_projectilePool;
 
     /* ISharedEffect Implementation start */
-    public List<GameEffectScriptableObject> GetEffects()
+    public List<GameEffect> GetEffects()
     {
         return m_projectileEffects;
     }
