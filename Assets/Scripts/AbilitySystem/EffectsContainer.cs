@@ -1,48 +1,26 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-internal class PeriodicEffectContainer
+internal struct PeriodicEffectContainer
 {
-    private readonly GameObject m_caster;
-    private readonly GameEffect m_effect;
-    private readonly GameObject m_target;
-    private readonly int m_level;
-    
-    private float m_lastTriggered;
+    public readonly GameObject Caster;
+    public readonly GameEffect Effect;
+    public readonly GameObject Target;
+    public readonly int Level;
 
-    private PeriodicEffectContainer() {}
     public PeriodicEffectContainer(GameObject caster, GameObject target, GameEffect effect, int level)
     {
-        m_caster = caster;
-        m_effect = effect;
-        m_target = target;
-        m_level = level;
-        
-        if (effect.PeriodicEffectValues.TriggerOnApplication)
-        {
-            m_lastTriggered = float.MinValue;
-        }
-        else
-        {
-            m_lastTriggered = Time.time + effect.PeriodicEffectValues.Period;
-        }
-    }
-
-    public void TryExecute()
-    {
-        if (m_lastTriggered + m_effect.PeriodicEffectValues.Period < Time.time)
-            return;
-
-        m_lastTriggered = Time.time;
-        m_effect.Execute(m_caster, m_target, m_level);
+        Caster = caster;
+        Effect = effect;
+        Target = target;
+        Level = level;
     }
 }
 
 public class EffectsContainer : MonoBehaviour
 {
-    private readonly List<PeriodicEffectContainer> m_effects = new List<PeriodicEffectContainer>();
-
     public void ApplyEffect(GameObject caster, GameEffect effect, int level = 1)
     {
         switch (effect.DurationPolicy)
@@ -51,7 +29,9 @@ public class EffectsContainer : MonoBehaviour
                 ApplyEffectInternal(caster, effect, level);
                 break;
             case DurationPolicy.Periodic:
-                m_effects.Add(new PeriodicEffectContainer(caster, gameObject, effect, level));
+                PeriodicEffectContainer effectContainer = new PeriodicEffectContainer(caster, gameObject, effect, level);
+                IEnumerator newTickCoroutine = PeriodicEffectCoroutine(effectContainer);
+                StartCoroutine(newTickCoroutine);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -63,11 +43,24 @@ public class EffectsContainer : MonoBehaviour
         effect.Execute(caster, gameObject, level);
     }
 
-    private void Update()
+    private static IEnumerator PeriodicEffectCoroutine(PeriodicEffectContainer effectContainer)
     {
-        foreach (PeriodicEffectContainer effect in m_effects)
+        float effectStartTime = Time.time;
+        
+        if (effectContainer.Effect.PeriodicEffectValues.TriggerOnApplication)
         {
-            effect.TryExecute();
+            effectContainer.Effect.Execute(effectContainer.Caster, effectContainer.Target, effectContainer.Level);
+        }
+        
+        while (true)
+        {
+            if (effectStartTime + effectContainer.Effect.PeriodicEffectValues.Duration < Time.time)
+            {
+                yield break;
+            }
+            
+            yield return new WaitForSeconds(effectContainer.Effect.PeriodicEffectValues.Period);
+            effectContainer.Effect.Execute(effectContainer.Caster, effectContainer.Target, effectContainer.Level);
         }
     }
 }

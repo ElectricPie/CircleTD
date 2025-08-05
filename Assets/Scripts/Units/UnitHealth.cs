@@ -27,8 +27,8 @@ public class UnitHealth : MonoBehaviour
     
     public void Damage(float damageAmount, GameObject damageCauser)
     {
-        // Clamp the damage to a minimum of 1
-        damageAmount = damageAmount < 1 ? 1 : damageAmount;
+        // Clamp the damage to a minimum of 0
+        damageAmount = damageAmount < 0 ? 0 : damageAmount;
         CurrentHealth -= damageAmount;
 
         OnUnitCurrentHealthChangedEvent?.Invoke(CurrentHealth);
