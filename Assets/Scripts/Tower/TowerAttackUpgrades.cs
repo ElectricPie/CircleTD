@@ -15,7 +15,7 @@ public class TowerAttackUpgrades : MonoBehaviour
 
     private TowerAbilities m_towerAbilities;
 
-    private ProjectileAbilityInstance m_projectileAbility;
+    private TowerBasicAttackAbilityInstance m_basicAttackAbility;
 
     private void Awake()
     {
@@ -25,7 +25,7 @@ public class TowerAttackUpgrades : MonoBehaviour
         }
 
         m_towerAbilities = GetComponent<TowerAbilities>();
-        m_projectileAbility = m_towerAbilities.BasicAttackInstance;
+        m_basicAttackAbility = m_towerAbilities.BasicAttackInstance;
     }
 
     private void Start()
@@ -37,7 +37,7 @@ public class TowerAttackUpgrades : MonoBehaviour
     public void UpgradeDamage()
     {
         // Cost is rounded up to remove any decimals and to ensure the cost always goes up
-        float upgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_projectileAbility.Level - 1));
+        float upgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_basicAttackAbility.Level - 1));
         
         if (!m_playerMoney.RemoveMoney(upgradeCost) && UIErrorMessage.Instance != null)
         {
@@ -45,16 +45,16 @@ public class TowerAttackUpgrades : MonoBehaviour
             return;
         }
 
-        m_projectileAbility.SetLevel(m_projectileAbility.Level + 1);
+        m_basicAttackAbility.SetLevel(m_basicAttackAbility.Level + 1);
         
-        float nextUpgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_projectileAbility.Level - 1));
+        float nextUpgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_basicAttackAbility.Level - 1));
         BroadcastDamageValues(nextUpgradeCost);
     }
 
     public void UpgradeSpeed()
     {
         // Cost is rounded up to remove any decimals and to ensure the cost always goes up
-        float upgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_projectileAbility.FireRateLevel - 1));
+        float upgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_basicAttackAbility.FireRateLevel - 1));
         
         if (!m_playerMoney.RemoveMoney(upgradeCost) && UIErrorMessage.Instance != null)
         {
@@ -62,9 +62,9 @@ public class TowerAttackUpgrades : MonoBehaviour
             return;
         }
 
-        m_projectileAbility.FireRateLevel++;
+        m_basicAttackAbility.FireRateLevel++;
         
-        float nextUpgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_projectileAbility.FireRateLevel - 1));
+        float nextUpgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_basicAttackAbility.FireRateLevel - 1));
         BroadcastFireRateValues(nextUpgradeCost);
     }
 
@@ -72,8 +72,8 @@ public class TowerAttackUpgrades : MonoBehaviour
     {
         UpgradeChangeMessage damageUpgradeMessage = new UpgradeChangeMessage(
             upgradeCost,
-            m_projectileAbility.GetDamage(m_projectileAbility.Level), 
-            m_projectileAbility.GetDamage(m_projectileAbility.Level + 1) 
+            m_basicAttackAbility.GetDamage(m_basicAttackAbility.Level), 
+            m_basicAttackAbility.GetDamage(m_basicAttackAbility.Level + 1) 
             );
         MessageRouter.Broadcast(m_damageUpgradeChannel, damageUpgradeMessage);
     }
@@ -82,8 +82,8 @@ public class TowerAttackUpgrades : MonoBehaviour
     {
         UpgradeChangeMessage speedUpgradeMessage = new UpgradeChangeMessage(
             upgradeCost,
-            m_projectileAbility.GetFireRate(m_projectileAbility.FireRateLevel), 
-            m_projectileAbility.GetFireRate(m_projectileAbility.FireRateLevel + 1)
+            m_basicAttackAbility.GetFireRate(m_basicAttackAbility.FireRateLevel), 
+            m_basicAttackAbility.GetFireRate(m_basicAttackAbility.FireRateLevel + 1)
             );
         MessageRouter.Broadcast(m_speedUpgradeChannel, speedUpgradeMessage);
     }

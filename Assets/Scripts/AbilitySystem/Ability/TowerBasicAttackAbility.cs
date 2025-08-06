@@ -5,8 +5,8 @@ using UnityEngine;
 using UnityEngine.Pool;
 using Object = UnityEngine.Object;
 
-[CreateAssetMenu(fileName = "New Projectile Ability Data", menuName = "Abilities/New Projectile Ability Data")]
-public class ProjectileAbilityData : AbilityData
+[CreateAssetMenu(fileName = "New Basic Attack Ability Data", menuName = "Abilities/New Basic Attack Ability Data")]
+public class TowerBasicAttackAbilityData : AbilityData
 {
     [SerializeReference, BoxGroup("Base Attack")] private DamageEffect m_baseAttackEffect;
     [SerializeField] private TowerProjectile m_projectilePrefab = null;
@@ -19,18 +19,18 @@ public class ProjectileAbilityData : AbilityData
     public AnimationCurve FireRateCurve => m_fireRateCurve;
 }
 
-public class ProjectileInitData : AbilityInitData
+public class TowerBasicAttackInitData : AbilityInitData
 {
     public Transform SpawnTransform = null;
     public Vector3 SpawnOffSet = Vector3.zero;
     public TowerWaves TowerWaveComponent = null;
 
-    public ProjectileInitData(GameObject owner, AbilityData abilityData) : base(owner, abilityData)
+    public TowerBasicAttackInitData(GameObject owner, AbilityData abilityData) : base(owner, abilityData)
     {
     }
 }
 
-public class ProjectileAbilityInstance : AbilityInstance, ISharedEffects
+public class TowerBasicAttackAbilityInstance : AbilityInstance, ISharedEffects
 {
     public int FireRateLevel { get; set; } = 1;
     
@@ -45,14 +45,14 @@ public class ProjectileAbilityInstance : AbilityInstance, ISharedEffects
 
     private float m_lastFireTime = int.MinValue;
 
-    private ProjectileAbilityData m_abilityData;
+    private TowerBasicAttackAbilityData m_abilityData;
 
     private readonly List<GameEffect> m_effects = new List<GameEffect>();
 
     
     public override void InitAbility(AbilityInitData initData)
     {
-        if (initData is not ProjectileInitData { AbilityData: ProjectileAbilityData projectileAbilityData } projectileInitData)
+        if (initData is not TowerBasicAttackInitData { AbilityData: TowerBasicAttackAbilityData projectileAbilityData } projectileInitData)
         {
             Debug.LogError("Tried to initialized projectile ability with non ProjectileInitData");
             return;

@@ -7,13 +7,13 @@ public class TowerAbilities : MonoBehaviour
     [SerializeField] private GameObject m_owningPlayer;
     [SerializeField] private TowerWaves m_towerWaves;
     
-    [SerializeField] private ProjectileAbilityData m_basicAttack;
+    [SerializeField] private TowerBasicAttackAbilityData m_basicAttack;
     // [SerializeField] private List<AbilityData> m_activeAbilities;
     // private List<AbilityInstance> m_activeAbilityInstances;
 
     [SerializeField] private Vector3 m_projectileSpawnPointOffset;
 
-    public ProjectileAbilityInstance BasicAttackInstance { get; private set; }
+    public TowerBasicAttackAbilityInstance BasicAttackInstance { get; private set; }
 
     private void Awake()
     {
@@ -24,8 +24,8 @@ public class TowerAbilities : MonoBehaviour
 
         // m_activeAbilityInstances = new List<AbilityInstance>();
 
-        BasicAttackInstance = new ProjectileAbilityInstance();
-        ProjectileInitData initData = new ProjectileInitData(m_owningPlayer, m_basicAttack)
+        BasicAttackInstance = new TowerBasicAttackAbilityInstance();
+        TowerBasicAttackInitData initData = new TowerBasicAttackInitData(m_owningPlayer, m_basicAttack)
         {
             SpawnTransform = transform,
             SpawnOffSet = m_projectileSpawnPointOffset,
