@@ -11,7 +11,7 @@ public class ProjectileAbilityData : AbilityData
     [SerializeReference, BoxGroup("Base Attack")] private DamageEffect m_baseAttackEffect;
     [SerializeField] private TowerProjectile m_projectilePrefab = null;
     [SerializeField] private int m_poolSize = 10;
-    [SerializeField] private AnimationCurve m_fireRateCurve;
+    [SerializeField, Tooltip("The amount of projectiles fired per second")] private AnimationCurve m_fireRateCurve;
 
     public DamageEffect BaseAttackEffect => m_baseAttackEffect;
     public TowerProjectile ProjectilePrefab => m_projectilePrefab;

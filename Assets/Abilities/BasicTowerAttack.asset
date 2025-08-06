@@ -23,7 +23,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 1
-      value: 0.1
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -50,8 +50,8 @@ MonoBehaviour:
       data:
         m_durationPolicy: 1
         m_periodicEffectValues:
-          m_duration: 2
-          m_period: 1
+          m_duration: 10
+          m_period: 4
           m_triggerOnApplication: 0
         DamageCurve:
           serializedVersion: 2
