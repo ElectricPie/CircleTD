@@ -1,28 +1,37 @@
 ﻿using UnityEngine;
 
-public abstract class AbilityInstance
+public class AbilityInitData
+{
+    public GameObject Owner { get; } 
+    
+    private AbilityInitData() {}
+    public AbilityInitData(GameObject owner)
+    {
+        Owner = owner;
+    }
+}
+
+public class AbilityInstance
 {
     public int Level { get; private set; } = 1;
     
-    public abstract void InitAbility(AbilityInitData initData);
-    public abstract void TryActivate();
+    protected readonly AbilityData AbilityData;
+    protected readonly GameObject Owner;
+    
+    private AbilityInstance() { }
+    public AbilityInstance(AbilityData abilityData, AbilityInitData initData)
+    {
+        AbilityData = abilityData;
+        Owner = initData.Owner;
+    }
+    
+    public virtual bool TryActivate(GameObject target = null)
+    {
+        return AbilityData.Execute(target, Owner, Level);
+    }
 
     public virtual void SetLevel(int newLevel)
     {
         Level = Mathf.Max(1, newLevel);
-    }
-}
-
-public class AbilityInitData
-{
-    public GameObject Owner { get; private set; } 
-    public AbilityData AbilityData { get; private set; }
-    
-    private AbilityInitData() {}
-
-    public AbilityInitData(GameObject owner, AbilityData abilityData)
-    {
-        Owner = owner;
-        AbilityData = abilityData;
     }
 }

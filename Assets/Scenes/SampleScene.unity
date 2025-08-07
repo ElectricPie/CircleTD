@@ -3262,6 +3262,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6725663958928044031}
     - target: {fileID: 4052425807144529552, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: DEBUG_poisonTipAbility
+      value: 
+      objectReference: {fileID: 11400000, guid: d68b5cf385e28f944b4a4dfc7a1eaa7d, type: 2}
+    - target: {fileID: 4052425807144529552, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: m_abilities.Array.size
       value: 0
       objectReference: {fileID: 0}

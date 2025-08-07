@@ -37,11 +37,11 @@ public enum DurationPolicy
     Periodic
 }
 
-[CreateAssetMenu(fileName = "New Effect", menuName = "Abilities/New Effect")]
-public class GameEffectScriptableObject : ScriptableObject
-{
-    [SerializeReference, InlineProperty, HideLabel] 
-    private GameEffect m_effect;
-
-    public GameEffect Effect => m_effect;
-}
+// [CreateAssetMenu(fileName = "New Effect", menuName = "Abilities/New Effect")]
+// public class GameEffectScriptableObject : ScriptableObject
+// {
+//     [SerializeReference, InlineProperty, HideLabel] 
+//     private GameEffect m_effect;
+//
+//     public GameEffect Effect => m_effect;
+// }

@@ -17,6 +17,11 @@ public class TowerBasicAttackAbilityData : AbilityData
     public TowerProjectile ProjectilePrefab => m_projectilePrefab;
     public int PoolSize => m_poolSize;
     public AnimationCurve FireRateCurve => m_fireRateCurve;
+
+    public override AbilityInstance CreateAbilityInstance(AbilityInitData initData)
+    {
+        return new TowerBasicAttackAbilityInstance(this, initData);
+    }
 }
 
 public class TowerBasicAttackInitData : AbilityInitData
@@ -25,62 +30,63 @@ public class TowerBasicAttackInitData : AbilityInitData
     public Vector3 SpawnOffSet = Vector3.zero;
     public TowerWaves TowerWaveComponent = null;
 
-    public TowerBasicAttackInitData(GameObject owner, AbilityData abilityData) : base(owner, abilityData)
+    public TowerBasicAttackInitData(GameObject owner) : base(owner)
     {
     }
 }
 
 public class TowerBasicAttackAbilityInstance : AbilityInstance, ISharedEffects
 {
+    private readonly TowerBasicAttackAbilityData m_basicAttackAbilityData;
+
     public int FireRateLevel { get; set; } = 1;
-    
-    private DamageEffect m_damageEffect;
-    
-    private ObjectPool<TowerProjectile> m_projectilePool;
-    private float m_projectileSpeed;
 
-    private Transform m_spawnPoint;
+    public event Action<GameObject> OnTargetHit = delegate { };
+    
+    private readonly ObjectPool<TowerProjectile> m_projectilePool;
+    private readonly float m_projectileSpeed;
+    private readonly Transform m_spawnPoint;
+    private readonly TowerWaves m_waveComponent;
+    private readonly List<GameEffect> m_effects = new List<GameEffect>();
+    
     private Unit m_currentTarget;
-    private TowerWaves m_waveComponent;
-
     private float m_lastFireTime = int.MinValue;
 
-    private TowerBasicAttackAbilityData m_abilityData;
-
-    private readonly List<GameEffect> m_effects = new List<GameEffect>();
-
     
-    public override void InitAbility(AbilityInitData initData)
+    public TowerBasicAttackAbilityInstance(AbilityData abilityData, AbilityInitData initData) : base(abilityData, initData)
     {
-        if (initData is not TowerBasicAttackInitData { AbilityData: TowerBasicAttackAbilityData projectileAbilityData } projectileInitData)
-        {
-            Debug.LogError("Tried to initialized projectile ability with non ProjectileInitData");
-            return;
-        }
-
-        if (projectileAbilityData.ProjectilePrefab == null)
-        {
+        if (initData is not TowerBasicAttackInitData projectileInitData)
+            throw new Exception("Tried to initialized projectile ability with non TowerBasicAttackInitData");
+        
+        if (abilityData is not TowerBasicAttackAbilityData attackAbilityData)
+            throw new Exception("Tried to initialized projectile ability with non TowerBasicAttackAbilityData");
+        
+        if (attackAbilityData.ProjectilePrefab == null)
             throw new Exception("Projectile Ability Data is missing projectile prefab");
-        }
-
-        m_abilityData = projectileAbilityData;
-        m_projectileSpeed = projectileAbilityData.ProjectilePrefab.GetComponent<TowerProjectileMovement>().Speed;
+        
+        m_basicAttackAbilityData = attackAbilityData;
+        m_projectileSpeed = m_basicAttackAbilityData.ProjectilePrefab.GetComponent<TowerProjectileMovement>().Speed;
         m_spawnPoint = projectileInitData.SpawnTransform;
         m_waveComponent = projectileInitData.TowerWaveComponent;
-
-        m_effects.Add(m_abilityData.BaseAttackEffect);
-        m_effects.AddRange(projectileAbilityData.Effects);
-
+        
+        m_effects.Add(m_basicAttackAbilityData.BaseAttackEffect);
+        
         m_projectilePool = new ObjectPool<TowerProjectile>(
             () =>
             {
-                TowerProjectile projectile = Object.Instantiate(projectileAbilityData.ProjectilePrefab);
+                TowerProjectile projectile = Object.Instantiate(m_basicAttackAbilityData.ProjectilePrefab);
                 projectile.Owner = projectileInitData.Owner;
                 projectile.Effects = this;
                 return projectile;
             },
             projectile =>
             {
+                if (m_currentTarget == null)
+                {
+                    Debug.LogError($"Tried to get projectile with null target");
+                    return;
+                }
+                
                 projectile.gameObject.SetActive(true);
                 
                 Vector3 spawnPoint = m_spawnPoint.position + projectileInitData.SpawnOffSet;
@@ -89,7 +95,7 @@ public class TowerBasicAttackAbilityInstance : AbilityInstance, ISharedEffects
                 projectile.SetTarget(m_currentTarget, predictedPos);
                 
                 projectile.Level = Level;
-
+    
                 projectile.OnHitEvent += OnProjectileHit;
                 projectile.OnTimeoutEvent += OnProjectileHit;
                 projectile.OnTargetKilledEvent += OnProjectileHit;
@@ -97,22 +103,23 @@ public class TowerBasicAttackAbilityInstance : AbilityInstance, ISharedEffects
             projectile =>
             {
                 projectile.gameObject.SetActive(false);
-
+    
                 projectile.OnHitEvent -= OnProjectileHit;
                 projectile.OnTimeoutEvent -= OnProjectileHit;
                 projectile.OnTargetKilledEvent -= OnProjectileHit;
             },
-            projectile => { Object.Destroy(projectile.gameObject); }, false, projectileAbilityData.PoolSize,
-            projectileAbilityData.PoolSize * 2);
+            projectile => { Object.Destroy(projectile.gameObject); }, false, m_basicAttackAbilityData.PoolSize,
+            m_basicAttackAbilityData.PoolSize * 2);
     }
-
-    public override void TryActivate()
+    
+    // Ignoring target for this ability
+    public override bool TryActivate(GameObject target = null)
     {
         if (m_currentTarget == null)
         {
             m_currentTarget = m_waveComponent.GetOldestUnit();
             if (m_currentTarget == null)
-                return;
+                return false;
         }
         
         if (m_lastFireTime + (1 / GetFireRate(FireRateLevel)) < Time.time)
@@ -120,6 +127,7 @@ public class TowerBasicAttackAbilityInstance : AbilityInstance, ISharedEffects
             m_lastFireTime = Time.time;
             m_projectilePool.Get();
         }
+		return true;
     }
     
     /* ISharedEffects Interface begin */ 
@@ -131,12 +139,12 @@ public class TowerBasicAttackAbilityInstance : AbilityInstance, ISharedEffects
 
     public float GetDamage(int level)
     {
-        return m_abilityData.BaseAttackEffect.DamageCurve.Evaluate(level);
+        return m_basicAttackAbilityData.BaseAttackEffect.DamageCurve.Evaluate(level);
     }
 
     public float GetFireRate(int level)
     {
-        return m_abilityData.FireRateCurve.Evaluate(level);
+        return m_basicAttackAbilityData.FireRateCurve.Evaluate(level);
     }
 
     private Vector3 GetPredictedLocation(Vector3 targetPos)
@@ -165,6 +173,7 @@ public class TowerBasicAttackAbilityInstance : AbilityInstance, ISharedEffects
 
     private void OnProjectileHit(TowerProjectile projectile)
     {
+        OnTargetHit?.Invoke(projectile.Target);
         m_projectilePool.Release(projectile);
     }
 }

@@ -1,19 +1,21 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Ability Data", menuName = "Abilities/New Ability Data")]
-public class AbilityData : ScriptableObject
+public abstract class AbilityData : ScriptableObject
 {
     public string Label;
-    [SerializeReference] public List<GameEffect> Effects;
-
+    
     protected void OnEnable()
     {
         if (string.IsNullOrEmpty(Label))
         {
             Label = name;
         }
+    }
 
-        Effects ??= new List<GameEffect>();
+    public virtual bool Execute(GameObject target, GameObject caster, int level = 1) { return true; }
+
+    public virtual AbilityInstance CreateAbilityInstance(AbilityInitData initData)
+    {
+        return new AbilityInstance(this, initData);
     }
 }

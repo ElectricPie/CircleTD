@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(TowerProjectileMovement))]
@@ -13,12 +12,12 @@ public class TowerProjectile : MonoBehaviour
 
     public GameObject Owner { private get; set; }
     public int Level { private get; set; } = 1;
-    
+    public GameObject Target { get; private set; } = null;
+
     [Tooltip("Time after creation before projectile the projectile triggers its on hit event")]
     [SerializeField] [Min(0)] private float m_timeoutTime = 4.0f;
 
     private TowerProjectileMovement m_movementComponent = null;
-    private GameObject m_target = null;
 
     private void Awake()
     {
@@ -36,7 +35,7 @@ public class TowerProjectile : MonoBehaviour
         target.HealthComponent.OnKilledEvent += OnTargetKilled;
 
         m_movementComponent.TargetPos = targetPos;
-        m_target = target.gameObject;
+        Target = target.gameObject;
         StartTimeout();
     }
 
@@ -49,7 +48,7 @@ public class TowerProjectile : MonoBehaviour
     private void Timeout()
     {
         ApplyEffects();
-        m_target = null;
+        Target = null;
         OnTimeoutEvent?.Invoke(this);
     }
 
@@ -58,7 +57,7 @@ public class TowerProjectile : MonoBehaviour
         if (collision == null)
             return;
         
-        if (collision.gameObject != m_target.gameObject) 
+        if (collision.gameObject != Target.gameObject) 
             return;
         
         CancelInvoke(nameof(Timeout));
@@ -68,10 +67,10 @@ public class TowerProjectile : MonoBehaviour
 
     private void ApplyEffects()
     {
-        if (m_target == null)
+        if (Target == null)
             return;
 
-        EffectsContainer effectsContainer = m_target.GetComponent<EffectsContainer>();
+        EffectsContainer effectsContainer = Target.GetComponent<EffectsContainer>();
         if (effectsContainer == null)
             return;
         
@@ -84,8 +83,8 @@ public class TowerProjectile : MonoBehaviour
     private void OnTargetKilled(GameObject target, GameObject killer)
     {
         CancelInvoke(nameof(Timeout));
-        
-        m_target = null;
         OnTargetKilledEvent?.Invoke(this);
+        
+        Target = null;
     }
 }

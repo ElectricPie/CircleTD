@@ -8,40 +8,54 @@ public class TowerAbilities : MonoBehaviour
     [SerializeField] private TowerWaves m_towerWaves;
     
     [SerializeField] private TowerBasicAttackAbilityData m_basicAttack;
-    // [SerializeField] private List<AbilityData> m_activeAbilities;
-    // private List<AbilityInstance> m_activeAbilityInstances;
 
     [SerializeField] private Vector3 m_projectileSpawnPointOffset;
 
+    [SerializeField] private AbilityData DEBUG_poisonTipAbility;
+
     public TowerBasicAttackAbilityInstance BasicAttackInstance { get; private set; }
 
+    private readonly HashSet<AbilityInstance> m_onHitAbilities = new HashSet<AbilityInstance>();
+
+    public void AddOnHitAbility(AbilityData newAbility)
+    {
+        AbilityInitData newAbilityData = new AbilityInitData(m_owningPlayer);
+        m_onHitAbilities.Add(newAbility.CreateAbilityInstance(newAbilityData));
+    }
+    
     private void Awake()
     {
         if (m_basicAttack == null)
-        {
             throw new Exception($"{name} is missing Basic Attack ability");
-        }
-
-        // m_activeAbilityInstances = new List<AbilityInstance>();
-
-        BasicAttackInstance = new TowerBasicAttackAbilityInstance();
-        TowerBasicAttackInitData initData = new TowerBasicAttackInitData(m_owningPlayer, m_basicAttack)
+        
+        TowerBasicAttackInitData initData = new TowerBasicAttackInitData(m_owningPlayer)
         {
             SpawnTransform = transform,
             SpawnOffSet = m_projectileSpawnPointOffset,
             TowerWaveComponent = m_towerWaves
         };
-        BasicAttackInstance.InitAbility(initData);
+        BasicAttackInstance = (TowerBasicAttackAbilityInstance)m_basicAttack.CreateAbilityInstance(initData);
+        BasicAttackInstance.OnTargetHit += target =>
+        { 
+            // Activate any other abilities 
+            foreach (AbilityInstance ability in m_onHitAbilities)
+            {
+                ability.TryActivate(target);
+            }
+        };
+        
+        Invoke(nameof(DEBUG_ADD_POISON), 5.0f);
+    }
+
+    private void DEBUG_ADD_POISON()
+    {
+        Debug.Log("Adding Poison");
+        AddOnHitAbility(DEBUG_poisonTipAbility);
     }
 
     private void Update()
     {
         BasicAttackInstance.TryActivate();
-        
-        // foreach (AbilityInstance instance in m_activeAbilityInstances)
-        // {
-        //     instance.TryActivate();
-        // }
     }
 
     private void OnDrawGizmos()
