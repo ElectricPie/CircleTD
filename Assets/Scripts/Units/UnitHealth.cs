@@ -33,7 +33,7 @@ public class UnitHealth : MonoBehaviour
 
         OnUnitCurrentHealthChangedEvent?.Invoke(CurrentHealth);
 
-        if (CurrentHealth >= 0) 
+        if (CurrentHealth > 0) 
             return;
         
         // Handle unit death
