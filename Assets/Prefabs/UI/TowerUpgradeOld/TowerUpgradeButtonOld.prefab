@@ -536,7 +536,7 @@ GameObject:
   - component: {fileID: 9179232660525120846}
   - component: {fileID: 8853609067019229425}
   m_Layer: 5
-  m_Name: TowerUpgradeButton
+  m_Name: TowerUpgradeButtonOld
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

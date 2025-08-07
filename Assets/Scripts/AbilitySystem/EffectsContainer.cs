@@ -33,7 +33,6 @@ internal class PeriodicEffectContainer
     public void RefreshDuration()
     {
         ExpirationTime = Time.time + Effect.PeriodicEffectValues.Duration;
-        Debug.Log("Effect Refreshed");
     }
 
     public bool HasExpired()

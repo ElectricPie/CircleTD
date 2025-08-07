@@ -49,7 +49,6 @@ public class TowerAbilities : MonoBehaviour
 
     private void DEBUG_ADD_POISON()
     {
-        Debug.Log("Adding Poison");
         AddOnHitAbility(DEBUG_poisonTipAbility);
     }
 

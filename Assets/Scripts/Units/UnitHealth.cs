@@ -30,7 +30,6 @@ public class UnitHealth : MonoBehaviour
         // Clamp the damage to a minimum of 0
         damageAmount = damageAmount < 0 ? 0 : damageAmount;
         CurrentHealth -= damageAmount;
-        Debug.Log($"Dealing {damageAmount}");
 
         OnUnitCurrentHealthChangedEvent?.Invoke(CurrentHealth);
 
