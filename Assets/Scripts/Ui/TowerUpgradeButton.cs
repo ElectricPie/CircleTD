@@ -5,7 +5,7 @@ using UnityEngine;
 public class TowerUpgradeButton : MonoBehaviour
 {
     [SerializeField] private TMP_Text m_upgradeAmountText;
-    [SerializeField] private TMP_Text m_upgradeButtonText;
+    [SerializeField] private TMP_Text m_upgradeCostText;
     
     [Header("Message Router Channels")]
     [SerializeField] private string m_upgradeChangeChannel = "UpgradeChannel";
@@ -14,8 +14,8 @@ public class TowerUpgradeButton : MonoBehaviour
     {
         MessageRouter.Register<UpgradeChangeMessage>(this, m_upgradeChangeChannel, 
             payload => {
-                m_upgradeAmountText.text = $"{payload.NewValue:0.00} -> {payload.NextValue:0.00}";
-                m_upgradeButtonText.text = $"£{payload.NewCost}";
+                //m_upgradeAmountText.text = $"{payload.NewValue:0.00} -> {payload.NextValue:0.00}";
+                m_upgradeCostText.text = $"£{payload.NewCost}";
             });
     }
 }
