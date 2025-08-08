@@ -6,8 +6,19 @@ public class UnitHealth : MonoBehaviour
 {
     [SerializeField] [Min(0)] private float m_maxHealth = 20.0f;
     
-    public event Action<float> OnUnitCurrentHealthChangedEvent = delegate { };
-    public event Action<float> OnUnitMaxHealthChangedEvent = delegate { };
+    /// <summary>
+    /// Called when ever the current health is changed passing the game object this component is on and the new current health
+    /// </summary>
+    public event Action<GameObject, float> OnUnitCurrentHealthChangedEvent = delegate { };
+    /// <summary>
+    /// Called when ever the max health is changed passing the game object this component is on and the new max health
+    /// </summary>
+    public event Action<GameObject, float> OnUnitMaxHealthChangedEvent = delegate { };
+    /// <summary>
+    /// Called when ever this takes damage passing the game object this component is on and the damage taken
+    /// </summary>
+    public event Action<GameObject, float> OnDamageTakenEvent = delegate { };
+
     /// <summary>
     /// The object that was killed and the object responsible for killing
     /// </summary>
@@ -21,8 +32,8 @@ public class UnitHealth : MonoBehaviour
     {
         CurrentHealth = m_maxHealth;
         
-        OnUnitMaxHealthChangedEvent?.Invoke(CurrentHealth);
-        OnUnitCurrentHealthChangedEvent?.Invoke(m_maxHealth);
+        OnUnitMaxHealthChangedEvent?.Invoke(gameObject, CurrentHealth);
+        OnUnitCurrentHealthChangedEvent?.Invoke(gameObject, m_maxHealth);
     }
     
     public void Damage(float damageAmount, GameObject damageCauser)
@@ -31,7 +42,8 @@ public class UnitHealth : MonoBehaviour
         damageAmount = damageAmount < 0 ? 0 : damageAmount;
         CurrentHealth -= damageAmount;
 
-        OnUnitCurrentHealthChangedEvent?.Invoke(CurrentHealth);
+        OnDamageTakenEvent?.Invoke(gameObject, damageAmount);
+        OnUnitCurrentHealthChangedEvent?.Invoke(gameObject, CurrentHealth);
 
         if (CurrentHealth > 0) 
             return;
@@ -57,7 +69,7 @@ public class UnitHealth : MonoBehaviour
         m_maxHealth = newMaxHealth;
         CurrentHealth = m_maxHealth * healthPercent;
         
-        OnUnitMaxHealthChangedEvent?.Invoke(m_maxHealth);
-        OnUnitCurrentHealthChangedEvent?.Invoke(CurrentHealth);
+        OnUnitMaxHealthChangedEvent?.Invoke(gameObject, m_maxHealth);
+        OnUnitCurrentHealthChangedEvent?.Invoke(gameObject, CurrentHealth);
     }
 }

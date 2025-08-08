@@ -44,7 +44,7 @@ public class TowerAbilities : MonoBehaviour
             }
         };
         
-        Invoke(nameof(DEBUG_ADD_POISON), 5.0f);
+        // Invoke(nameof(DEBUG_ADD_POISON), 5.0f);
     }
 
     private void DEBUG_ADD_POISON()

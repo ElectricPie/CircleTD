@@ -34,12 +34,12 @@ public class HealthBar : MonoBehaviour
         transform.rotation = m_camera.transform.rotation;
     }
 
-    private void OnCurrentHealthChanged(float currentHealth)
+    private void OnCurrentHealthChanged(GameObject unit, float currentHealth)
     {
         m_slider.value = currentHealth;
     }
 
-    private void OnMaxHealthChanged(float newMaxHealth)
+    private void OnMaxHealthChanged(GameObject unit, float newMaxHealth)
     {
         m_slider.maxValue = newMaxHealth;
     }
