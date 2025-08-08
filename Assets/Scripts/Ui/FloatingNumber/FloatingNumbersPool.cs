@@ -14,7 +14,7 @@ namespace Ui.FloatingNumber
         
         [SerializeField, Required] private FloatingNumber m_floatingNumberPrefab;
         [SerializeField, Min(1)] private int m_poolSize = 20;
-        [SerializeField, Min(0)] private float m_showTime = 1.0f;
+        [SerializeField, Min(0)] private float m_showTime = 0.5f;
         [SerializeField] private Vector3 m_offsetFromUnit = new Vector3(0.0f, 2.0f, 0.0f);
         
         private ObjectPool<FloatingNumber> m_numberPool;
@@ -27,9 +27,21 @@ namespace Ui.FloatingNumber
                     newFloatingNumber.Camera = m_cameraTransform;
                     return newFloatingNumber;
                 },
-                floatingNumber => { floatingNumber.gameObject.SetActive(true); },
-                floatingNumber => { floatingNumber.gameObject.SetActive(false); },
-                floatingNumber => { Destroy(floatingNumber); }, true, m_poolSize);
+                floatingNumber =>
+                {
+                    floatingNumber.gameObject.SetActive(true);
+                    Debug.Log("Activated Number");
+                },
+                floatingNumber =>
+                {
+                    floatingNumber.gameObject.SetActive(false);
+                    floatingNumber.transform.position = Vector3.zero;
+                    Debug.Log("Deactivated Number");
+                },
+                floatingNumber =>
+                {
+                    Destroy(floatingNumber);
+                }, true, m_poolSize);
 
             m_towerWaves.OnUnitSpanwedEvent.AddListener(newUnit =>
             {
@@ -40,10 +52,10 @@ namespace Ui.FloatingNumber
         private void OnUnitTakeDamage(GameObject unit, float damage)
         {
             FloatingNumber floatingNumber = m_numberPool.Get();
-            floatingNumber.SetValue(damage);
-            floatingNumber.SetTarget(unit.transform.position + m_offsetFromUnit);
+            floatingNumber.SetValue(damage, unit.transform.position + m_offsetFromUnit, 1 / m_showTime);
 
             StartCoroutine(HideNumber(floatingNumber));
+            Debug.Log("Set Number");
         }
 
         private IEnumerator HideNumber(FloatingNumber floatingNumber)

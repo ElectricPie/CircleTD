@@ -47,16 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 251937ebee187da77b0e547ae55622c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Effects:
-  - rid: 3214090246003621945
-  m_timeoutTime: 4
-  references:
-    version: 2
-    RefIds:
-    - rid: 3214090246003621945
-      type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
-      data:
-        DamageAmount: 1
+  m_timeoutTime: 2
 --- !u!114 &5334966420341806112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,7 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TargetPos: {x: 0, y: 0, z: 0}
-  m_speed: 20
+  m_speed: 25
 --- !u!54 &7244603853143164600
 Rigidbody:
   m_ObjectHideFlags: 0

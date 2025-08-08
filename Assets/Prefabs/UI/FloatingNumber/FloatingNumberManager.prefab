@@ -44,5 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3a35a5d56b94f8abd135aacdb66ac54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_towerWaves: {fileID: 0}
+  m_cameraTransform: {fileID: 0}
   m_floatingNumberPrefab: {fileID: -9163537751700784094, guid: f28adf7f215e9e046a139570a8ff2926, type: 3}
   m_poolSize: 20
+  m_showTime: 0.2
+  m_offsetFromUnit: {x: 0, y: 2, z: 0}
