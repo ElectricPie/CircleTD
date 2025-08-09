@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TargetPos: {x: 0, y: 0, z: 0}
-  m_speed: 25
+  m_speed: 20
 --- !u!54 &7244603853143164600
 Rigidbody:
   m_ObjectHideFlags: 0

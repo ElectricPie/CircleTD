@@ -14,8 +14,8 @@ public class TowerProjectile : MonoBehaviour
     public int Level { private get; set; } = 1;
     public GameObject Target { get; private set; } = null;
 
-    [Tooltip("Time after creation before projectile the projectile triggers its on hit event")]
-    [SerializeField] [Min(0)] private float m_timeoutTime = 4.0f;
+    [SerializeField, Min(0), Tooltip("Time after creation before projectile the projectile triggers its on hit event")] 
+    private float m_timeoutTime = 2.0f;
 
     private TowerProjectileMovement m_movementComponent = null;
 
@@ -33,7 +33,7 @@ public class TowerProjectile : MonoBehaviour
         }
 
         target.HealthComponent.OnKilledEvent += OnTargetKilled;
-
+        
         m_movementComponent.TargetPos = targetPos;
         Target = target.gameObject;
         StartTimeout();

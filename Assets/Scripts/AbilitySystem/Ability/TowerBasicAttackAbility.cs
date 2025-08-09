@@ -45,7 +45,6 @@ public class TowerBasicAttackAbilityInstance : AbilityInstance, ISharedEffects
     
     private readonly ObjectPool<TowerProjectile> m_projectilePool;
     private readonly float m_projectileSpeed;
-    private readonly Transform m_spawnPoint;
     private readonly TowerWaves m_waveComponent;
     private readonly List<GameEffect> m_effects = new List<GameEffect>();
     
@@ -66,7 +65,6 @@ public class TowerBasicAttackAbilityInstance : AbilityInstance, ISharedEffects
         
         m_basicAttackAbilityData = attackAbilityData;
         m_projectileSpeed = m_basicAttackAbilityData.ProjectilePrefab.GetComponent<TowerProjectileMovement>().Speed;
-        m_spawnPoint = projectileInitData.SpawnTransform;
         m_waveComponent = projectileInitData.TowerWaveComponent;
         
         m_effects.Add(m_basicAttackAbilityData.BaseAttackEffect);
@@ -89,9 +87,9 @@ public class TowerBasicAttackAbilityInstance : AbilityInstance, ISharedEffects
                 
                 projectile.gameObject.SetActive(true);
                 
-                Vector3 spawnPoint = m_spawnPoint.position + projectileInitData.SpawnOffSet;
+                Vector3 spawnPoint = projectileInitData.SpawnTransform.position + projectileInitData.SpawnOffSet;
                 projectile.transform.position = spawnPoint;
-                Vector3 predictedPos = GetPredictedLocation(m_currentTarget.transform.position);
+                Vector3 predictedPos = GetPredictedLocation(m_currentTarget.transform.position, spawnPoint);
                 projectile.SetTarget(m_currentTarget, predictedPos);
                 
                 projectile.Level = Level;
@@ -147,28 +145,29 @@ public class TowerBasicAttackAbilityInstance : AbilityInstance, ISharedEffects
         return m_basicAttackAbilityData.FireRateCurve.Evaluate(level);
     }
 
-    private Vector3 GetPredictedLocation(Vector3 targetPos)
+    private Vector3 GetPredictedLocation(Vector3 targetCurrentPosition, Vector3 projectileSpawn)
     {
-        Vector3 spawnPos = m_spawnPoint.position;
-        float distanceToTarget = Vector3.Distance(spawnPos, m_currentTarget.transform.position);
+        float projectileDistanceToTarget = Vector3.Distance(targetCurrentPosition, projectileSpawn);
 
-        float angularVelocity = (m_waveComponent.CurrentWaveRpm * 2 * Mathf.PI) / 60;
-        float timeToTarget = distanceToTarget / m_projectileSpeed;
+        float angularVelocity = m_waveComponent.CurrentWaveRpm * ((2 * Mathf.PI) / 60.0f);
+        float timeToTarget = projectileDistanceToTarget / m_projectileSpeed;
 
+        Vector3 centre = m_waveComponent.transform.position;
         // Keep it on one plane so don't need to handle the y-axis
-        spawnPos.y = targetPos.y;
-
+        centre.y = targetCurrentPosition.y;
+        
         // Calculate how much the unit will rotate in a frame
-        float startingAngle = Mathf.Atan2(targetPos.z - spawnPos.z, targetPos.x - spawnPos.x);
+        float startingAngle = Mathf.Atan2(targetCurrentPosition.z - centre.z, targetCurrentPosition.x - centre.x);
         float angleMoved = angularVelocity * timeToTarget;
         float newAngle = startingAngle - angleMoved;
 
+        float targetDistanceFromTower = Vector3.Distance(targetCurrentPosition, centre);
         // Calculate the predicted position
-        float x = distanceToTarget * Mathf.Cos(newAngle);
-        float z = distanceToTarget * Mathf.Sin(newAngle);
+        float x = targetDistanceFromTower * Mathf.Cos(newAngle);
+        float z = targetDistanceFromTower * Mathf.Sin(newAngle);
 
         // Need to account for the towers position
-        return new Vector3(x + spawnPos.x, targetPos.y, z + spawnPos.z);
+        return new Vector3(x + centre.x, centre.y, z + centre.z);
     }
 
     private void OnProjectileHit(TowerProjectile projectile)
